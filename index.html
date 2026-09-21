@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Carnet Pro</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --ink:#20241f;
+    --ink-soft:#565f52;
+    --paper:#eef1ea;
+    --surface:#ffffff;
+    --surface-2:#e4e8dd;
+    --border:#d3d9c8;
+    --accent:#8a6a34;
+    --accent-ink:#3d2f16;
+    --accent-2:#3e6b63;
+    --danger:#a1483a;
+    --shadow: 0 1px 2px rgba(32,36,31,.06), 0 6px 20px -8px rgba(32,36,31,.18);
+    --radius: 14px;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --ink:#e9ece3;
+      --ink-soft:#a7ae9c;
+      --paper:#181c17;
+      --surface:#20241d;
+      --surface-2:#2a2f24;
+      --border:#3a4133;
+      --accent:#d0a75c;
+      --accent-ink:#2a2114;
+      --accent-2:#7fb0a6;
+      --danger:#e18375;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 26px -10px rgba(0,0,0,.55);
+    }
+  }
+
+  *{box-sizing:border-box;}
+  html,body{ margin:0; }
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Public Sans", ui-sans-serif, system-ui, sans-serif;
+    padding-inline:16px;
+    padding-block:0 24px;
+  }
+  h1,h2,h3,.display{ font-family:"Fraunces", Georgia, serif; text-wrap:balance; }
+
+  a{ color:inherit; }
+  img{ max-width:100%; }
+
+  .wrap{ max-width:1080px; margin:0 auto; }
+
+  header.top{
+    position:sticky; top:0;
+    background:var(--paper);
+    padding-block:18px 12px;
+    z-index:5;
+    border-bottom:1px solid var(--border);
+    margin-bottom:18px;
+  }
+  .top-row{
+    display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap;
+  }
+  .brand{ display:flex; align-items:baseline; gap:10px; }
+  .brand h1{ font-size:1.5rem; font-weight:700; margin:0; letter-spacing:-.01em; }
+  .brand .count{ font-size:.8rem; color:var(--ink-soft); font-variant-numeric:tabular-nums; }
+  .btn{
+    font: inherit; font-weight:600; font-size:.85rem;
+    border:1px solid var(--border); background:var(--surface); color:var(--ink);
+    padding:9px 16px; border-radius:999px; cursor:pointer; display:inline-flex; align-items:center; gap:6px;
+    transition:transform .1s ease, background .15s ease;
+  }
+  .btn:hover{ background:var(--surface-2); }
+  .btn:active{ transform:scale(.97); }
+  .btn.primary{ background:var(--accent); color:var(--accent-ink); border-color:transparent; }
+  .btn.primary:hover{ filter:brightness(1.06); }
+  .btn.danger{ color:var(--danger); border-color:var(--danger); background:transparent; }
+  .btn.ghost{ background:transparent; border-color:transparent; padding:6px 10px; }
+  .btn:disabled{ opacity:.5; cursor:default; }
+  .btn:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, .chip:focus-visible{
+    outline:2px solid var(--accent-2); outline-offset:2px;
+  }
+
+  .controls{ display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; align-items:center; }
+  .search{ flex:1 1 220px; position:relative; }
+  .search input{
+    width:100%; font:inherit; font-size:.9rem; padding:10px 14px 10px 34px;
+    border-radius:999px; border:1px solid var(--border); background:var(--surface); color:var(--ink);
+  }
+  .search svg{ position:absolute; left:11px; top:50%; transform:translateY(-50%); opacity:.55; }
+
+  .chips{ display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+  .chip{
+    font:inherit; font-size:.78rem; font-weight:600; padding:6px 13px; border-radius:999px;
+    border:1px solid var(--border); background:var(--surface); color:var(--ink-soft); cursor:pointer;
+  }
+  .chip[aria-pressed="true"]{ background:var(--ink); color:var(--paper); border-color:var(--ink); }
+  .chip .n{ opacity:.7; margin-left:4px; }
+
+  main{ min-height:40vh; }
+
+  .grid{
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(250px,1fr)); gap:14px; margin-top:6px;
+  }
+
+  .card{
+    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+    padding:16px; box-shadow:var(--shadow); display:flex; flex-direction:column; gap:10px;
+    position:relative;
+  }
+  .card .name-row{ display:flex; justify-content:space-between; align-items:flex-start; gap:8px; }
+  .card h3{ font-size:1.08rem; font-weight:600; margin:0; line-height:1.25; }
+  .card .role{ font-size:.82rem; color:var(--ink-soft); margin-top:2px; }
+  .star{
+    background:none; border:none; cursor:pointer; font-size:1.1rem; line-height:1; padding:2px;
+    color:var(--border); flex-shrink:0;
+  }
+  .star.on{ color:var(--accent); }
+
+  .badge{
+    align-self:flex-start; font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.04em;
+    padding:3px 9px; border-radius:999px; background:hsl(var(--hue) 45% 92%); color:hsl(var(--hue) 45% 25%);
+  }
+  @media (prefers-color-scheme: dark){
+    .badge{ background:hsl(var(--hue) 30% 22%); color:hsl(var(--hue) 55% 82%); }
+  }
+
+  .meta{ display:flex; flex-direction:column; gap:5px; font-size:.85rem; }
+  .meta a{ text-decoration:none; display:flex; align-items:center; gap:7px; color:var(--ink); word-break:break-all; }
+  .meta a:hover{ color:var(--accent-2); }
+  .meta svg{ flex-shrink:0; opacity:.6; }
+  .notes{ font-size:.82rem; color:var(--ink-soft); border-top:1px dashed var(--border); padding-top:8px; margin-top:2px; }
+
+  .card-actions{ display:flex; justify-content:flex-end; gap:6px; margin-top:auto; padding-top:4px; }
+  .card-actions .btn{ padding:6px 12px; font-size:.78rem; }
+
+  .empty{ text-align:center; padding:60px 20px; color:var(--ink-soft); }
+  .empty h2{ color:var(--ink); font-size:1.3rem; margin-bottom:6px; }
+
+  dialog{
+    border:none; border-radius:18px; padding:0; background:var(--surface); color:var(--ink);
+    box-shadow:var(--shadow); width:min(480px, 92vw); max-height:min(640px,88vh);
+  }
+  dialog::backdrop{ background:rgba(20,22,18,.45); }
+  form.sheet{ padding:22px; display:flex; flex-direction:column; gap:12px; max-height:min(640px,88vh); overflow-y:auto; }
+  form.sheet h2{ margin:0 0 4px; font-size:1.25rem; }
+  .field{ display:flex; flex-direction:column; gap:5px; }
+  .field label{ font-size:.75rem; font-weight:600; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.03em; }
+  .field input, .field select, .field textarea{
+    font:inherit; font-size:.92rem; padding:9px 11px; border-radius:9px; border:1px solid var(--border);
+    background:var(--paper); color:var(--ink); width:100%;
+  }
+  .field textarea{ resize:vertical; min-height:60px; }
+  .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .sheet-actions{ display:flex; justify-content:space-between; align-items:center; margin-top:8px; gap:10px; }
+  .fav-toggle{ display:flex; align-items:center; gap:7px; font-size:.85rem; color:var(--ink-soft); }
+
+  .banner{
+    background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:14px 16px;
+    font-size:.87rem; color:var(--ink-soft); margin-top:16px;
+  }
+
+  .qr-sheet{ align-items:center; text-align:center; }
+  .qr-help, .qr-note{ font-size:.83rem; color:var(--ink-soft); margin:0; }
+  .qr-canvas{
+    display:flex; justify-content:center; align-items:center; padding:14px;
+    background:#ffffff; border-radius:12px; border:1px solid var(--border); align-self:center;
+  }
+  .qr-canvas img, .qr-canvas canvas{ display:block; }
+  .qr-link-row{ display:flex; gap:8px; width:100%; }
+  .qr-link-row input{
+    flex:1; font:inherit; font-size:.78rem; padding:8px 10px; border-radius:8px;
+    border:1px solid var(--border); background:var(--paper); color:var(--ink-soft);
+  }
+
+  .spinner{
+    width:14px; height:14px; border-radius:50%; border:2px solid var(--border); border-top-color:var(--accent);
+    animation:spin .7s linear infinite; display:inline-block;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  @media (max-width:480px){
+    .two-col{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <div class="top-row">
+      <div class="brand">
+        <h1>Carnet Pro</h1>
+        <span class="count" id="count"></span>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <button class="btn" id="refreshBtn" type="button">Actualiser</button>
+        <button class="btn" id="qrBtn" type="button">Code QR</button>
+        <button class="btn primary" id="addBtn" type="button">+ Nouveau contact</button>
+      </div>
+    </div>
+    <div class="controls">
+      <div class="search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="searchInput" type="text" placeholder="Rechercher un nom, une société, un rôle…" autocomplete="off">
+      </div>
+    </div>
+    <div class="chips" id="chips"></div>
+  </header>
+
+  <main>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="emptyState" hidden>
+      <h2>Aucun contact</h2>
+      <p id="emptyMsg">Ajoutez votre premier contact professionnel.</p>
+    </div>
+    <div class="banner" id="errorBanner" hidden></div>
+  </main>
+</div>
+
+<dialog id="dialog">
+  <form class="sheet" id="contactForm">
+    <h2 id="dialogTitle">Nouveau contact</h2>
+    <div class="two-col">
+      <div class="field"><label for="f-first">Prénom</label><input id="f-first" required></div>
+      <div class="field"><label for="f-last">Nom</label><input id="f-last" required></div>
+    </div>
+    <div class="two-col">
+      <div class="field"><label for="f-company">Société</label><input id="f-company"></div>
+      <div class="field"><label for="f-role">Fonction</label><input id="f-role"></div>
+    </div>
+    <div class="two-col">
+      <div class="field"><label for="f-email">Email</label><input id="f-email" type="email"></div>
+      <div class="field"><label for="f-phone">Téléphone</label><input id="f-phone" type="tel"></div>
+    </div>
+    <div class="field">
+      <label for="f-category">Catégorie</label>
+      <select id="f-category"></select>
+    </div>
+    <div class="field"><label for="f-notes">Notes</label><textarea id="f-notes" placeholder="Contexte, rappel, source du contact…"></textarea></div>
+    <div class="sheet-actions">
+      <label class="fav-toggle"><input type="checkbox" id="f-fav"> Favori</label>
+      <div style="display:flex; gap:8px;">
+        <button type="button" class="btn ghost" id="cancelBtn">Annuler</button>
+        <button type="submit" class="btn primary" id="saveBtn">Enregistrer</button>
+      </div>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="qrDialog">
+  <div class="sheet qr-sheet">
+    <h2>Collecte de contacts par QR</h2>
+    <p class="qr-help">Ce code renvoie vers un formulaire public (Google Forms) — aucun compte requis. Toute personne peut le scanner et laisser ses coordonnées.</p>
+    <div id="qrCanvas" class="qr-canvas"></div>
+    <div class="qr-link-row">
+      <input id="qrUrlInput" type="text" readonly>
+      <button class="btn" id="copyLinkBtn" type="button">Copier</button>
+    </div>
+    <p class="qr-note">Les réponses arrivent dans une feuille Google Sheets. Carnet Pro les affiche automatiquement (rafraîchissement toutes les 20&nbsp;s, ou via « Actualiser »).</p>
+    <div class="sheet-actions" style="justify-content:flex-end;">
+      <button type="button" class="btn primary" id="closeQrBtn">Fermer</button>
+    </div>
+  </div>
+</dialog>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+(function(){
+  var API_URL = 'https://script.google.com/macros/s/AKfycbwJVwBG-pwBf-AcXI1pVPQZQ5yVTEdQLLy7qk0F7UyahZiG1AlPYryKkmR9esLeObYRyQ/exec';
+  var FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSd4dWBekyst_oykLVEl5ruzkvChcOrLDwN2lfbrf2xBKMuLKQ/viewform';
+  var POLL_MS = 20000;
+
+  var CATEGORIES = [
+    {id:"Client", hue:165},
+    {id:"Fournisseur", hue:38},
+    {id:"Partenaire", hue:215},
+    {id:"Prospect", hue:8},
+    {id:"Collègue", hue:265},
+    {id:"Réseau", hue:95},
+    {id:"Autre", hue:0}
+  ];
+  function hueFor(cat){
+    for (var i=0;i<CATEGORIES.length;i++){ if (CATEGORIES[i].id === cat) return CATEGORIES[i].hue; }
+    return 0;
+  }
+
+  var state = { contacts: [], search: "", filter: "all", loading: true, error: null, editingId: null };
+
+  var grid = document.getElementById('grid');
+  var emptyState = document.getElementById('emptyState');
+  var emptyMsg = document.getElementById('emptyMsg');
+  var chipsEl = document.getElementById('chips');
+  var countEl = document.getElementById('count');
+  var errorBanner = document.getElementById('errorBanner');
+  var dialog = document.getElementById('dialog');
+  var form = document.getElementById('contactForm');
+  var addBtn = document.getElementById('addBtn');
+  var refreshBtn = document.getElementById('refreshBtn');
+  var cancelBtn = document.getElementById('cancelBtn');
+  var searchInput = document.getElementById('searchInput');
+  var qrBtn = document.getElementById('qrBtn');
+  var qrDialog = document.getElementById('qrDialog');
+  var qrCanvas = document.getElementById('qrCanvas');
+  var qrUrlInput = document.getElementById('qrUrlInput');
+  var copyLinkBtn = document.getElementById('copyLinkBtn');
+  var closeQrBtn = document.getElementById('closeQrBtn');
+
+  var catSelect = document.getElementById('f-category');
+  CATEGORIES.forEach(function(c){
+    var opt = document.createElement('option');
+    opt.value = c.id; opt.textContent = c.id;
+    catSelect.appendChild(opt);
+  });
+
+  function escapeHtml(s){
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+    });
+  }
+
+  function renderChips(){
+    var counts = {};
+    state.contacts.forEach(function(c){ counts[c.category] = (counts[c.category]||0)+1; });
+    var html = '<button class="chip" aria-pressed="'+(state.filter==='all')+'" data-filter="all">Tous<span class="n">'+state.contacts.length+'</span></button>';
+    html += '<button class="chip" aria-pressed="'+(state.filter==='fav')+'" data-filter="fav">★ Favoris<span class="n">'+(state.contacts.filter(function(c){return c.favorite;}).length)+'</span></button>';
+    CATEGORIES.forEach(function(c){
+      if (!counts[c.id]) return;
+      html += '<button class="chip" aria-pressed="'+(state.filter===c.id)+'" data-filter="'+c.id+'">'+c.id+'<span class="n">'+counts[c.id]+'</span></button>';
+    });
+    chipsEl.innerHTML = html;
+    Array.prototype.forEach.call(chipsEl.querySelectorAll('.chip'), function(btn){
+      btn.addEventListener('click', function(){ state.filter = btn.getAttribute('data-filter'); render(); });
+    });
+  }
+
+  function contactIcon(kind){
+    if (kind === 'mail') return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 6 10 7 10-7"/></svg>';
+    return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2Z"/></svg>';
+  }
+
+  function matchesFilter(c){
+    if (state.filter === 'fav') return !!c.favorite;
+    if (state.filter !== 'all') return c.category === state.filter;
+    return true;
+  }
+  function matchesSearch(c){
+    if (!state.search) return true;
+    var q = state.search.toLowerCase();
+    return [c.firstName,c.lastName,c.company,c.role].join(' ').toLowerCase().indexOf(q) !== -1;
+  }
+
+  function render(){
+    renderChips();
+    var list = state.contacts.filter(matchesFilter).filter(matchesSearch);
+    countEl.innerHTML = state.loading
+      ? '<span class="spinner"></span>'
+      : (state.contacts.length ? (state.contacts.length + (state.contacts.length>1 ? ' contacts' : ' contact')) : '');
+
+    if (state.error){
+      errorBanner.hidden = false;
+      errorBanner.textContent = "Impossible de joindre la base de contacts (" + state.error + "). Vérifiez votre connexion et réessayez avec « Actualiser ».";
+    } else {
+      errorBanner.hidden = true;
+    }
+
+    if (!list.length){
+      grid.innerHTML = '';
+      emptyState.hidden = false;
+      emptyMsg.textContent = state.loading ? "Chargement…" : (state.contacts.length ? "Aucun contact ne correspond à votre recherche." : "Ajoutez votre premier contact professionnel.");
+      return;
+    }
+    emptyState.hidden = true;
+
+    grid.innerHTML = list.map(function(c){
+      var hue = hueFor(c.category);
+      var name = escapeHtml((c.firstName||'') + ' ' + (c.lastName||'')).trim() || 'Sans nom';
+      var subtitle = [c.role, c.company].filter(Boolean).map(escapeHtml).join(' · ');
+      var meta = '';
+      if (c.email) meta += '<a href="mailto:'+escapeHtml(c.email)+'">'+contactIcon('mail')+escapeHtml(c.email)+'</a>';
+      if (c.phone) meta += '<a href="tel:'+escapeHtml(c.phone)+'">'+contactIcon('phone')+escapeHtml(c.phone)+'</a>';
+      var notes = c.notes ? '<div class="notes">'+escapeHtml(c.notes)+'</div>' : '';
+      return '' +
+        '<article class="card" data-id="'+c.id+'">' +
+          '<div class="name-row">' +
+            '<div><h3>'+name+'</h3>'+(subtitle?'<div class="role">'+subtitle+'</div>':'')+'</div>' +
+            '<button class="star '+(c.favorite?'on':'')+'" data-action="fav" data-id="'+c.id+'" aria-label="Basculer favori" title="Favori">'+(c.favorite?'★':'☆')+'</button>' +
+          '</div>' +
+          '<span class="badge" style="--hue:'+hue+'">'+escapeHtml(c.category||'Autre')+'</span>' +
+          '<div class="meta">'+meta+'</div>' +
+          notes +
+          '<div class="card-actions">' +
+            '<button class="btn ghost" data-action="edit" data-id="'+c.id+'">Modifier</button>' +
+            '<button class="btn danger" data-action="del" data-id="'+c.id+'">Supprimer</button>' +
+          '</div>' +
+        '</article>';
+    }).join('');
+  }
+
+  grid.addEventListener('click', function(e){
+    var btn = e.target.closest('button[data-action]');
+    if (!btn) return;
+    var id = btn.getAttribute('data-id');
+    var action = btn.getAttribute('data-action');
+    var c = state.contacts.find(function(x){ return String(x.id) === String(id); });
+    if (!c) return;
+    if (action === 'fav') toggleFavorite(c);
+    else if (action === 'edit') openEdit(c);
+    else if (action === 'del') confirmDelete(btn, c);
+  });
+
+  function confirmDelete(btn, c){
+    if (btn.dataset.confirming){
+      deleteContact(c);
+      return;
+    }
+    btn.dataset.confirming = '1';
+    var original = btn.textContent;
+    btn.textContent = 'Confirmer ?';
+    setTimeout(function(){
+      if (btn.isConnected){ btn.textContent = original; delete btn.dataset.confirming; }
+    }, 3000);
+  }
+
+  searchInput.addEventListener('input', function(){ state.search = searchInput.value; render(); });
+  refreshBtn.addEventListener('click', function(){ loadContacts(); });
+
+  function openDialog(title){
+    document.getElementById('dialogTitle').textContent = title;
+    dialog.showModal();
+  }
+  addBtn.addEventListener('click', function(){
+    state.editingId = null;
+    form.reset();
+    catSelect.value = 'Client';
+    openDialog('Nouveau contact');
+  });
+  cancelBtn.addEventListener('click', function(){ dialog.close(); });
+
+  qrBtn.addEventListener('click', function(){
+    qrUrlInput.value = FORM_URL;
+    qrCanvas.innerHTML = '';
+    if (window.QRCode){
+      new QRCode(qrCanvas, { text: FORM_URL, width:200, height:200, colorDark:'#20241f', colorLight:'#ffffff', correctLevel: QRCode.CorrectLevel.M });
+    } else {
+      qrCanvas.textContent = 'QR indisponible — utilisez le lien ci-dessous.';
+    }
+    qrDialog.showModal();
+  });
+  closeQrBtn.addEventListener('click', function(){ qrDialog.close(); });
+  copyLinkBtn.addEventListener('click', function(){
+    var original = copyLinkBtn.textContent;
+    try {
+      navigator.clipboard.writeText(FORM_URL).then(function(){
+        copyLinkBtn.textContent = 'Copié !';
+        setTimeout(function(){ copyLinkBtn.textContent = original; }, 1500);
+      });
+    } catch(e){
+      qrUrlInput.select();
+    }
+  });
+
+  function openEdit(c){
+    state.editingId = c.id;
+    document.getElementById('f-first').value = c.firstName || '';
+    document.getElementById('f-last').value = c.lastName || '';
+    document.getElementById('f-company').value = c.company || '';
+    document.getElementById('f-role').value = c.role || '';
+    document.getElementById('f-email').value = c.email || '';
+    document.getElementById('f-phone').value = c.phone || '';
+    catSelect.value = c.category || 'Autre';
+    document.getElementById('f-notes').value = c.notes || '';
+    document.getElementById('f-fav').checked = !!c.favorite;
+    openDialog('Modifier le contact');
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var data = {
+      firstName: document.getElementById('f-first').value.trim(),
+      lastName: document.getElementById('f-last').value.trim(),
+      company: document.getElementById('f-company').value.trim(),
+      role: document.getElementById('f-role').value.trim(),
+      email: document.getElementById('f-email').value.trim(),
+      phone: document.getElementById('f-phone').value.trim(),
+      category: catSelect.value,
+      notes: document.getElementById('f-notes').value.trim(),
+      favorite: document.getElementById('f-fav').checked
+    };
+    var saveBtn = document.getElementById('saveBtn');
+    saveBtn.disabled = true;
+    var body = state.editingId
+      ? { action: 'update', id: state.editingId, data: data }
+      : { action: 'add', data: data };
+    apiPost(body).then(function(){
+      dialog.close();
+      saveBtn.disabled = false;
+      loadContacts();
+    }).catch(function(err){
+      saveBtn.disabled = false;
+      alert("Échec de l'enregistrement : " + err.message);
+    });
+  });
+
+  function toggleFavorite(c){
+    apiPost({ action: 'toggleFavorite', id: c.id }).then(function(){ loadContacts(); })
+      .catch(function(err){ alert("Échec : " + err.message); });
+  }
+  function deleteContact(c){
+    apiPost({ action: 'delete', id: c.id }).then(function(){ loadContacts(); })
+      .catch(function(err){ alert("Échec de la suppression : " + err.message); });
+  }
+
+  function apiPost(payload){
+    return fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
+    }).then(function(r){ return r.json(); }).then(function(json){
+      if (!json.ok) throw new Error(json.error || 'Erreur inconnue');
+      return json;
+    });
+  }
+
+  function loadContacts(){
+    state.loading = state.contacts.length === 0;
+    state.error = null;
+    render();
+    fetch(API_URL).then(function(r){ return r.json(); }).then(function(json){
+      if (!json.ok) throw new Error(json.error || 'Erreur inconnue');
+      state.contacts = json.contacts || [];
+      state.loading = false;
+      render();
+    }).catch(function(err){
+      state.loading = false;
+      state.error = err.message;
+      render();
+    });
+  }
+
+  loadContacts();
+  setInterval(loadContacts, POLL_MS);
+})();
+</script>
+</body>
+</html>
