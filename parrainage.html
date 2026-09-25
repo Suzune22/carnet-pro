@@ -1,0 +1,866 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Parrainage L1</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --ink:#20241f;
+    --ink-soft:#565f52;
+    --paper:#eef1ea;
+    --surface:#ffffff;
+    --surface-2:#e4e8dd;
+    --border:#d3d9c8;
+    --accent:#8a6a34;
+    --accent-ink:#3d2f16;
+    --accent-2:#3e6b63;
+    --danger:#a1483a;
+    --filleul:#3e6b63;
+    --parrain:#8a6a34;
+    --shadow: 0 1px 2px rgba(32,36,31,.06), 0 6px 20px -8px rgba(32,36,31,.18);
+    --radius: 14px;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --ink:#e9ece3;
+      --ink-soft:#a7ae9c;
+      --paper:#181c17;
+      --surface:#20241d;
+      --surface-2:#2a2f24;
+      --border:#3a4133;
+      --accent:#d0a75c;
+      --accent-ink:#2a2114;
+      --accent-2:#7fb0a6;
+      --danger:#e18375;
+      --filleul:#7fb0a6;
+      --parrain:#d0a75c;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 26px -10px rgba(0,0,0,.55);
+    }
+  }
+
+  *{box-sizing:border-box;}
+  html,body{ margin:0; }
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Public Sans", ui-sans-serif, system-ui, sans-serif;
+    padding-inline:16px;
+    padding-block:0 32px;
+  }
+  h1,h2,h3{ font-family:"Fraunces", Georgia, serif; text-wrap:balance; }
+  a{ color:inherit; }
+  [hidden]{ display:none !important; }
+
+  .wrap{ max-width:1080px; margin:0 auto; }
+
+  header.top{
+    position:sticky; top:0; background:var(--paper); z-index:5;
+    padding-block:18px 0; border-bottom:1px solid var(--border); margin-bottom:22px;
+  }
+  .top-row{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+  .brand h1{ font-size:1.5rem; font-weight:700; margin:0; letter-spacing:-.01em; }
+  .brand p{ margin:2px 0 0; font-size:.85rem; color:var(--ink-soft); }
+  .tabs{ display:flex; gap:4px; margin-top:14px; }
+  .tab{
+    font:inherit; font-weight:600; font-size:.88rem; background:none; border:none; color:var(--ink-soft);
+    padding:10px 14px; cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px;
+  }
+  .tab[aria-selected="true"]{ color:var(--ink); border-bottom-color:var(--accent); }
+
+  .btn{
+    font:inherit; font-weight:600; font-size:.85rem;
+    border:1px solid var(--border); background:var(--surface); color:var(--ink);
+    padding:9px 16px; border-radius:999px; cursor:pointer; display:inline-flex; align-items:center; gap:6px;
+    text-decoration:none; transition:transform .1s ease, background .15s ease;
+  }
+  .btn:hover{ background:var(--surface-2); }
+  .btn:active{ transform:scale(.97); }
+  .btn.primary{ background:var(--accent); color:var(--accent-ink); border-color:transparent; }
+  .btn.primary:hover{ filter:brightness(1.06); }
+  .btn.danger{ color:var(--danger); border-color:var(--danger); background:transparent; }
+  .btn.ghost{ background:transparent; border-color:transparent; padding:6px 10px; }
+  .btn.small{ padding:6px 12px; font-size:.78rem; }
+  .btn:disabled{ opacity:.5; cursor:default; }
+  .btn:focus-visible, .tab:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, .pick input:focus-visible + span{
+    outline:2px solid var(--accent-2); outline-offset:2px;
+  }
+
+  /* ---------- Formulaire ---------- */
+  .form-card{
+    max-width:640px; margin:0 auto; background:var(--surface); border:1px solid var(--border);
+    border-radius:18px; box-shadow:var(--shadow); padding:24px;
+  }
+  .form-card > h2{ margin:0 0 4px; font-size:1.35rem; }
+  .form-card > .lead{ margin:0 0 20px; color:var(--ink-soft); font-size:.9rem; line-height:1.5; }
+  form{ display:flex; flex-direction:column; gap:16px; }
+  fieldset{ border:none; margin:0; padding:0; display:flex; flex-direction:column; gap:12px; }
+  legend{ font-family:"Fraunces", Georgia, serif; font-weight:600; font-size:1.02rem; padding:0; margin-bottom:10px; }
+  .field{ display:flex; flex-direction:column; gap:5px; }
+  .field > label, .field > .label{ font-size:.75rem; font-weight:600; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.03em; }
+  .field .hint{ font-size:.78rem; color:var(--ink-soft); }
+  .field input, .field select, .field textarea{
+    font:inherit; font-size:.92rem; padding:9px 11px; border-radius:9px; border:1px solid var(--border);
+    background:var(--paper); color:var(--ink); width:100%;
+  }
+  .field textarea{ resize:vertical; min-height:70px; }
+  .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+
+  .role-pick{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .role-pick label{
+    position:relative; display:flex; flex-direction:column; gap:3px; padding:14px; border-radius:12px; cursor:pointer;
+    border:1.5px solid var(--border); background:var(--paper);
+  }
+  .role-pick input{ position:absolute; opacity:0; pointer-events:none; }
+  .role-pick strong{ font-size:.95rem; }
+  .role-pick span{ font-size:.8rem; color:var(--ink-soft); }
+  .role-pick label:has(input:checked){ border-color:var(--accent); background:var(--surface); box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent); }
+  .role-pick label:has(input:focus-visible){ outline:2px solid var(--accent-2); outline-offset:2px; }
+
+  .picks{ display:flex; flex-wrap:wrap; gap:7px; }
+  .pick{ position:relative; }
+  .pick input{ position:absolute; opacity:0; pointer-events:none; }
+  .pick span{
+    display:inline-block; font-size:.8rem; font-weight:600; padding:6px 12px; border-radius:999px; cursor:pointer;
+    border:1px solid var(--border); background:var(--paper); color:var(--ink-soft);
+  }
+  .pick input:checked + span{ background:var(--ink); color:var(--paper); border-color:var(--ink); }
+
+  .consent{ display:flex; gap:9px; align-items:flex-start; font-size:.84rem; color:var(--ink-soft); line-height:1.45; }
+  .consent input{ margin-top:3px; }
+  .form-actions{ display:flex; justify-content:flex-end; gap:8px; }
+  .form-msg{ font-size:.87rem; padding:12px 14px; border-radius:10px; }
+  .form-msg.err{ background:color-mix(in srgb, var(--danger) 12%, var(--surface)); color:var(--danger); }
+
+  .success{ text-align:center; padding:26px 10px; }
+  .success h2{ margin:0 0 8px; }
+  .success p{ color:var(--ink-soft); margin:0 0 18px; }
+
+  /* ---------- Organisation ---------- */
+  .banner{
+    background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:12px 16px;
+    font-size:.86rem; color:var(--ink-soft); margin-bottom:16px; line-height:1.5;
+  }
+  .banner.err{ color:var(--danger); }
+  .key-row{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; max-width:460px; }
+  .key-row input{
+    flex:1 1 180px; font:inherit; font-size:.9rem; padding:9px 12px; border-radius:999px;
+    border:1px solid var(--border); background:var(--surface); color:var(--ink);
+  }
+
+  .stats{ display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:10px; margin-bottom:16px; }
+  .stat{ background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:12px 14px; }
+  .stat .v{ font-family:"Fraunces", Georgia, serif; font-size:1.6rem; font-weight:600; font-variant-numeric:tabular-nums; }
+  .stat .k{ font-size:.78rem; color:var(--ink-soft); }
+
+  .toolbar{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:22px; }
+  .toolbar .spacer{ flex:1; }
+
+  section.block{ margin-bottom:28px; }
+  section.block > h2{ font-size:1.15rem; margin:0 0 10px; display:flex; align-items:baseline; gap:8px; }
+  section.block > h2 .n{ font-family:"Public Sans", sans-serif; font-size:.8rem; color:var(--ink-soft); font-weight:600; }
+  .muted{ color:var(--ink-soft); font-size:.87rem; }
+
+  .pairs{ display:grid; grid-template-columns:repeat(auto-fill, minmax(320px,1fr)); gap:12px; }
+  .pair{
+    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:14px 16px; display:flex; flex-direction:column; gap:10px;
+  }
+  .pair-people{ display:grid; grid-template-columns:1fr auto 1fr; gap:8px; align-items:start; }
+  .pair-people .link{ color:var(--ink-soft); padding-top:16px; }
+  .who .tag{ font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.05em; }
+  .who.parrain .tag{ color:var(--parrain); }
+  .who.filleul .tag{ color:var(--filleul); }
+  .who .nm{ font-weight:600; font-size:.95rem; margin-top:2px; overflow-wrap:anywhere; }
+  .who .sub{ font-size:.78rem; color:var(--ink-soft); overflow-wrap:anywhere; }
+  .why{ display:flex; flex-wrap:wrap; gap:5px; }
+  .why span{ font-size:.72rem; padding:3px 8px; border-radius:999px; background:var(--surface-2); color:var(--ink-soft); }
+  .pair-foot{ display:flex; justify-content:space-between; align-items:center; gap:8px; border-top:1px dashed var(--border); padding-top:8px; }
+  .score{ font-size:.78rem; color:var(--ink-soft); font-variant-numeric:tabular-nums; }
+
+  table{ width:100%; border-collapse:collapse; font-size:.86rem; }
+  .table-wrap{ overflow-x:auto; background:var(--surface); border:1px solid var(--border); border-radius:12px; }
+  th, td{ text-align:left; padding:9px 12px; border-bottom:1px solid var(--border); vertical-align:top; }
+  th{ font-size:.72rem; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-soft); font-weight:600; background:var(--surface-2); }
+  tr:last-child td{ border-bottom:none; }
+  td .sub{ font-size:.78rem; color:var(--ink-soft); }
+  td select{ font:inherit; font-size:.82rem; padding:6px 8px; border-radius:8px; border:1px solid var(--border); background:var(--paper); color:var(--ink); max-width:220px; }
+  .role-dot{ display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:6px; vertical-align:middle; }
+
+  dialog{
+    border:none; border-radius:18px; padding:0; background:var(--surface); color:var(--ink);
+    box-shadow:var(--shadow); width:min(420px, 92vw);
+  }
+  dialog::backdrop{ background:rgba(20,22,18,.45); }
+  .sheet{ padding:22px; display:flex; flex-direction:column; gap:12px; align-items:center; text-align:center; }
+  .sheet h2{ margin:0; font-size:1.2rem; }
+  .qr-canvas{ padding:14px; background:#fff; border-radius:12px; border:1px solid var(--border); }
+  .qr-canvas img, .qr-canvas canvas{ display:block; }
+  .link-row{ display:flex; gap:8px; width:100%; }
+  .link-row input{ flex:1; min-width:0; font:inherit; font-size:.78rem; padding:8px 10px; border-radius:8px; border:1px solid var(--border); background:var(--paper); color:var(--ink-soft); }
+
+  .spinner{
+    width:14px; height:14px; border-radius:50%; border:2px solid var(--border); border-top-color:var(--accent);
+    animation:spin .7s linear infinite; display:inline-block; vertical-align:middle;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  @media (max-width:520px){
+    .two-col, .role-pick{ grid-template-columns:1fr; }
+    .form-card{ padding:18px; }
+    .pairs{ grid-template-columns:1fr; }
+    .pair-people{ grid-template-columns:1fr; }
+    .pair-people .link{ padding-top:0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <div class="top-row">
+      <div class="brand">
+        <h1>Parrainage L1</h1>
+        <p>Binômes entre nouveaux étudiants et étudiants plus avancés</p>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <a class="btn" href="index.html">← Carnet Pro</a>
+        <button class="btn" id="shareBtn" type="button">Partager le formulaire</button>
+      </div>
+    </div>
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tab-inscription" aria-controls="view-inscription" aria-selected="true" type="button">Inscription</button>
+      <button class="tab" role="tab" id="tab-binomes" aria-controls="view-binomes" aria-selected="false" type="button">Binômes</button>
+    </div>
+  </header>
+
+  <!-- ================= Inscription ================= -->
+  <main id="view-inscription" role="tabpanel" aria-labelledby="tab-inscription">
+    <div class="form-card">
+      <div id="formWrap">
+        <h2>Inscription au parrainage</h2>
+        <p class="lead">Tu arrives en L1 et tu veux un·e étudiant·e plus avancé·e pour t'aider à prendre tes marques ? Ou tu es en L2 ou plus et tu veux accompagner un·e nouvel·le ? Remplis ce formulaire : les binômes sont formés selon la filière, les centres d'intérêt et les disponibilités.</p>
+
+        <form id="signupForm" novalidate>
+          <fieldset>
+            <legend>Je m'inscris comme…</legend>
+            <div class="role-pick">
+              <label><input type="radio" name="role" value="filleul" checked><strong>Filleul·e</strong><span>Je suis en L1 et je cherche un parrain ou une marraine</span></label>
+              <label><input type="radio" name="role" value="parrain"><strong>Parrain / Marraine</strong><span>Je suis en L2 ou plus et je veux accompagner un·e L1</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Mes informations</legend>
+            <div class="two-col">
+              <div class="field"><label for="f-first">Prénom</label><input id="f-first" autocomplete="given-name" required></div>
+              <div class="field"><label for="f-last">Nom</label><input id="f-last" autocomplete="family-name" required></div>
+            </div>
+            <div class="two-col">
+              <div class="field"><label for="f-email">Email</label><input id="f-email" type="email" autocomplete="email" required></div>
+              <div class="field"><label for="f-phone">Téléphone <span style="text-transform:none; font-weight:400;">(facultatif)</span></label><input id="f-phone" type="tel" autocomplete="tel"></div>
+            </div>
+            <div class="two-col">
+              <div class="field">
+                <label for="f-program">Filière / parcours</label>
+                <input id="f-program" list="programs" required placeholder="Ex. Droit, Informatique…">
+                <datalist id="programs"></datalist>
+              </div>
+              <div class="field">
+                <label for="f-level">Niveau</label>
+                <select id="f-level"></select>
+              </div>
+            </div>
+            <div class="field" id="capacityField" hidden>
+              <label for="f-capacity">Nombre de filleul·es que je peux suivre</label>
+              <select id="f-capacity">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Pour bien s'entendre</legend>
+            <div class="field">
+              <span class="label">Centres d'intérêt</span>
+              <span class="hint">Choisis-en au moins un, ils servent à te proposer un binôme avec qui tu as des points communs.</span>
+              <div class="picks" id="interestPicks"></div>
+            </div>
+            <div class="field">
+              <span class="label">Rencontres de préférence</span>
+              <div class="picks" id="modePicks"></div>
+            </div>
+            <div class="field">
+              <label for="f-notes" id="notesLabel">Ce que j'attends du parrainage</label>
+              <textarea id="f-notes" placeholder="Méthodes de travail, vie sur le campus, orientation…"></textarea>
+            </div>
+          </fieldset>
+
+          <label class="consent"><input type="checkbox" id="f-consent" required> J'accepte que mon nom, mon email et ma filière soient transmis à mon binôme et aux organisateurs du parrainage. Ces données servent uniquement à former les binômes.</label>
+
+          <div class="form-msg err" id="formError" hidden></div>
+          <div class="form-actions">
+            <button type="submit" class="btn primary" id="submitBtn">Envoyer mon inscription</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="success" id="successWrap" hidden>
+        <h2>Inscription enregistrée</h2>
+        <p id="successMsg"></p>
+        <button class="btn" type="button" id="againBtn">Inscrire une autre personne</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- ================= Binômes (organisateurs) ================= -->
+  <main id="view-binomes" role="tabpanel" aria-labelledby="tab-binomes" hidden>
+    <div class="banner" id="modeBanner" hidden></div>
+
+    <div id="lockPanel" hidden>
+      <div class="banner">Cet espace est réservé aux organisateurs du parrainage. Saisis le code organisateur pour voir les inscrits et former les binômes.</div>
+      <form class="key-row" id="keyForm">
+        <input id="keyInput" type="password" placeholder="Code organisateur" autocomplete="off" aria-label="Code organisateur">
+        <button class="btn primary" type="submit">Accéder</button>
+      </form>
+    </div>
+
+    <div id="adminPanel" hidden>
+      <div class="banner err" id="adminError" hidden></div>
+
+      <div class="stats" id="stats"></div>
+
+      <div class="toolbar">
+        <button class="btn primary" id="autoBtn" type="button">Former les binômes automatiquement</button>
+        <button class="btn" id="exportBtn" type="button">Exporter (CSV)</button>
+        <span class="spacer"></span>
+        <button class="btn" id="reloadBtn" type="button">Actualiser</button>
+        <button class="btn danger" id="resetBtn" type="button">Dissoudre tous les binômes</button>
+      </div>
+
+      <section class="block">
+        <h2>Binômes <span class="n" id="pairsCount"></span></h2>
+        <div class="pairs" id="pairsList"></div>
+      </section>
+
+      <section class="block">
+        <h2>Filleul·es sans binôme <span class="n" id="unmatchedCount"></span></h2>
+        <div id="unmatchedList"></div>
+      </section>
+
+      <section class="block">
+        <h2>Tous les inscrits <span class="n" id="allCount"></span></h2>
+        <div id="allList"></div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<dialog id="shareDialog">
+  <div class="sheet">
+    <h2>Partager le formulaire</h2>
+    <p class="muted" style="margin:0;">Affiche ce QR code en amphi ou envoie le lien aux étudiants.</p>
+    <div class="qr-canvas" id="qrCanvas"></div>
+    <div class="link-row">
+      <input id="shareUrl" type="text" readonly aria-label="Lien du formulaire">
+      <button class="btn" id="copyBtn" type="button">Copier</button>
+    </div>
+    <button class="btn primary" id="closeShareBtn" type="button">Fermer</button>
+  </div>
+</dialog>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+(function(){
+  // URL de déploiement du script apps-script/parrainage.gs (voir PARRAINAGE.md).
+  // Laisser vide pour un mode démo : les données restent dans ce navigateur.
+  var API_URL = '';
+
+  var PROGRAMS = ['Droit','Économie-Gestion','Informatique','Mathématiques','Physique-Chimie','Sciences de la vie','Psychologie','Sociologie','Histoire','Géographie','Lettres','Langues (LLCER / LEA)','STAPS','Arts','Philosophie'];
+  var LEVELS = { filleul:['L1'], parrain:['L2','L3','M1','M2','Doctorat'] };
+  var INTERESTS = ['Sport','Musique','Jeux vidéo','Cinéma & séries','Lecture','Art & dessin','Voyages','Cuisine','Tech & code','Vie associative','Sorties','Engagement & bénévolat'];
+  var MODES = [{id:'presentiel', label:'Sur le campus'}, {id:'distanciel', label:'À distance'}, {id:'les-deux', label:'Peu importe'}];
+
+  var LOCAL_KEY = 'parrainage-v1';
+  var ADMIN_KEY_STORE = 'parrainage-admin-key';
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  function escapeHtml(s){
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+    });
+  }
+  function norm(s){
+    return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/\s+/g,' ').trim();
+  }
+  function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,8); }
+  function fullName(s){ return ((s.firstName||'') + ' ' + (s.lastName||'')).trim() || 'Sans nom'; }
+
+  /* ---------------- Stockage ---------------- */
+
+  function readLocal(){
+    try {
+      var raw = localStorage.getItem(LOCAL_KEY);
+      var db = raw ? JSON.parse(raw) : null;
+      if (db && db.students && db.pairs) return db;
+    } catch(e){}
+    return { students: [], pairs: [] };
+  }
+  function writeLocal(db){
+    try { localStorage.setItem(LOCAL_KEY, JSON.stringify(db)); return true; } catch(e){ return false; }
+  }
+  function getAdminKey(){ try { return sessionStorage.getItem(ADMIN_KEY_STORE) || ''; } catch(e){ return ''; } }
+  function setAdminKey(k){ try { sessionStorage.setItem(ADMIN_KEY_STORE, k); } catch(e){} }
+
+  function apiPost(payload){
+    return fetch(API_URL, {
+      method:'POST',
+      headers:{ 'Content-Type':'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
+    }).then(function(r){ return r.json(); }).then(function(json){
+      if (!json.ok) throw new Error(json.error || 'Erreur inconnue');
+      return json;
+    });
+  }
+
+  var store = {
+    register: function(student){
+      if (!API_URL){
+        var db = readLocal();
+        var dup = db.students.some(function(s){ return norm(s.email) === norm(student.email) && s.role === student.role; });
+        if (dup) return Promise.reject(new Error('Cette adresse email est déjà inscrite avec ce rôle.'));
+        student.id = uid();
+        student.createdAt = new Date().toISOString();
+        db.students.push(student);
+        if (!writeLocal(db)) return Promise.reject(new Error("le stockage du navigateur est indisponible"));
+        return Promise.resolve();
+      }
+      return apiPost({ action:'register', data: student });
+    },
+    load: function(){
+      if (!API_URL) return Promise.resolve(readLocal());
+      return fetch(API_URL + '?key=' + encodeURIComponent(getAdminKey()))
+        .then(function(r){ return r.json(); })
+        .then(function(json){
+          if (!json.ok) throw new Error(json.error || 'Erreur inconnue');
+          return { students: json.students || [], pairs: json.pairs || [] };
+        });
+    },
+    savePairs: function(pairs){
+      if (!API_URL){
+        var db = readLocal(); db.pairs = pairs;
+        return writeLocal(db) ? Promise.resolve() : Promise.reject(new Error("le stockage du navigateur est indisponible"));
+      }
+      return apiPost({ action:'setPairs', key:getAdminKey(), pairs: pairs });
+    },
+    removeStudent: function(id){
+      if (!API_URL){
+        var db = readLocal();
+        db.students = db.students.filter(function(s){ return s.id !== id; });
+        db.pairs = db.pairs.filter(function(p){ return p.parrainId !== id && p.filleulId !== id; });
+        writeLocal(db);
+        return Promise.resolve();
+      }
+      return apiPost({ action:'delete', key:getAdminKey(), id: id });
+    }
+  };
+
+  /* ---------------- Onglets ---------------- */
+
+  var tabs = { inscription: $('tab-inscription'), binomes: $('tab-binomes') };
+  function showTab(name){
+    Object.keys(tabs).forEach(function(k){
+      tabs[k].setAttribute('aria-selected', String(k === name));
+      $('view-' + k).hidden = k !== name;
+    });
+    if (name === 'binomes') openAdmin();
+    if (location.hash !== '#' + name) history.replaceState(null, '', '#' + name);
+  }
+  tabs.inscription.addEventListener('click', function(){ showTab('inscription'); });
+  tabs.binomes.addEventListener('click', function(){ showTab('binomes'); });
+
+  /* ---------------- Formulaire ---------------- */
+
+  var form = $('signupForm');
+  var levelSelect = $('f-level');
+
+  $('programs').innerHTML = PROGRAMS.map(function(p){ return '<option value="'+escapeHtml(p)+'">'; }).join('');
+  $('interestPicks').innerHTML = INTERESTS.map(function(i){
+    return '<label class="pick"><input type="checkbox" name="interest" value="'+escapeHtml(i)+'"><span>'+escapeHtml(i)+'</span></label>';
+  }).join('');
+  $('modePicks').innerHTML = MODES.map(function(m, idx){
+    return '<label class="pick"><input type="radio" name="mode" value="'+m.id+'"'+(idx===2?' checked':'')+'><span>'+m.label+'</span></label>';
+  }).join('');
+
+  function currentRole(){ return form.querySelector('input[name="role"]:checked').value; }
+  function syncRole(){
+    var role = currentRole();
+    levelSelect.innerHTML = LEVELS[role].map(function(l){ return '<option>'+l+'</option>'; }).join('');
+    levelSelect.disabled = role === 'filleul';
+    $('capacityField').hidden = role !== 'parrain';
+    $('notesLabel').textContent = role === 'parrain' ? 'Ce que je peux apporter' : "Ce que j'attends du parrainage";
+  }
+  Array.prototype.forEach.call(form.querySelectorAll('input[name="role"]'), function(r){ r.addEventListener('change', syncRole); });
+  syncRole();
+
+  function showFormError(msg){
+    var el = $('formError');
+    el.textContent = msg; el.hidden = !msg;
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    showFormError('');
+    var role = currentRole();
+    var data = {
+      role: role,
+      firstName: $('f-first').value.trim(),
+      lastName: $('f-last').value.trim(),
+      email: $('f-email').value.trim(),
+      phone: $('f-phone').value.trim(),
+      program: $('f-program').value.trim(),
+      level: levelSelect.value,
+      capacity: role === 'parrain' ? Number($('f-capacity').value) : 0,
+      interests: Array.prototype.map.call(form.querySelectorAll('input[name="interest"]:checked'), function(i){ return i.value; }),
+      mode: form.querySelector('input[name="mode"]:checked').value,
+      notes: $('f-notes').value.trim()
+    };
+
+    if (!data.firstName || !data.lastName) return showFormError('Indique ton prénom et ton nom.');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) return showFormError('Indique une adresse email valide.');
+    if (!data.program) return showFormError('Indique ta filière ou ton parcours.');
+    if (!data.interests.length) return showFormError("Choisis au moins un centre d'intérêt.");
+    if (!$('f-consent').checked) return showFormError("Coche la case d'accord pour valider l'inscription.");
+
+    var btn = $('submitBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> Envoi…';
+    store.register(data).then(function(){
+      $('formWrap').hidden = true;
+      $('successWrap').hidden = false;
+      $('successMsg').textContent = role === 'parrain'
+        ? 'Merci ' + data.firstName + ' ! Tu recevras par email le nom de ton ou ta filleul·e dès que les binômes seront formés.'
+        : 'Bienvenue ' + data.firstName + ' ! Tu recevras par email le nom de ton parrain ou de ta marraine dès que les binômes seront formés.';
+    }).catch(function(err){
+      showFormError("L'inscription n'a pas pu être enregistrée : " + err.message);
+    }).then(function(){
+      btn.disabled = false;
+      btn.textContent = 'Envoyer mon inscription';
+    });
+  });
+
+  $('againBtn').addEventListener('click', function(){
+    form.reset();
+    syncRole();
+    $('formWrap').hidden = false;
+    $('successWrap').hidden = true;
+    $('f-first').focus();
+  });
+
+  /* ---------------- Appariement ---------------- */
+
+  // Score de compatibilité entre un parrain et un filleul.
+  function compatibility(p, f){
+    var reasons = [];
+    var score = 0;
+    if (norm(p.program) && norm(p.program) === norm(f.program)){
+      score += 10; reasons.push('Même filière');
+    }
+    var common = (p.interests || []).filter(function(i){ return (f.interests || []).indexOf(i) !== -1; });
+    score += common.length * 2;
+    common.forEach(function(i){ reasons.push(i); });
+    if (p.mode === f.mode || p.mode === 'les-deux' || f.mode === 'les-deux'){
+      score += 1;
+    } else {
+      score -= 3; reasons.push('Préférences de rencontre différentes');
+    }
+    return { score: score, reasons: reasons };
+  }
+
+  // Complète les binômes existants : chaque filleul sans binôme reçoit le parrain
+  // le plus compatible encore disponible (tri glouton des paires par score).
+  function autoMatch(students, pairs){
+    var parrains = students.filter(function(s){ return s.role === 'parrain'; });
+    var filleuls = students.filter(function(s){ return s.role === 'filleul'; });
+    var load = {};
+    var matched = {};
+    pairs.forEach(function(p){ load[p.parrainId] = (load[p.parrainId]||0) + 1; matched[p.filleulId] = true; });
+
+    var candidates = [];
+    filleuls.forEach(function(f){
+      if (matched[f.id]) return;
+      parrains.forEach(function(p){
+        var c = compatibility(p, f);
+        candidates.push({ p:p, f:f, score:c.score });
+      });
+    });
+    // À score égal, on privilégie les parrains les moins chargés puis les premiers inscrits.
+    candidates.sort(function(a, b){
+      return (b.score - a.score) || ((load[a.p.id]||0) - (load[b.p.id]||0)) || String(a.f.createdAt).localeCompare(String(b.f.createdAt));
+    });
+
+    var added = [];
+    candidates.forEach(function(c){
+      if (matched[c.f.id]) return;
+      if ((load[c.p.id]||0) >= capacityOf(c.p)) return;
+      load[c.p.id] = (load[c.p.id]||0) + 1;
+      matched[c.f.id] = true;
+      added.push({ id: uid(), parrainId: c.p.id, filleulId: c.f.id, score: c.score, createdAt: new Date().toISOString() });
+    });
+    return added;
+  }
+  function capacityOf(p){ return Math.max(1, Number(p.capacity) || 1); }
+
+  /* ---------------- Espace organisateurs ---------------- */
+
+  var admin = { students: [], pairs: [], loaded: false };
+
+  function openAdmin(){
+    var banner = $('modeBanner');
+    if (!API_URL){
+      banner.hidden = false;
+      banner.innerHTML = '<strong>Mode démo :</strong> les inscriptions sont enregistrées uniquement dans ce navigateur. Pour collecter les réponses de tous les étudiants, branche le script Google Apps Script décrit dans <code>PARRAINAGE.md</code>.';
+    } else {
+      banner.hidden = true;
+    }
+    reloadAdmin();
+  }
+
+  function showLock(show){
+    $('lockPanel').hidden = !show;
+    $('adminPanel').hidden = show;
+  }
+
+  function reloadAdmin(){
+    $('adminError').hidden = true;
+    return store.load().then(function(db){
+      admin.students = (db.students || []).map(function(s){
+        if (typeof s.interests === 'string') s.interests = s.interests ? s.interests.split(/\s*;\s*/) : [];
+        return s;
+      });
+      admin.pairs = db.pairs || [];
+      admin.loaded = true;
+      showLock(false);
+      renderAdmin();
+    }).catch(function(err){
+      if (/code organisateur/i.test(err.message)){
+        showLock(true);
+        return;
+      }
+      showLock(false);
+      $('adminError').hidden = false;
+      $('adminError').textContent = 'Impossible de charger les inscriptions (' + err.message + ').';
+    });
+  }
+
+  $('keyForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    setAdminKey($('keyInput').value);
+    reloadAdmin();
+  });
+
+  function byId(id){
+    for (var i=0;i<admin.students.length;i++){ if (String(admin.students[i].id) === String(id)) return admin.students[i]; }
+    return null;
+  }
+
+  function renderAdmin(){
+    var parrains = admin.students.filter(function(s){ return s.role === 'parrain'; });
+    var filleuls = admin.students.filter(function(s){ return s.role === 'filleul'; });
+    var pairs = admin.pairs.filter(function(p){ return byId(p.parrainId) && byId(p.filleulId); });
+    var load = {}, matched = {};
+    pairs.forEach(function(p){ load[p.parrainId] = (load[p.parrainId]||0)+1; matched[p.filleulId] = true; });
+    var totalCap = parrains.reduce(function(n, p){ return n + capacityOf(p); }, 0);
+    var unmatched = filleuls.filter(function(f){ return !matched[f.id]; });
+
+    $('stats').innerHTML = [
+      [filleuls.length, 'Filleul·es (L1)'],
+      [parrains.length, 'Parrains / marraines'],
+      [totalCap, 'Places de parrainage'],
+      [pairs.length, 'Binômes formés']
+    ].map(function(s){ return '<div class="stat"><div class="v">'+s[0]+'</div><div class="k">'+s[1]+'</div></div>'; }).join('');
+
+    $('autoBtn').disabled = !unmatched.length || !parrains.length;
+    $('resetBtn').disabled = !pairs.length;
+    $('exportBtn').disabled = !pairs.length;
+
+    // Binômes
+    $('pairsCount').textContent = pairs.length ? '· ' + pairs.length : '';
+    $('pairsList').innerHTML = pairs.length ? pairs.map(function(pr){
+      var p = byId(pr.parrainId), f = byId(pr.filleulId);
+      var c = compatibility(p, f);
+      return '<article class="pair">' +
+        '<div class="pair-people">' +
+          personBlock(p, 'parrain') +
+          '<div class="link" aria-hidden="true">↔</div>' +
+          personBlock(f, 'filleul') +
+        '</div>' +
+        (c.reasons.length ? '<div class="why">' + c.reasons.map(function(r){ return '<span>'+escapeHtml(r)+'</span>'; }).join('') + '</div>' : '') +
+        '<div class="pair-foot"><span class="score">Compatibilité : ' + c.score + '</span>' +
+          '<button class="btn ghost small" data-unpair="'+escapeHtml(pr.id)+'" type="button">Dissoudre</button></div>' +
+      '</article>';
+    }).join('') : '<p class="muted">Aucun binôme pour l\'instant. Utilise « Former les binômes automatiquement » ou associe les filleul·es à la main ci-dessous.</p>';
+
+    // Filleuls sans binôme, avec association manuelle
+    var available = parrains.filter(function(p){ return (load[p.id]||0) < capacityOf(p); });
+    $('unmatchedCount').textContent = unmatched.length ? '· ' + unmatched.length : '';
+    if (!filleuls.length){
+      $('unmatchedList').innerHTML = '<p class="muted">Aucun·e filleul·e inscrit·e.</p>';
+    } else if (!unmatched.length){
+      $('unmatchedList').innerHTML = '<p class="muted">Tous les filleul·es ont un binôme.</p>';
+    } else {
+      $('unmatchedList').innerHTML = (available.length ? '' : '<p class="muted">Plus aucune place chez les parrains : il faut recruter d\'autres parrains ou augmenter leur nombre de filleul·es.</p>') +
+        '<div class="table-wrap"><table><thead><tr><th>Filleul·e</th><th>Filière</th><th>Centres d\'intérêt</th><th>Associer à</th></tr></thead><tbody>' +
+        unmatched.map(function(f){
+          var opts = available.map(function(p){ return { p:p, c:compatibility(p, f) }; })
+            .sort(function(a,b){ return b.c.score - a.c.score; })
+            .map(function(o){ return '<option value="'+escapeHtml(o.p.id)+'">'+escapeHtml(fullName(o.p))+' ('+o.c.score+')</option>'; }).join('');
+          return '<tr><td>'+escapeHtml(fullName(f))+'<div class="sub">'+escapeHtml(f.email)+'</div></td>' +
+            '<td>'+escapeHtml(f.program)+'</td>' +
+            '<td class="sub">'+escapeHtml((f.interests||[]).join(', '))+'</td>' +
+            '<td>'+(available.length ? '<select data-assign="'+escapeHtml(f.id)+'" aria-label="Choisir un parrain pour '+escapeHtml(fullName(f))+'"><option value="">Choisir…</option>'+opts+'</select>' : '—')+'</td></tr>';
+        }).join('') + '</tbody></table></div>';
+    }
+
+    // Tous les inscrits
+    $('allCount').textContent = admin.students.length ? '· ' + admin.students.length : '';
+    $('allList').innerHTML = admin.students.length ?
+      '<div class="table-wrap"><table><thead><tr><th>Nom</th><th>Rôle</th><th>Filière</th><th>Contact</th><th></th></tr></thead><tbody>' +
+      admin.students.slice().sort(function(a,b){ return a.role.localeCompare(b.role) || fullName(a).localeCompare(fullName(b)); }).map(function(s){
+        var isP = s.role === 'parrain';
+        var roleTxt = isP ? 'Parrain · ' + escapeHtml(s.level) + ' · ' + (load[s.id]||0) + '/' + capacityOf(s) : 'Filleul·e · L1';
+        return '<tr><td>'+escapeHtml(fullName(s))+(s.notes ? '<div class="sub">'+escapeHtml(s.notes)+'</div>' : '')+'</td>' +
+          '<td><span class="role-dot" style="background:var(--'+(isP?'parrain':'filleul')+')"></span>'+roleTxt+'</td>' +
+          '<td>'+escapeHtml(s.program)+'</td>' +
+          '<td><a href="mailto:'+escapeHtml(s.email)+'">'+escapeHtml(s.email)+'</a>'+(s.phone ? '<div class="sub">'+escapeHtml(s.phone)+'</div>' : '')+'</td>' +
+          '<td><button class="btn danger small" data-remove="'+escapeHtml(s.id)+'" type="button">Retirer</button></td></tr>';
+      }).join('') + '</tbody></table></div>'
+      : '<p class="muted">Aucune inscription pour l\'instant. Partage le formulaire pour recueillir les inscriptions.</p>';
+  }
+
+  function personBlock(s, role){
+    return '<div class="who '+role+'"><div class="tag">'+(role === 'parrain' ? 'Parrain · ' + escapeHtml(s.level) : 'Filleul·e · L1')+'</div>' +
+      '<div class="nm">'+escapeHtml(fullName(s))+'</div>' +
+      '<div class="sub">'+escapeHtml(s.program)+'</div>' +
+      '<div class="sub"><a href="mailto:'+escapeHtml(s.email)+'">'+escapeHtml(s.email)+'</a></div></div>';
+  }
+
+  function commitPairs(pairs){
+    var previous = admin.pairs;
+    admin.pairs = pairs;
+    renderAdmin();
+    return store.savePairs(pairs).catch(function(err){
+      admin.pairs = previous;
+      renderAdmin();
+      $('adminError').hidden = false;
+      $('adminError').textContent = "Les binômes n'ont pas pu être enregistrés (" + err.message + ').';
+    });
+  }
+
+  $('autoBtn').addEventListener('click', function(){
+    var added = autoMatch(admin.students, admin.pairs);
+    if (added.length) commitPairs(admin.pairs.concat(added));
+  });
+
+  $('resetBtn').addEventListener('click', function(){
+    var btn = this;
+    if (!btn.dataset.confirming){
+      btn.dataset.confirming = '1';
+      btn.textContent = 'Confirmer ?';
+      setTimeout(function(){ delete btn.dataset.confirming; btn.textContent = 'Dissoudre tous les binômes'; }, 3000);
+      return;
+    }
+    delete btn.dataset.confirming;
+    btn.textContent = 'Dissoudre tous les binômes';
+    commitPairs([]);
+  });
+
+  $('reloadBtn').addEventListener('click', reloadAdmin);
+
+  $('view-binomes').addEventListener('click', function(e){
+    var un = e.target.closest('[data-unpair]');
+    if (un){
+      var id = un.getAttribute('data-unpair');
+      commitPairs(admin.pairs.filter(function(p){ return String(p.id) !== id; }));
+      return;
+    }
+    var rm = e.target.closest('[data-remove]');
+    if (rm){
+      if (!rm.dataset.confirming){
+        rm.dataset.confirming = '1';
+        rm.textContent = 'Confirmer ?';
+        setTimeout(function(){ if (rm.isConnected){ delete rm.dataset.confirming; rm.textContent = 'Retirer'; } }, 3000);
+        return;
+      }
+      rm.disabled = true;
+      store.removeStudent(rm.getAttribute('data-remove')).then(reloadAdmin).catch(function(err){
+        $('adminError').hidden = false;
+        $('adminError').textContent = 'Suppression impossible (' + err.message + ').';
+        rm.disabled = false;
+      });
+    }
+  });
+
+  $('view-binomes').addEventListener('change', function(e){
+    var sel = e.target.closest('select[data-assign]');
+    if (!sel || !sel.value) return;
+    var p = byId(sel.value), f = byId(sel.getAttribute('data-assign'));
+    commitPairs(admin.pairs.concat([{ id: uid(), parrainId: p.id, filleulId: f.id, score: compatibility(p, f).score, createdAt: new Date().toISOString() }]));
+  });
+
+  $('exportBtn').addEventListener('click', function(){
+    var rows = [['Parrain / marraine','Email parrain','Niveau','Filleul·e','Email filleul','Filière filleul','Points communs','Compatibilité']];
+    admin.pairs.forEach(function(pr){
+      var p = byId(pr.parrainId), f = byId(pr.filleulId);
+      if (!p || !f) return;
+      var c = compatibility(p, f);
+      rows.push([fullName(p), p.email, p.level, fullName(f), f.email, f.program, c.reasons.join(' / '), c.score]);
+    });
+    var csv = rows.map(function(r){
+      return r.map(function(v){ return '"' + String(v == null ? '' : v).replace(/"/g,'""') + '"'; }).join(';');
+    }).join('\r\n');
+    var blob = new Blob(['﻿' + csv], { type:'text/csv;charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'binomes-parrainage.csv';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1000);
+  });
+
+  /* ---------------- Partage ---------------- */
+
+  var shareDialog = $('shareDialog');
+  function formUrl(){ return location.href.split('#')[0] + '#inscription'; }
+  $('shareBtn').addEventListener('click', function(){
+    var url = formUrl();
+    $('shareUrl').value = url;
+    var qr = $('qrCanvas');
+    qr.innerHTML = '';
+    if (window.QRCode){
+      new QRCode(qr, { text:url, width:200, height:200, colorDark:'#20241f', colorLight:'#ffffff', correctLevel: QRCode.CorrectLevel.M });
+    } else {
+      qr.textContent = 'QR indisponible — utilise le lien ci-dessous.';
+    }
+    shareDialog.showModal();
+  });
+  $('closeShareBtn').addEventListener('click', function(){ shareDialog.close(); });
+  $('copyBtn').addEventListener('click', function(){
+    var btn = this;
+    try {
+      navigator.clipboard.writeText(formUrl()).then(function(){
+        btn.textContent = 'Copié !';
+        setTimeout(function(){ btn.textContent = 'Copier'; }, 1500);
+      });
+    } catch(e){ $('shareUrl').select(); }
+  });
+
+  showTab(location.hash === '#binomes' ? 'binomes' : 'inscription');
+})();
+</script>
+</body>
+</html>
