@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>AE-GMPE × FIFEM — affiches simples</title>
+<style>
+@font-face{font-family:IT;src:url(assets/fonts/intertight-normal.woff2) format("woff2");font-weight:100 900}
+:root{--mag:#E5197E;--ink:#1d1830}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:IT,sans-serif;color:var(--ink)}
+.p{display:none;position:relative;overflow:hidden;background:#fff;flex-direction:column;align-items:center;justify-content:center}
+.p.on{display:flex}
+.lock{display:flex;align-items:center;justify-content:center}
+.x{font-weight:300;color:var(--mag);line-height:1}
+.sub{font-weight:700;letter-spacing:.35em;color:#6b6280;text-align:center}
+.bar{background:var(--mag);border-radius:4px}
+.dark{background:#1d1830}
+.dark .x{color:#ff5aa8}.dark .sub{color:#d8d0e8}
+.dark .chip{background:#fff;border-radius:28px;padding:30px 38px;display:flex;align-items:center;justify-content:center}
+</style>
+</head>
+<body>
+<!-- carré -->
+<div class="p" id="s1" style="width:1080px;height:1080px">
+  <div class="lock" style="gap:40px">
+    <img src="assets/fifem_t.png" style="width:400px">
+    <div class="x" style="font-size:150px">×</div>
+    <img src="assets/aegmpe_t.png" style="height:420px">
+  </div>
+  <div class="bar" style="width:80px;height:6px;margin:70px 0 34px"></div>
+  <div class="sub" style="font-size:26px">ASSOCIATION JEUNESSE PARTENAIRE</div>
+</div>
+<!-- portrait 4:5 -->
+<div class="p" id="s2" style="width:1080px;height:1350px">
+  <img src="assets/fifem_t.png" style="width:480px">
+  <div class="x" style="font-size:150px;margin:36px 0 30px">×</div>
+  <img src="assets/aegmpe_t.png" style="height:440px">
+  <div class="bar" style="width:80px;height:6px;margin:60px 0 30px"></div>
+  <div class="sub" style="font-size:24px">ASSOCIATION JEUNESSE PARTENAIRE</div>
+</div>
+<!-- story 9:16 -->
+<div class="p" id="s3" style="width:1080px;height:1920px">
+  <img src="assets/fifem_t.png" style="width:680px">
+  <div class="x" style="font-size:220px;margin:90px 0 80px">×</div>
+  <img src="assets/aegmpe_t.png" style="height:640px">
+  <div class="bar" style="width:90px;height:7px;margin:100px 0 36px"></div>
+  <div class="sub" style="font-size:28px">ASSOCIATION JEUNESSE PARTENAIRE</div>
+</div>
+<!-- carré fond sombre -->
+<div class="p dark" id="s4" style="width:1080px;height:1080px">
+  <div class="lock" style="gap:36px">
+    <div class="chip" style="width:430px;height:430px"><img src="assets/fifem_t.png" style="width:360px"></div>
+    <div class="x" style="font-size:130px">×</div>
+    <div class="chip" style="width:430px;height:430px"><img src="assets/aegmpe_t.png" style="height:370px"></div>
+  </div>
+  <div class="bar" style="width:80px;height:6px;margin:70px 0 34px;background:#ff5aa8"></div>
+  <div class="sub" style="font-size:26px">ASSOCIATION JEUNESSE PARTENAIRE</div>
+</div>
+<script>
+document.getElementById((location.hash||'#s1').slice(1)).classList.add('on');
+window.ready=document.fonts.ready.then(()=>Promise.all([...document.images].map(i=>i.complete?1:new Promise(r=>{i.onload=r;i.onerror=r}))));
+</script>
+</body>
+</html>
