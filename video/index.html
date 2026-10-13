@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>AE-GMPE × FIFEM</title>
+<style>
+@font-face{font-family:M;src:url(assets/fonts/mont900.woff2) format("woff2");font-weight:100 900;}
+:root{--crimson:#C1214B;--orange:#F07A22;--gold:#F2B33D;--navy:#1B2F7A;}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000;font-family:M,sans-serif;color:#fff}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:#120812}
+.abs{position:absolute;left:0;top:0;will-change:transform,opacity}
+
+#shade{position:absolute;inset:0;background:
+  linear-gradient(180deg,rgba(18,6,20,.55) 0%,rgba(40,8,30,.15) 45%,rgba(18,6,20,0) 70%,rgba(10,4,10,.55) 100%)}
+#tint{position:absolute;inset:0;background:linear-gradient(135deg,var(--crimson),var(--orange));mix-blend-mode:soft-light;opacity:.4}
+canvas{position:absolute;left:0;top:0}
+.center{display:flex;align-items:center;justify-content:center;text-align:center}
+.card{background:#fff;border-radius:48px;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+.pill{border-radius:999px;background:linear-gradient(90deg,var(--crimson),var(--orange))}
+.big{font-weight:900;letter-spacing:-2px;line-height:1}
+.track{letter-spacing:10px;font-weight:700}
+.ch{display:inline-block;will-change:transform,opacity}
+.mask{overflow:hidden;padding:0 10px}
+#flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+#vignette{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.6) 100%);pointer-events:none}
+.shine{position:absolute;top:-20%;width:180px;height:140%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent);transform:skewX(-20deg);mix-blend-mode:overlay}
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas id="bgc" width="1080" height="1920"></canvas>
+  <div id="shade"></div>
+  <div id="tint"></div>
+  <canvas id="rays" width="1080" height="1920"></canvas>
+
+  <!-- SCENE 1 : annonce -->
+  <div id="s1" class="abs" style="width:1080px;height:1920px">
+    <div id="s1label" class="abs center pill track" style="left:220px;top:690px;width:640px;height:76px;font-size:28px;white-space:nowrap">ANNONCE OFFICIELLE</div>
+    <div id="s1l1" class="abs center big mask" style="top:810px;width:1080px;height:150px;font-size:132px"></div>
+    <div id="s1l2" class="abs center big mask" style="top:950px;width:1080px;height:150px;font-size:118px"></div>
+    <div id="s1bar" class="abs pill" style="left:240px;top:1135px;width:600px;height:14px"></div>
+    <div id="s1sub" class="abs center" style="top:1185px;width:1080px;font-size:40px;font-weight:600;color:#ffd9b0">FIFEM 2026</div>
+  </div>
+
+  <!-- SCENE 2 : union -->
+  <div id="s2" class="abs" style="width:1080px;height:1920px">
+    <div id="c_fifem" class="abs card center" style="left:140px;top:300px;width:800px;height:520px;flex-direction:column">
+      <img src="assets/fifem.png" style="width:620px">
+    </div>
+    <div id="x_wrap" class="abs" style="left:0;top:880px;width:1080px;height:200px">
+      <div id="x_line1" class="abs pill" style="left:80px;top:94px;width:330px;height:10px"></div>
+      <div id="x_line2" class="abs pill" style="left:670px;top:94px;width:330px;height:10px"></div>
+      <div id="x_ring" class="abs" style="left:440px;top:0;width:200px;height:200px;border-radius:50%;border:6px solid var(--gold)"></div>
+      <div id="x_circ" class="abs center pill big" style="left:450px;top:10px;width:180px;height:180px;font-size:120px;font-weight:800;border-radius:50%">×</div>
+    </div>
+    <div id="c_ae" class="abs card center" style="left:140px;top:1140px;width:800px;height:620px">
+      <img src="assets/aegmpe.png" style="height:560px">
+    </div>
+  </div>
+
+  <!-- SCENE 3 : AE-GMPE -->
+  <div id="s3" class="abs" style="width:1080px;height:1920px">
+    <div id="s3pill" class="abs center pill big" style="left:90px;top:300px;width:900px;height:190px;font-size:62px;line-height:1.08;flex-direction:column;letter-spacing:0">
+      <div>ASSOCIATION JEUNESSE</div><div>PARTENAIRE</div>
+    </div>
+    <div id="s3card" class="abs card center" style="left:170px;top:600px;width:740px;height:780px;overflow:hidden">
+      <img src="assets/aegmpe.png" style="height:720px">
+      <div id="s3shine" class="shine"></div>
+    </div>
+    <div id="s3name" class="abs center track" style="top:1450px;width:1080px;font-size:40px;color:#ffd9b0">AE-GMPE · UTT-LOKO</div>
+    <div id="s3motto" class="abs center" style="top:1530px;width:1080px;height:80px;font-size:50px;font-weight:700;font-style:italic"></div>
+  </div>
+
+  <!-- SCENE 4 : infos -->
+  <div id="s4" class="abs" style="width:1080px;height:1920px">
+    <div id="s4tag" class="abs center track" style="top:390px;width:1080px;font-size:28px;letter-spacing:5px;white-space:nowrap;color:#ffd9b0">FORUM INTERNATIONAL DES FEMMES MINIÈRES</div>
+    <div id="s4date" class="abs center big" style="top:500px;width:1080px;font-size:150px">20 NOV. 2026</div>
+    <div id="s4time" class="abs center big" style="top:680px;width:1080px;font-size:120px"><span style="color:var(--orange);font-size:90px;margin-right:24px">▶</span>13h30</div>
+    <div id="s4place" class="abs center track" style="top:860px;width:1080px;font-size:36px;letter-spacing:8px">PARC DES EXPOSITIONS D'ABIDJAN</div>
+    <div id="s4theme" class="abs" style="left:110px;top:1040px;width:860px;height:290px;border-radius:28px;background:linear-gradient(135deg,#f6c453,#d98e1c);color:#3a1405;padding:44px 48px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.4)">
+      <div style="display:inline-block;background:var(--crimson);color:#fff;font-size:26px;font-weight:700;padding:8px 22px;border-radius:10px;letter-spacing:4px">THÈME</div>
+      <div style="font-size:44px;font-weight:900;line-height:1.12;margin-top:22px">DE L'EXPLORATION AU LINGOT :</div>
+      <div style="font-size:36px;font-weight:700;line-height:1.25;margin-top:12px">quand le cycle de l'or rencontre le regard féminin</div>
+      <div id="s4shine" class="shine"></div>
+    </div>
+    <div id="s4sirexe" class="abs center pill track" style="left:190px;top:1450px;width:700px;height:80px;font-size:30px">EN MARGE DU SIREXE 2026</div>
+  </div>
+
+  <!-- SCENE 5 : outro -->
+  <div id="s5" class="abs" style="width:1080px;height:1920px">
+    <div id="s5card" class="abs card" style="left:70px;top:360px;width:940px;height:520px">
+      <img id="s5f" class="abs" src="assets/fifem.png" style="left:30px;top:120px;width:390px">
+      <div id="s5x" class="abs center big" style="left:440px;top:195px;width:70px;height:120px;font-size:96px;color:var(--orange)">×</div>
+      <img id="s5a" class="abs" src="assets/aegmpe.png" style="left:530px;top:45px;height:430px">
+    </div>
+    <div id="s5t1" class="abs center big" style="top:960px;width:1080px;font-size:66px;line-height:1.15;letter-spacing:-1px;flex-direction:column">
+      <div>ENSEMBLE, BÂTISSONS</div><div style="background:linear-gradient(90deg,#ff7b9c,#ffb050);-webkit-background-clip:text;color:transparent">L'AVENIR MINIER</div><div>AU FÉMININ</div>
+    </div>
+    <div id="s5t2" class="abs center" style="top:1240px;width:1080px;font-size:38px;font-weight:600;color:#ffd9b0">Rendez-vous le 20 novembre 2026 · Abidjan</div>
+    <div id="s5spons" class="abs center" style="left:240px;top:1340px;width:600px;height:96px;background:#fff;border-radius:22px">
+      <img src="assets/sponsors.png" style="width:540px">
+    </div>
+    <div id="s5orga" class="abs center" style="left:180px;top:1490px;width:720px;height:200px;border-radius:24px;overflow:hidden">
+      <img src="assets/orga.png" style="width:720px">
+    </div>
+    <div id="s5tag" class="abs center track" style="top:1745px;width:1080px;font-size:32px;color:var(--gold)">#FIFEM2026 · #AEGMPE</div>
+  </div>
+
+  <canvas id="fx" width="1080" height="1920"></canvas>
+  <div id="vignette"></div>
+  <div id="flash"></div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const p=(t,a,b)=>clamp((t-a)/(b-a));
+const eOut=x=>1-Math.pow(1-x,3);
+const eIn=x=>x*x*x;
+const eIO=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const eBack=x=>{const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+const eElastic=x=>x===0?0:x===1?1:Math.pow(2,-10*x)*Math.sin((x*10-.75)*(2*Math.PI)/3)+1;
+const lerp=(a,b,x)=>a+(b-a)*x;
+function set(el,{x=0,y=0,s=1,r=0,o=1,sx,blur=0}={}){
+  el=typeof el==='string'?$(el):el;
+  el.style.transform=`translate(${x}px,${y}px) rotate(${r}deg) scale(${sx??s},${s})`;
+  el.style.opacity=o;
+  el.style.filter=blur>0.05?`blur(${blur}px)`:'none';
+}
+// scene window: fade in [a,a+d], fade out [b-d2,b]
+const win=(t,a,b,d=.4,d2=.4)=>Math.min(p(t,a,a+d),1-p(t,b-d2,b));
+
+// letter split
+function split(id,text){const el=$(id);el.innerHTML='';return [...text].map(c=>{const s=document.createElement('span');s.className='ch';s.textContent=c===' '?' ':c;el.appendChild(s);return s;});}
+const L1=split('s1l1','NOUVEAU');
+const L2=split('s1l2','PARTENARIAT');
+L2.forEach(s=>{s.style.background='linear-gradient(180deg,#fff 30%,#ffc38a)';s.style.webkitBackgroundClip='text';s.style.color='transparent'});
+const MOTTO='« Lire dans la roche, bâtir l’avenir »';
+
+// deterministic particles
+let seed=7;const rnd=()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646};
+const parts=[...Array(110)].map(()=>({x:rnd()*1080,y:rnd()*1920,v:40+rnd()*110,r:1.5+rnd()*4.5,ph:rnd()*6.28,a:.25+rnd()*.6,w:20+rnd()*50}));
+const fx=$('fx').getContext('2d'), rays=$('rays').getContext('2d');
+
+function drawFx(t){
+  fx.clearRect(0,0,1080,1920);
+  for(const q of parts){
+    let y=(q.y - q.v*t)%1920; if(y<0)y+=1920;
+    const x=q.x+Math.sin(t*1.3+q.ph)*q.w;
+    const tw=.6+.4*Math.sin(t*4+q.ph*3);
+    const g=fx.createRadialGradient(x,y,0,x,y,q.r*4);
+    g.addColorStop(0,`rgba(255,215,140,${q.a*tw})`);g.addColorStop(1,'rgba(255,140,40,0)');
+    fx.fillStyle=g;fx.beginPath();fx.arc(x,y,q.r*4,0,6.283);fx.fill();
+  }
+}
+function drawRays(t,cx,cy,alpha,rot){
+  rays.clearRect(0,0,1080,1920);
+  if(alpha<=0)return;
+  rays.save();rays.translate(cx,cy);rays.rotate(rot);
+  const n=18;
+  for(let i=0;i<n;i++){
+    rays.rotate(Math.PI*2/n);
+    const g=rays.createLinearGradient(0,0,0,-1100);
+    g.addColorStop(0,`rgba(255,190,90,${.35*alpha})`);g.addColorStop(1,'rgba(255,120,60,0)');
+    rays.fillStyle=g;rays.beginPath();rays.moveTo(0,0);rays.lineTo(-70,-1100);rays.lineTo(70,-1100);rays.closePath();rays.fill();
+  }
+  rays.restore();
+  const rg=rays.createRadialGradient(cx,cy,0,cx,cy,520);
+  rg.addColorStop(0,`rgba(255,200,120,${.55*alpha})`);rg.addColorStop(1,'rgba(255,120,60,0)');
+  rays.fillStyle=rg;rays.fillRect(0,0,1080,1920);
+}
+
+const TOTAL=19;
+const bg=$('bgc').getContext('2d');
+// terraced ridge profiles (deterministic)
+function ridge(n,amp,base,sd){let v=[];let s=sd;const r=()=>{s=(s*48271)%2147483647;return s/2147483647};
+  let ph=[r()*6,r()*6,r()*6];for(let i=0;i<=n;i++){const x=i/n;v.push(base-amp*(.5+.25*Math.sin(x*5+ph[0])+.15*Math.sin(x*13+ph[1])+.1*Math.sin(x*29+ph[2])));}return v;}
+const R1=ridge(60,160,1380,11),R2=ridge(60,120,1520,23),R3=ridge(60,90,1680,37);
+function drawRidge(R,off,col,steps){
+  const n=R.length-1;bg.fillStyle=col;bg.beginPath();bg.moveTo(-200,1920);
+  for(let i=0;i<=n;i++){const x=-200+i*(1480/n)+off;let y=R[i];if(steps)y=Math.round(y/steps)*steps;bg.lineTo(x,y);if(steps)bg.lineTo(x+1480/n,y);}
+  bg.lineTo(1480+off,1920);bg.closePath();bg.fill();}
+function drawBg(t){
+  const g=bg.createLinearGradient(0,0,0,1920);
+  g.addColorStop(0,'#14061a');g.addColorStop(.35,'#3b0f2e');g.addColorStop(.6,'#8f2340');g.addColorStop(.72,'#e0643a');g.addColorStop(.78,'#f6a24a');g.addColorStop(1,'#2a0c14');
+  bg.fillStyle=g;bg.fillRect(0,0,1080,1920);
+  // sun
+  const sx=760,sy=1360+lerp(40,-20,eIO(p(t,0,TOTAL)));
+  const sg=bg.createRadialGradient(sx,sy,0,sx,sy,700);
+  sg.addColorStop(0,'rgba(255,236,190,1)');sg.addColorStop(.08,'rgba(255,200,120,.95)');sg.addColorStop(.3,'rgba(255,130,60,.45)');sg.addColorStop(1,'rgba(255,90,60,0)');
+  bg.fillStyle=sg;bg.fillRect(0,0,1080,1920);
+  // haze bands
+  for(let i=0;i<5;i++){bg.fillStyle=`rgba(255,180,140,${.05})`;bg.fillRect(0,1180+i*40+Math.sin(t*.5+i)*8,1080,6);}
+  const dr=t*6;
+  drawRidge(R1,-dr*.5,'rgba(150,50,60,.85)',0);
+  drawRidge(R2,-dr,'rgba(95,30,42,.95)',22);
+  // headframe tower
+  bg.save();bg.translate(880-dr*1.2,1300);bg.strokeStyle='#3a1220';bg.lineWidth=6;
+  bg.beginPath();bg.moveTo(-50,220);bg.lineTo(0,0);bg.lineTo(50,220);bg.moveTo(0,0);bg.lineTo(0,220);
+  for(let k=0;k<5;k++){const y=40+k*40,w=50*y/220;bg.moveTo(-w,y);bg.lineTo(w,y+40>220?220:y+40);bg.moveTo(w,y);bg.lineTo(-w,y);}
+  bg.stroke();bg.beginPath();bg.arc(0,0,18,0,6.283);bg.stroke();bg.restore();
+  drawRidge(R3,-dr*1.8,'#2a0c16',16);
+  // terrace highlight lines
+  bg.strokeStyle='rgba(255,170,110,.18)';bg.lineWidth=3;
+  for(let k=0;k<6;k++){const y=1610+k*48;bg.beginPath();bg.moveTo(0,y);for(let x=0;x<=1080;x+=40)bg.lineTo(x,y+Math.sin((x+dr*3)/160+k)*14);bg.stroke();}
+  // haul truck
+  const tx=((t*55)%1500)-200,ty=1772;bg.fillStyle='#1a060c';bg.fillRect(tx,ty-34,90,30);bg.fillRect(tx+70,ty-56,30,24);bg.beginPath();bg.arc(tx+20,ty,13,0,6.283);bg.arc(tx+78,ty,13,0,6.283);bg.fill();
+}
+window.render=function(t){
+  // background slow push + drift
+  drawBg(t);
+  $('tint').style.opacity=.3+.15*Math.sin(t*.6);
+  drawFx(t);
+
+  // flashes at transitions
+  const fl=[3.0,7.5,11.5,15.0].reduce((m,c)=>Math.max(m,1-Math.abs(t-c)/.18),0);
+  $('flash').style.opacity=clamp(fl)*.55;
+
+  // ---------- SCENE 1 (0 - 3.0)
+  const a1=win(t,0,3.0,.01,.35);
+  $('s1').style.opacity=a1;
+  if(a1>0){
+    const lp=p(t,.25,.75);
+    set('s1label',{o:eOut(lp),sx:lerp(.3,1,eBack(lp)),s:1});
+    $('s1label').style.letterSpacing=lerp(24,10,eOut(lp))+'px';
+    L1.forEach((s,i)=>{const k=p(t,.5+i*.045,.95+i*.045);set(s,{y:lerp(160,0,eOut(k)),o:k>0?1:0,r:lerp(12,0,eOut(k))});});
+    L2.forEach((s,i)=>{const k=p(t,.8+i*.04,1.25+i*.04);set(s,{y:lerp(160,0,eOut(k)),o:k>0?1:0,r:lerp(12,0,eOut(k))});});
+    const bp=eIO(p(t,1.4,2.0));set('s1bar',{sx:bp,o:bp>0?1:0});
+    set('s1sub',{o:eOut(p(t,1.8,2.3)),y:lerp(30,0,eOut(p(t,1.8,2.3)))});
+    const ex=eIn(p(t,2.65,3.0));
+    $('s1').style.transform=`scale(${1+ex*.35})`;
+  }
+
+  // ---------- SCENE 2 (3.0 - 7.5)
+  const a2=win(t,2.95,7.5,.05,.35);
+  $('s2').style.opacity=a2;
+  if(a2>0){
+    const f=p(t,3.0,3.7), a=p(t,3.25,3.95);
+    const ex=eIn(p(t,7.0,7.5));
+    set('c_fifem',{x:lerp(-1100,0,eBack(f))+ex*-200,y:ex*-120,r:lerp(-8,0,eOut(f)),o:f>0?1:0,s:1+.015*Math.sin(t*2)});
+    set('c_ae',{x:lerp(1100,0,eBack(a))+ex*200,y:ex*120,r:lerp(8,0,eOut(a)),o:a>0?1:0,s:1+.015*Math.sin(t*2+1.5)});
+    const xc=p(t,3.9,4.5);
+    set('x_circ',{s:eElastic(xc)*(1-ex),r:lerp(-180,0,eOut(xc)),o:xc>0?1:0});
+    const rp=p(t,4.05,4.9);set('x_ring',{s:lerp(.8,2.2,eOut(rp)),o:(1-rp)*(rp>0?1:0)});
+    const ln=eOut(p(t,4.1,4.7));
+    set('x_line1',{sx:ln*(1-ex),o:1});$('x_line1').style.transformOrigin='right center';
+    set('x_line2',{sx:ln*(1-ex),o:1});$('x_line2').style.transformOrigin='left center';
+    drawRays(t,540,980,eOut(p(t,3.9,4.6))*(1-ex)*.8,t*.15);
+  }
+
+  // ---------- SCENE 3 (7.5 - 11.5)
+  const a3=win(t,7.45,11.5,.05,.4);
+  $('s3').style.opacity=a3;
+  if(a3>0){
+    const pp=eIO(p(t,7.55,8.15));
+    $('s3pill').style.clipPath=`inset(0 ${50-50*pp}% 0 ${50-50*pp}% round 999px)`;
+    set('s3pill',{y:lerp(-40,0,pp)});
+    const cp=p(t,7.7,8.5);
+    set('s3card',{s:lerp(.4,1,eBack(cp))*(1+.012*Math.sin(t*2.2)),o:clamp(cp*3),r:lerp(-10,0,eOut(cp))});
+    $('s3card').style.borderRadius=lerp(400,48,eOut(cp))+'px';
+    const sh=p(t,8.6,9.4);$('s3shine').style.left=lerp(-300,1000,eIO(sh))+'px';
+    set('s3name',{o:eOut(p(t,8.6,9.0)),y:lerp(30,0,eOut(p(t,8.6,9.0)))});
+    const n=Math.round(MOTTO.length*p(t,9.0,10.3));
+    $('s3motto').textContent=MOTTO.slice(0,n)+((n<MOTTO.length&&Math.floor(t*6)%2===0&&t>9)?'|':'');
+    const ex=eIn(p(t,11.0,11.5));
+    $('s3').style.transform=`translateY(${-ex*120}px)`;
+    if(t>=7.45&&t<11.5) drawRays(t,540,990,eOut(p(t,7.7,8.6))*(1-ex),-t*.12);
+  }
+  if(t<3.9||(t>=11.5)) { if(!(t>=3.0&&t<7.5)) drawRays(t,0,0,0,0); }
+
+  // ---------- SCENE 4 (11.5 - 15.0)
+  const a4=win(t,11.45,15.0,.05,.4);
+  $('s4').style.opacity=a4;
+  if(a4>0){
+    const tg=p(t,11.55,12.0);set('s4tag',{o:eOut(tg),y:lerp(-30,0,eOut(tg))});
+    const d=p(t,11.65,12.05);set('s4date',{s:lerp(2.2,1,eOut(d)),o:clamp(d*2),blur:lerp(20,0,eOut(d))});
+    const tm=p(t,12.0,12.45);set('s4time',{x:lerp(-700,0,eBack(tm)),o:tm>0?1:0});
+    const pl=p(t,12.3,12.8);set('s4place',{o:eOut(pl)});$('s4place').style.letterSpacing=lerp(30,8,eOut(pl))+'px';
+    const th=p(t,12.7,13.3);set('s4theme',{y:lerp(500,0,eBack(th)),o:th>0?1:0,r:lerp(6,0,eOut(th))});
+    $('s4shine').style.left=lerp(-300,1100,eIO(p(t,13.4,14.1)))+'px';
+    const sx=p(t,13.2,13.7);set('s4sirexe',{s:eBack(sx),o:sx>0?1:0});
+    const ex=eIn(p(t,14.6,15.0));$('s4').style.transform=`scale(${1-ex*.15})`;
+  }
+
+  // ---------- SCENE 5 (15.0 - 19)
+  const a5=win(t,14.95,19.0,.05,.6);
+  $('s5').style.opacity=a5;
+  if(a5>0){
+    const c=p(t,15.05,15.65);set('s5card',{s:lerp(.7,1,eBack(c)),o:clamp(c*3)});
+    const f=p(t,15.4,15.9),a=p(t,15.55,16.05);
+    set('s5f',{x:lerp(-120,0,eOut(f)),o:f});set('s5a',{x:lerp(120,0,eOut(a)),o:a});
+    set('s5x',{s:eElastic(p(t,15.8,16.5)),o:p(t,15.8,15.9)});
+    const t1=p(t,16.0,16.6);set('s5t1',{y:lerp(60,0,eOut(t1)),o:eOut(t1)});
+    const t2=p(t,16.4,16.9);set('s5t2',{o:eOut(t2)});
+    const sp=p(t,16.7,17.2);set('s5spons',{y:lerp(80,0,eOut(sp)),o:eOut(sp)});
+    const og=p(t,16.9,17.4);set('s5orga',{y:lerp(80,0,eOut(og)),o:eOut(og)});
+    set('s5tag',{o:eOut(p(t,17.3,17.8))});
+  }
+  // global fade out
+  $('stage').style.filter=`brightness(${1-eIn(p(t,18.4,19.0))})`;
+};
+window.ready=document.fonts.ready.then(()=>Promise.all([...document.images].map(i=>i.complete?1:new Promise(r=>i.onload=r))));
+render(0);
+</script>
+</body>
+</html>
