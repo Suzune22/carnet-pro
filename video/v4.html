@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>AE-GMPE × FIFEM — suspense</title>
+<style>
+@font-face{font-family:Anton;src:url(assets/fonts/Anton.woff2) format("woff2")}
+@font-face{font-family:Oswald;src:url(assets/fonts/Oswald.woff2) format("woff2");font-weight:200 700}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:1080px;overflow:hidden;background:#000}
+#stage{position:relative;width:1920px;height:1080px;overflow:hidden;background:#000}
+#world{position:absolute;inset:0;transform-origin:50% 45%}
+.a{position:absolute;left:0;top:0}
+.c{display:flex;align-items:center;justify-content:center;text-align:center}
+.anton{font-family:Anton,Impact,sans-serif;text-transform:uppercase}
+.osw{font-family:Oswald,sans-serif;text-transform:uppercase}
+.gold{background:linear-gradient(180deg,#fff7df 0%,#ffd27a 30%,#b8761c 49%,#5e3508 52%,#e5a843 72%,#fff3cf 100%);-webkit-background-clip:text;color:transparent}
+canvas{position:absolute;left:0;top:0}
+#lit{position:absolute;inset:0}
+.ch{display:inline-block}
+#flash{position:absolute;inset:0;pointer-events:none;opacity:0;background:#fff4dc}
+#vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 45%,rgba(0,0,0,.8) 100%)}
+#grain{opacity:.07;mix-blend-mode:screen;width:1920px;height:1080px}
+</style>
+</head>
+<body>
+<div id="stage">
+ <div id="world">
+  <!-- Lit area (rock + logo fragments), revealed by a moving light mask -->
+  <div id="lit">
+    <img class="a" id="rock" src="assets/rock.jpg" style="width:1920px;height:1080px">
+    <img class="a" id="fragA" src="assets/aegmpe_t.png" style="left:980px;top:-120px;height:1300px;opacity:0">
+    <img class="a" id="fragF" src="assets/fifem_t.png" style="left:-160px;top:160px;width:1150px;opacity:0">
+  </div>
+  <canvas id="glow" width="1920" height="1080"></canvas>
+
+  <!-- Act 1/2 texts -->
+  <div id="txt1" class="a c osw" style="top:820px;width:1920px;font-size:52px;font-weight:500;letter-spacing:16px;color:#f5e6c8;text-shadow:0 0 24px rgba(255,190,90,.6)"></div>
+  <div id="txt2" class="a c osw" style="top:820px;width:1920px;font-size:64px;font-weight:600;letter-spacing:18px;color:#ffe1a6;text-shadow:0 0 30px rgba(255,170,60,.7)"></div>
+  <div id="word" class="a c anton gold" style="top:300px;width:1920px;height:480px;font-size:300px;letter-spacing:6px;filter:drop-shadow(0 0 30px rgba(255,170,60,.55))"></div>
+
+  <!-- Act 3 countdown -->
+  <div id="count" class="a c anton gold" style="width:1920px;height:1080px;font-size:560px;font-style:italic;filter:drop-shadow(0 10px 40px rgba(255,160,40,.6))"></div>
+
+  <!-- Act 4/5 reveal -->
+  <div id="reveal" class="a" style="width:1920px;height:1080px">
+    <div class="a" id="rbg" style="width:1920px;height:1080px;background:radial-gradient(ellipse 62% 70% at 50% 40%,#fff3dc 0%,#f6d9a8 22%,#b9672a 46%,#3a1208 70%,#060203 100%)"></div>
+    <canvas id="rays" width="1920" height="1080"></canvas>
+    <img class="a" id="smoke" src="assets/smoke0.png" style="left:300px;top:560px;width:1300px;height:700px;mix-blend-mode:screen;opacity:.55">
+    <div class="a" id="logos" style="width:1920px;height:1080px">
+      <img class="a" id="lf" src="assets/fifem_t.png" style="left:290px;top:250px;width:560px">
+      <div class="a c anton" id="lx" style="left:900px;top:300px;width:120px;height:260px;font-size:200px;color:#c1214b;text-shadow:0 0 30px rgba(255,255,255,.9)">×</div>
+      <img class="a" id="la" src="assets/aegmpe_t.png" style="left:1080px;top:150px;height:520px">
+      <div class="a" id="shine" style="left:0;top:100px;width:220px;height:620px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.75),transparent);transform:skewX(-20deg);mix-blend-mode:overlay"></div>
+    </div>
+    <!-- texts block A (11–16 s) -->
+    <div id="blockA" class="a" style="width:1920px;height:1080px">
+      <div class="a c anton" id="tTitle" style="top:705px;width:1920px;font-size:120px;color:#fff;letter-spacing:4px;text-shadow:0 6px 30px rgba(0,0,0,.6)">AE-GMPE <span style="margin:0 26px;color:#ffc861">×</span> FIFEM</div>
+      <div class="a c anton gold" id="tOff" style="top:850px;width:1920px;font-size:76px;letter-spacing:6px;filter:drop-shadow(0 4px 16px rgba(0,0,0,.6))">C'EST OFFICIEL !</div>
+      <div class="a c osw" id="tAss" style="top:955px;width:1920px;font-size:38px;font-weight:500;letter-spacing:14px;color:#f8ead2">ASSOCIATION JEUNESSE PARTENAIRE</div>
+    </div>
+    <!-- texts block B (16–20 s) -->
+    <div id="blockB" class="a" style="width:1920px;height:1080px">
+      <div class="a c osw" id="b1" style="top:640px;width:1920px;font-size:40px;font-weight:700;letter-spacing:18px;color:#ffc861;text-shadow:0 2px 12px rgba(0,0,0,.6)">FIFEM 2026</div>
+      <div class="a c anton" id="b2" style="top:695px;width:1920px;font-size:96px;color:#fff;letter-spacing:3px;text-shadow:0 6px 30px rgba(0,0,0,.6)">VENDREDI 20 NOVEMBRE 2026 · 13H30</div>
+      <div class="a c osw" id="b3" style="top:822px;width:1920px;font-size:44px;font-weight:400;letter-spacing:10px;color:#f8ead2">PARC DES EXPOSITIONS D'ABIDJAN</div>
+      <div class="a c osw" id="b4" style="top:888px;width:1920px;font-size:34px;font-weight:300;font-style:italic;text-transform:none;letter-spacing:2px;color:#ffd99a">« Lire dans la roche, bâtir l'avenir »</div>
+      <div class="a c" id="b5" style="top:955px;width:1920px;gap:24px">
+        <div style="background:#fff;border-radius:12px;padding:7px 14px;display:flex"><img src="assets/sponsors.png" style="height:40px"></div>
+        <div style="border-radius:12px;overflow:hidden;display:flex"><img src="assets/orga.png" style="height:80px"></div>
+      </div>
+    </div>
+  </div>
+ </div>
+ <canvas id="fx" width="1920" height="1080"></canvas>
+ <div id="vig"></div>
+ <canvas id="grain" width="960" height="540"></canvas>
+ <div id="flash"></div>
+ <div id="black" style="position:absolute;inset:0;background:#000;opacity:0;pointer-events:none"></div>
+ <div id="endtag" class="a c osw" style="width:1920px;height:1080px;font-size:46px;font-weight:500;letter-spacing:12px;color:#ffd99a;opacity:0;text-shadow:0 0 20px rgba(255,180,80,.5)">#FIFEM2026 · #AEGMPE</div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const p=(t,a,b)=>clamp((t-a)/(b-a));
+const eOut=x=>1-Math.pow(1-x,3), eOut5=x=>1-Math.pow(1-x,5), eIn=x=>x*x*x;
+const eIO=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const eBack=x=>{const c1=1.7,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+const lerp=(a,b,x)=>a+(b-a)*x;
+function set(el,{x=0,y=0,s=1,r=0,op=1,blur=0,sx,sy}={}){el=typeof el==='string'?$(el):el;
+  el.style.transform=`translate(${x}px,${y}px) rotate(${r}deg) scale(${sx??s},${sy??s})`;el.style.opacity=op;
+  if(el.dataset.base===undefined)el.dataset.base=el.style.filter||'';
+  el.style.filter=(el.dataset.base+(blur>.1?` blur(${blur}px)`:'')).trim();}
+function R(seed){let s=Math.abs(Math.floor(seed))%2147483647||1;return()=>{s=(s*16807)%2147483647;return (s-1)/2147483646}}
+// letters
+function split(id,text){const el=$(id);el.innerHTML='';return [...text].map(c=>{const s=document.createElement('span');s.className='ch';s.textContent=c===' '?' ':c;el.appendChild(s);return s})}
+const T1=split('txt1','DANS LES PROFONDEURS DE LA ROCHE…');
+const T2=split('txt2','… UNE ALLIANCE NAÎT');
+function flickerIn(spans,t,t0,dur,seed){const r=R(seed);spans.forEach((s,i)=>{const st=t0+r()*dur;let o=t<st?0:1;
+  if(t>=st&&t<st+.22){o=[.2,1,0,.7,1,.3,1][Math.floor((t-st)*30)%7]}s.style.opacity=o;});}
+// grain
+const gctx=$('grain').getContext('2d');const rg=R(5);
+const tiles=[...Array(6)].map(()=>{const im=gctx.createImageData(960,540);for(let i=0;i<im.data.length;i+=4){const v=rg()*255;im.data[i]=im.data[i+1]=im.data[i+2]=v;im.data[i+3]=255}return im});
+const fx=$('fx').getContext('2d'), glow=$('glow').getContext('2d'), rays=$('rays').getContext('2d');
+// dust
+const rd=R(42);const dust=[...Array(140)].map(()=>({x:rd()*1920,y:rd()*1080,vx:(rd()-.5)*14,vy:-4-rd()*14,r:.8+rd()*2.6,ph:rd()*6.3}));
+function drawDust(t,amt,lx,ly,lr){
+  if(amt<=0)return;fx.save();fx.globalCompositeOperation='lighter';
+  for(const d of dust){const x=((d.x+d.vx*t)%1920+1920)%1920, y=((d.y+d.vy*t)%1080+1080)%1080;
+    let a=amt*(.35+.65*Math.abs(Math.sin(t*1.7+d.ph)));
+    if(lr!==undefined){const dd=Math.hypot(x-lx,y-ly);a*=clamp(1.15-dd/lr)}
+    if(a<=.01)continue;fx.fillStyle=`rgba(255,215,150,${a})`;fx.beginPath();fx.arc(x,y,d.r,0,6.283);fx.fill();}
+  fx.restore();
+}
+function sparks(t,amt,cx,cy){
+  if(amt<=0)return;const r=R(Math.floor(t*30)*91+7);fx.save();fx.globalCompositeOperation='lighter';
+  for(let i=0;i<26;i++){const a=r()*6.283,d=40+r()*260,l=10+r()*40;const x=cx+Math.cos(a)*d,y=cy+Math.sin(a)*d;
+    fx.strokeStyle=`rgba(255,${180+r()*60|0},90,${amt*(.4+r()*.6)})`;fx.lineWidth=1.5+r()*2;fx.beginPath();fx.moveTo(x,y);fx.lineTo(x+Math.cos(a)*l,y+Math.sin(a)*l);fx.stroke();}
+  fx.restore();
+}
+function drawRays(t,a){
+  rays.clearRect(0,0,1920,1080);if(a<=0)return;rays.save();rays.translate(960,420);rays.globalCompositeOperation='lighter';
+  for(let i=0;i<16;i++){rays.rotate(6.283/16);const g=rays.createLinearGradient(0,0,0,-1300);
+    g.addColorStop(0,`rgba(255,225,170,${.3*a})`);g.addColorStop(1,'rgba(255,140,60,0)');rays.fillStyle=g;
+    const w=50+30*Math.sin(t*1.3+i*1.7);rays.beginPath();rays.moveTo(0,0);rays.lineTo(-w,-1300);rays.lineTo(w,-1300);rays.fill();}
+  rays.restore();
+}
+// light state → mask + glow
+function light(x,y,r,intensity){
+  const m=`radial-gradient(circle ${r}px at ${x}px ${y}px, rgba(0,0,0,${intensity}) 0%, rgba(0,0,0,${intensity*.55}) 45%, rgba(0,0,0,0) 100%)`;
+  $('lit').style.webkitMaskImage=m;$('lit').style.maskImage=m;
+  glow.clearRect(0,0,1920,1080);if(intensity<=0)return;
+  glow.save();glow.globalCompositeOperation='lighter';
+  const g=glow.createRadialGradient(x,y,0,x,y,r*.9);g.addColorStop(0,`rgba(255,200,120,${.28*intensity})`);g.addColorStop(.4,`rgba(255,150,60,${.12*intensity})`);g.addColorStop(1,'rgba(0,0,0,0)');
+  glow.fillStyle=g;glow.fillRect(0,0,1920,1080);
+  const core=glow.createRadialGradient(x,y,0,x,y,40);core.addColorStop(0,`rgba(255,245,220,${.5*intensity})`);core.addColorStop(1,'rgba(255,200,120,0)');
+  glow.fillStyle=core;glow.fillRect(x-60,y-60,120,120);glow.restore();
+}
+
+window.render=function(t){
+  fx.clearRect(0,0,1920,1080);gctx.putImageData(tiles[Math.floor(t*24)%6],0,0);
+  let flash=0, black=0, zoom=1, shake=0;
+  const actDark=t<11;
+  $('lit').style.display=actDark?'block':'none';$('glow').style.display=actDark?'block':'none';
+  $('reveal').style.display=t>=10.95?'block':'none';
+  ['txt1','txt2','word','count'].forEach(id=>$(id).style.display='none');
+
+  if(actDark){
+    // ---------- light path
+    let lx=960,ly=500,lr=0,li=0;
+    // Act 1: tiny glow grows from centre (1.5 → 4)
+    if(t<4){const k=p(t,1.4,4.0);lr=lerp(10,520,eIO(k));li=lerp(0,.85,eOut(k));lx=960+Math.sin(t*.9)*20;ly=470+Math.cos(t*.7)*12;}
+    // Act 2: beam sweeps over logo fragments (4 → 6)
+    else if(t<6){const k=eIO(p(t,4,6));
+      lx=lerp(1500,420,k)+Math.sin(t*3)*30; ly=lerp(380,560,k)+Math.sin(k*Math.PI)*-120; lr=480; li=.95;}
+    // 6 → 8 flicker, light jumps between fragments
+    else if(t<8){const seq=[[1450,420],[500,520],[1250,650],[760,380]];const i=Math.floor((t-6)/.5)%4;
+      lx=seq[i][0];ly=seq[i][1];lr=430;li=.95;}
+    // Act 3: countdown — light grows each number
+    else {const n=t<9?0:t<10?1:2;lx=960;ly=520;lr=lerp(500,1100,(n+p(t,8+n,8.4+n))/3);li=lerp(.55,.9,n/2)*(1-.4*p(t,8+n+.25,9+n));}
+    // global light flicker in act 2
+    if(t>6&&t<8){const r=R(Math.floor(t*30));if(r()<.28)li*=.15;if(Math.abs(((t-6)%.4)-.0)<.05)li*=.2;}
+    if(t>=10.72) li=0, black=1;
+    light(lx,ly,lr,li);
+    $('rock').style.opacity=t<8?1:.7;
+    const fo=(t>=4&&t<8)?1:0;
+    set('fragA',{s:1+.05*p(t,4,8),x:-40*p(t,4,8),op:fo});set('fragF',{s:1+.05*p(t,4,8),x:30*p(t,4,8),op:fo});
+    drawDust(t,t<1.4?p(t,0,1.4)*.5:.9,lx,ly,lr*1.6+(t<1.4?2000:0));
+    if(t>6&&t<8)sparks(t,.8,lx,ly);
+    zoom=1+.04*p(t,0,10.7);
+
+    // ---------- texts
+    if(t>=1.9&&t<4.2){$('txt1').style.display='flex';flickerIn(T1,t,1.9,1.1,11);set('txt1',{op:1-p(t,3.85,4.15),s:1+.03*p(t,1.9,4.2)});}
+    if(t>=4.3&&t<6.05){$('txt2').style.display='flex';flickerIn(T2,t,4.3,.9,23);set('txt2',{op:1-p(t,5.8,6.05),s:1+.03*p(t,4.3,6)});}
+    const words=[['JEUNESSE',6.1],['MINES',6.5],['GÉOLOGIE',6.9],['AVENIR',7.3]];
+    for(const [w,st] of words){ if(t>=st&&t<st+.36){$('word').style.display='flex';$('word').textContent=w;
+      const k=p(t,st,st+.36);set('word',{s:lerp(1.18,1,eOut5(k)),op:k<.75?1:1-p(k,.75,1),blur:lerp(8,0,eOut(p(k,0,.3)))});
+      shake=8*(1-k);} }
+    if(t>=7.66&&t<8) black=Math.max(black,p(t,7.66,7.8));
+    // countdown
+    if(t>=8&&t<10.72){const n=3-Math.floor(t-8);const k=t-8-(3-n);$('count').style.display='flex';$('count').textContent=n;
+      set('count',{s:lerp(1.45,1,eOut5(p(k,0,.18)))-.04*k,op:(k<.03?p(k,0,.03):1)*(1-p(k,.78,.98)),blur:lerp(14,0,eOut(p(k,0,.15)))});
+      flash=Math.max(flash,.35*(1-p(k,0,.18)));shake=Math.max(shake,16*(1-p(k,0,.25)));}
+  }
+  // ---------- reveal 11–20
+  if(t>=10.95){
+    const k=p(t,11,11.4);
+    flash=Math.max(flash,t<11.5?1-p(t,11,11.5):0);
+    drawRays(t,eOut(p(t,11,12))*(1-p(t,19.0,19.8)));
+    set('rbg',{s:1.05+.05*Math.sin(t*.5),op:eOut(p(t,11,11.3))});
+    set('smoke',{x:Math.sin(t*.4)*80-(t-11)*8,y:-(t-11)*6,op:.5});
+    // logos converge
+    const c=eOut5(p(t,11.05,12.2));
+    const down=eIO(p(t,15.8,16.5));
+    set('lf',{x:lerp(-700,0,c),op:clamp(c*2),s:lerp(1,.82,down)});
+    set('la',{x:lerp(700,0,c),op:clamp(c*2),s:lerp(1,.82,down)});
+    set('lx',{s:eBack(p(t,12.0,12.5))*lerp(1,.82,down),op:p(t,12,12.1)});
+    set('logos',{y:lerp(0,-40,down)});
+    $('shine').style.left=lerp(-300,2100,eIO(p(t,13.2,14.4)))+'px';
+    // block A
+    const a1=p(t,11.9,12.5);set('tTitle',{y:lerp(40,0,eOut5(a1)),op:a1*(1-p(t,15.7,16.0)),blur:lerp(10,0,eOut(a1))});
+    const a2=p(t,13.0,13.35);set('tOff',{s:lerp(1.8,1,eOut5(a2)),op:a2*(1-p(t,15.7,16.0))});
+    if(t>=13&&t<13.3)shake=Math.max(shake,10*(1-p(t,13,13.3)));
+    const a3=p(t,13.5,14.0);set('tAss',{op:a3*(1-p(t,15.7,16.0))});$('tAss').style.letterSpacing=lerp(30,14,eOut(a3))+'px';
+    // block B
+    [['b1',16.0],['b2',16.2],['b3',16.5],['b4',16.8],['b5',17.1]].forEach(([id,st])=>{const q=p(t,st,st+.45);set(id,{y:lerp(30,0,eOut5(q)),op:q,blur:lerp(8,0,eOut(q))});});
+    drawDust(t,.9);
+    zoom=1+.035*p(t,11,19);
+    for(const b of [12,13,14,15,16,17,18]) if(t>=b) zoom+= .012*Math.exp(-(t-b)*8);
+    // fade to black + end tag
+    black=Math.max(black,eIO(p(t,18.9,19.5)));
+    $('endtag').style.opacity=p(t,19.0,19.3)*(1-p(t,19.7,20));
+  }
+  const rs=R(Math.floor(t*30)*7+3);
+  $('world').style.transform=`translate(${(rs()-.5)*shake}px,${(rs()-.5)*shake}px) scale(${zoom})`;
+  $('flash').style.opacity=clamp(flash);$('black').style.opacity=clamp(black);
+};
+window.ready=document.fonts.ready.then(()=>Promise.all([...document.images].map(i=>i.complete?1:new Promise(r=>{i.onload=r;i.onerror=r}))));
+render(0);
+</script>
+</body>
+</html>
