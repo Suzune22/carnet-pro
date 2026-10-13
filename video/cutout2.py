@@ -24,6 +24,12 @@ def cut(box,out,keep_poly=None,scale=3,extra=None):
         if (comp&keep).sum()>comp.sum()*.5: continue
         bg|=comp
     bg&=~keep
+    # absorbe le liseré clair (rose/blanc) collé au fond
+    light=(mn>192)&(mx-mn<55)&~keep
+    for _ in range(4*scale):
+        nb=bg|(light&nd.binary_dilation(bg))
+        if (nb==bg).all(): break
+        bg=nb
     fg=~bg
     fg=nd.binary_opening(fg,iterations=1)
     bgm=~fg
@@ -46,5 +52,5 @@ def fifem_line(img,box,scale):     # filet gris vertical du logo FIFEM
     d=ImageDraw.Draw(img); x=(136-box[0])*scale
     d.line([(x,(332-box[1])*scale),(x,(548-box[1])*scale)],fill=(190,190,190,255),width=max(2,scale))
 cut((612,262,968,636),'assets/aegmpe_t.png',
-    keep_poly=[(694,350),(787,345),(882,350),(886,440),(870,482),(830,516),(787,536),(744,516),(704,482),(690,440)])
+    keep_poly=[(712,337),(863,337),(890,362),(890,440),(872,482),(832,517),(787,538),(742,517),(702,482),(686,440),(686,362)])
 cut((55,315,418,572),'assets/fifem_t.png',extra=fifem_line)
