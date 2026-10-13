@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Affiches AE-GMPE × FIFEM</title>
+<style>
+@font-face{font-family:IT;src:url(assets/fonts/intertight-normal.woff2) format("woff2");font-weight:100 900;font-style:normal}
+@font-face{font-family:IT;src:url(assets/fonts/intertight-italic.woff2) format("woff2");font-weight:100 900;font-style:italic}
+:root{--mag:#E5197E;--pur:#8B5CF6;--ink:#1d1830;--crim:#C1214B;--org:#F07A22}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:IT,sans-serif;color:var(--ink);background:#888}
+.poster{position:relative;overflow:hidden;display:none}
+.poster.on{display:block}
+.a{position:absolute}
+.c{display:flex;align-items:center;justify-content:center;text-align:center}
+.big{font-weight:900;letter-spacing:-.045em;line-height:.88}
+.halftone{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(120,40,140,.35) 1.4px,transparent 1.7px);background-size:10px 10px;-webkit-mask-image:radial-gradient(ellipse at center,transparent 50%,#000 100%);opacity:.45}
+.grain{position:absolute;inset:0;pointer-events:none;opacity:.06;mix-blend-mode:multiply;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>")}
+.card{background:#fff;border-radius:40px;box-shadow:0 40px 80px rgba(80,30,110,.25),0 6px 0 rgba(255,255,255,.9) inset}
+.notif{width:600px;height:138px;border-radius:32px;background:linear-gradient(135deg,rgba(255,238,247,.97),rgba(250,207,231,.95));box-shadow:inset 0 2px 0 rgba(255,255,255,.9),0 18px 40px rgba(140,40,120,.25);display:flex;align-items:center;padding:0 26px;gap:20px;position:relative}
+.notif .av{width:84px;height:84px;border-radius:22px;background:#fff;display:flex;align-items:center;justify-content:center;flex:none;box-shadow:0 3px 10px rgba(0,0,0,.12)}
+.notif .av img{max-width:70px;max-height:70px}
+.notif b{display:block;font-size:29px;font-weight:800;color:#3b1530;line-height:1.1}
+.notif span{display:block;font-size:24px;font-weight:500;color:#7b4e6c;margin-top:4px}
+.notif i{position:absolute;right:26px;top:18px;font-style:normal;font-size:18px;color:#a9809a;font-weight:600}
+.btn3d{border-radius:70px;background:linear-gradient(180deg,#f7d6f2 0%,#e4a6e8 55%,#c98ae0 100%);box-shadow:inset 0 6px 0 rgba(255,255,255,.75),inset 0 -14px 24px rgba(120,40,160,.35),0 22px 0 #a865c9,0 46px 60px rgba(80,20,110,.4)}
+.chip{display:inline-block;padding:9px 22px;border-radius:999px;background:#2f8fb8;color:#fff;font-weight:700;font-size:21px;margin:4px}
+.ticket{border-radius:30px;background:linear-gradient(135deg,#ffe7a6,#f3b53b 55%,#d88a1d);box-shadow:inset 0 4px 0 rgba(255,255,255,.7),0 40px 70px rgba(120,60,10,.3);color:#3a1405}
+.tag{display:inline-block;background:var(--crim);color:#fff;font-weight:800;letter-spacing:4px;border-radius:10px}
+.sky{background:linear-gradient(180deg,#78c2e6 0%,#a9dcf2 55%,#e6f6fc 100%)}
+.cloud{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.95) 0%,rgba(255,255,255,.6) 45%,rgba(255,255,255,0) 70%)}
+.sun{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.95) 0%,rgba(255,255,255,.45) 22%,rgba(255,255,255,0) 60%)}
+.foot{background:#1d1830;color:#fff}
+.spons{background:#fff;border-radius:16px;padding:10px 16px;display:inline-flex}
+.orga{border-radius:14px;overflow:hidden;display:inline-flex}
+.speed{position:absolute;height:10px;border-radius:5px;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.95))}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs>
+  <linearGradient id="gCur" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#C4A6FF"/><stop offset=".55" stop-color="#8B5CF6"/><stop offset="1" stop-color="#5B2BC9"/></linearGradient>
+  <linearGradient id="gGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE9A3"/><stop offset=".45" stop-color="#F3B53B"/><stop offset="1" stop-color="#B9741A"/></linearGradient>
+  <radialGradient id="gSph" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#FFE0EF"/><stop offset=".5" stop-color="#FF7DB8"/><stop offset="1" stop-color="#C2186B"/></radialGradient>
+  <linearGradient id="gHat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF9BC4"/><stop offset="1" stop-color="#D21F6E"/></linearGradient>
+  <symbol id="cur" viewBox="0 0 100 100"><path d="M12 8 L88 46 L52 56 L40 92 Z" fill="url(#gCur)" stroke="#EFE6FF" stroke-width="2.5" stroke-linejoin="round"/></symbol>
+  <symbol id="gold" viewBox="0 0 180 150"><path d="M20 90 L50 30 L110 14 L165 60 L150 120 L80 138 Z" fill="url(#gGold)"/><path d="M50 30 L90 70 L110 14 M90 70 L150 120 M90 70 L80 138 M90 70 L20 90" stroke="rgba(255,255,255,.45)" stroke-width="3" fill="none"/></symbol>
+  <symbol id="sph" viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="url(#gSph)"/></symbol>
+  <symbol id="hat" viewBox="0 0 260 170"><path d="M40 140 Q40 30 130 26 Q220 30 220 140 Z" fill="url(#gHat)"/><rect x="10" y="134" width="240" height="30" rx="15" fill="#c2185b"/><rect x="118" y="20" width="24" height="120" rx="10" fill="rgba(255,255,255,.35)"/></symbol>
+</defs></svg>
+
+<!-- ===================== P1 : carré 1080 — NOUVEAU PARTENARIAT ===================== -->
+<div class="poster" id="p1" style="width:1080px;height:1080px;background:#f1eeea">
+  <div class="a" style="left:-200px;top:-260px;width:900px;height:900px;border-radius:50%;border:70px solid var(--mag);opacity:.12"></div>
+  <div class="a" style="left:64px;top:62px;font-size:24px;font-weight:800;letter-spacing:5px;display:flex;align-items:center;gap:14px"><span style="width:18px;height:18px;background:var(--mag)"></span>ANNONCE OFFICIELLE</div>
+  <img class="a" src="assets/fifem_t.png" style="right:64px;top:44px;height:70px">
+  <div class="a big" style="left:56px;top:150px;font-size:168px;color:var(--mag)">NOUVEAU</div>
+  <div class="a big" style="left:58px;top:300px;font-size:116px;color:var(--ink)">PARTENARIAT<span style="color:var(--org)">.</span></div>
+  <div class="a card" style="left:64px;top:470px;width:952px;height:380px;transform:rotate(-2deg)">
+    <img class="a" src="assets/fifem_t.png" style="left:50px;top:95px;width:400px">
+    <div class="a c big" style="left:450px;top:120px;width:90px;height:130px;font-size:130px;color:var(--mag)">×</div>
+    <img class="a" src="assets/aegmpe_t.png" style="left:560px;top:22px;height:336px">
+  </div>
+  <svg class="a" style="left:880px;top:780px;width:150px;height:150px;transform:rotate(-12deg);filter:drop-shadow(0 20px 20px rgba(70,20,120,.4))"><use href="#cur"/></svg>
+  <svg class="a" style="left:900px;top:390px;width:110px;height:92px;transform:rotate(18deg);filter:drop-shadow(0 14px 14px rgba(120,70,10,.35))"><use href="#gold"/></svg>
+  <svg class="a" style="left:30px;top:830px;width:80px;height:80px;filter:drop-shadow(0 14px 14px rgba(150,20,80,.3))"><use href="#sph"/></svg>
+  <div class="a" style="left:64px;top:900px;font-size:30px;font-weight:600;color:#5b5270"><b style="color:var(--ink)">AE-GMPE · UTT-Loko</b> rejoint le FIFEM 2026<br>en tant qu'<i style="color:var(--mag);font-weight:800">Association Jeunesse Partenaire</i></div>
+  <div class="a c" style="left:0;top:1010px;width:1080px;height:70px;background:var(--ink);color:#fff;font-size:24px;font-weight:700;letter-spacing:4px">20.11.2026 · 13H30 · PARC DES EXPOSITIONS D'ABIDJAN</div>
+  <div class="halftone"></div><div class="grain"></div>
+</div>
+
+<!-- ===================== P2 : 4:5 1080x1350 — ciel PARTENAIRE ===================== -->
+<div class="poster sky" id="p2" style="width:1080px;height:1350px">
+  <div class="cloud" style="left:-200px;top:520px;width:700px;height:420px"></div>
+  <div class="cloud" style="left:500px;top:600px;width:800px;height:380px"></div>
+  <div class="cloud" style="left:150px;top:700px;width:600px;height:320px"></div>
+  <div class="cloud" style="left:700px;top:250px;width:500px;height:260px;opacity:.6"></div>
+  <div class="sun" style="left:-300px;top:-320px;width:900px;height:900px"></div>
+  <div class="a c" style="left:0;top:60px;width:1080px"><span class="tag" style="font-size:22px;padding:9px 22px;background:var(--mag)">FIFEM 2026 · ANNONCE</span></div>
+  <div class="a c big" style="left:0;top:405px;width:1080px;font-size:170px;color:#fff;text-shadow:0 10px 50px rgba(40,120,170,.3)">PARTENAIRE</div>
+  <img class="a" src="assets/aegmpe_t.png" style="left:330px;top:140px;width:420px;transform:rotate(-4deg);filter:drop-shadow(0 40px 40px rgba(20,60,110,.35))">
+  <div class="a c" style="left:0;top:640px;width:1080px;gap:40px;font-size:52px;font-weight:800"><span style="color:var(--mag)">jeunesse</span><span style="color:var(--pur)">engagée</span></div>
+  <div class="a" style="left:0;top:760px;width:1080px;height:590px;background:#faf8f5;border-radius:44px 44px 0 0;box-shadow:0 -20px 60px rgba(40,100,150,.18)">
+    <div class="a" style="left:64px;top:56px;font-size:58px;font-weight:800;line-height:1.02;letter-spacing:-1.5px">Association<br>Jeunesse Partenaire</div>
+    <div class="a" style="left:64px;top:200px;width:150px;height:12px;background:#f1d9a9;border-radius:4px"></div>
+    <div class="a" style="left:64px;top:238px;font-size:28px;font-weight:600;line-height:1.7;color:#2a2440">
+      <div>• AE-GMPE · UTT-Loko</div><div>• Géologie, Mines &amp; Pétrole</div><div>• <i style="color:var(--mag)">« Lire dans la roche, bâtir l'avenir »</i></div>
+    </div>
+    <div class="a ticket" style="left:660px;top:56px;width:356px;height:300px;padding:30px 30px;transform:rotate(3deg)">
+      <span class="tag" style="font-size:16px;padding:6px 14px">FIFEM 2026</span>
+      <div style="font-size:74px;font-weight:900;letter-spacing:-3px;margin-top:16px;line-height:1">20 NOV.</div>
+      <div style="font-size:40px;font-weight:800;margin-top:4px">2026 · 13h30</div>
+      <div style="font-size:21px;font-weight:700;margin-top:16px">Parc des Expositions d'Abidjan</div>
+    </div>
+    <div class="a c" style="left:0;top:440px;width:1080px;height:150px;background:#efece6;gap:28px">
+      <img src="assets/fifem_t.png" style="height:96px">
+      <span class="spons"><img src="assets/sponsors.png" style="height:40px"></span>
+      <span class="orga"><img src="assets/orga.png" style="height:90px"></span>
+    </div>
+  </div>
+  <div class="grain"></div>
+</div>
+
+<!-- ===================== P3 : story 1080x1920 — C'EST OFFICIEL ===================== -->
+<div class="poster" id="p3" style="width:1080px;height:1920px;background:radial-gradient(ellipse at 50% 40%,#f3e8ff 0%,#dcc5f6 50%,#b993ea 100%)">
+  <div class="a" style="inset:0;background:linear-gradient(115deg,transparent 0 30%,rgba(255,255,255,.35) 30% 38%,transparent 38% 44%,rgba(255,255,255,.25) 44% 50%,transparent 50%)"></div>
+  <div class="a" style="inset:0;background-image:linear-gradient(rgba(140,90,200,.12) 2px,transparent 2px),linear-gradient(90deg,rgba(140,90,200,.12) 2px,transparent 2px);background-size:120px 120px;transform:perspective(1200px) rotateX(55deg);transform-origin:50% 100%;top:900px;height:1400px"></div>
+  <div class="a c" style="left:0;top:110px;width:1080px"><img src="assets/fifem_t.png" style="height:120px;background:#fff;padding:14px 26px;border-radius:24px;box-shadow:0 20px 40px rgba(80,30,110,.2)"></div>
+  <div class="a" style="left:240px;top:330px;transform:rotate(-5deg)"><div class="notif"><div class="av"><img src="assets/aegmpe_t.png"></div><div><b>AE-GMPE · UTT-Loko</b><span>a rejoint le FIFEM 2026</span></div><i>maintenant</i></div></div>
+  <div class="a" style="left:120px;top:500px;transform:rotate(4deg);opacity:.95"><div class="notif" style="width:640px"><div class="av"><img src="assets/fifem_t.png"></div><div><b>FIFEM 2026</b><span>Nouveau partenaire jeunesse !</span></div><i>1 min</i></div></div>
+  <div class="a c btn3d" style="left:110px;top:720px;width:860px;height:230px;font-size:118px;font-weight:900;letter-spacing:-4px;transform:rotate(-4deg)">
+    <span style="background:linear-gradient(180deg,#b04fcc,#7c2aa3);-webkit-background-clip:text;color:transparent">Partenariat</span>
+  </div>
+  <svg class="a" style="left:690px;top:830px;width:230px;height:230px;filter:drop-shadow(0 30px 30px rgba(70,20,120,.45))"><use href="#cur"/></svg>
+  <svg class="a" style="left:830px;top:1180px;width:190px;height:124px;transform:rotate(12deg);filter:drop-shadow(0 20px 20px rgba(150,20,80,.3))"><use href="#hat"/></svg>
+  <svg class="a" style="left:880px;top:640px;width:120px;height:100px;transform:rotate(20deg);filter:drop-shadow(0 14px 14px rgba(120,70,10,.35))"><use href="#gold"/></svg>
+  <svg class="a" style="left:90px;top:260px;width:70px;height:70px"><use href="#sph"/></svg>
+  <div class="speed" style="left:0;top:1140px;width:420px"></div><div class="speed" style="left:0;top:1180px;width:260px;height:6px"></div>
+  <div class="a" style="left:80px;top:1130px;font-size:40px;font-weight:700;color:#fff;text-shadow:0 2px 14px rgba(120,40,140,.5)">ENFIN, C'EST</div>
+  <div class="a big" style="left:72px;top:1180px;font-size:150px;color:#fff;text-shadow:0 6px 40px rgba(170,40,140,.55)">OFFICIEL !!!</div>
+  <div class="a ticket" style="left:80px;top:1400px;width:920px;height:290px;padding:40px 50px">
+    <span class="tag" style="font-size:20px;padding:7px 18px">FIFEM 2026 · ASSOCIATION JEUNESSE PARTENAIRE</span>
+    <div style="font-size:96px;font-weight:900;letter-spacing:-3px;margin-top:20px;line-height:1">20 NOV. 2026</div>
+    <div style="font-size:32px;font-weight:700;margin-top:12px">13h30 · Parc des Expositions d'Abidjan</div>
+  </div>
+  <div class="a c" style="left:0;top:1740px;width:1080px;gap:24px">
+    <span class="spons"><img src="assets/sponsors.png" style="height:44px"></span>
+    <span class="orga"><img src="assets/orga.png" style="height:100px"></span>
+  </div>
+  <div class="halftone"></div><div class="grain"></div>
+</div>
+
+<!-- ===================== P4 : A4 794x1123 (impression) ===================== -->
+<div class="poster" id="p4" style="width:794px;height:1123px;background:#fff">
+  <div class="a" style="left:397px;top:545px;width:430px;height:430px;margin:-215px 0 0 -215px;border-radius:50%;border:30px solid var(--mag)"></div>
+  <div class="a" style="left:397px;top:545px;width:500px;height:500px;margin:-250px 0 0 -250px;border-radius:50%;border:4px dotted var(--mag);opacity:.6"></div>
+  <div class="a" style="left:397px;top:545px;width:700px;height:700px;margin:-350px 0 0 -350px;border-radius:50%;background:radial-gradient(var(--mag) 1.6px,transparent 2px);background-size:12px 12px;-webkit-mask-image:radial-gradient(circle,transparent 38%,#000 40%,transparent 70%);opacity:.35"></div>
+  <div class="a c" style="left:0;top:40px;width:794px"><img src="assets/fifem_t.png" style="height:92px"></div>
+  <div class="a c" style="left:0;top:160px;width:794px;font-size:17px;font-weight:800;letter-spacing:6px;gap:10px"><span style="width:12px;height:12px;background:var(--mag)"></span>ANNONCE OFFICIELLE</div>
+  <div class="a c big" style="left:0;top:194px;width:794px;font-size:92px;color:var(--mag)">NOUVEAU</div>
+  <div class="a c big" style="left:0;top:276px;width:794px;font-size:64px">PARTENARIAT<span style="color:var(--org)">.</span></div>
+  <img class="a" src="assets/aegmpe_t.png" style="left:262px;top:398px;width:270px;filter:drop-shadow(0 26px 30px rgba(20,40,110,.3))">
+  <svg class="a" style="left:600px;top:640px;width:90px;height:100px;filter:drop-shadow(0 14px 14px rgba(70,20,120,.4))"><use href="#cur"/></svg>
+  <svg class="a" style="left:100px;top:470px;width:80px;height:66px;transform:rotate(-14deg);filter:drop-shadow(0 10px 10px rgba(120,70,10,.35))"><use href="#gold"/></svg>
+  <svg class="a" style="left:640px;top:410px;width:46px;height:46px"><use href="#sph"/></svg>
+  <div class="a c" style="left:0;top:772px;width:794px;font-size:22px;font-weight:600;color:#4a4260;flex-direction:column;line-height:1.35">
+    <div><b style="color:var(--ink)">AE-GMPE · UTT-Loko</b> rejoint le FIFEM 2026</div>
+    <div>en tant qu'<i style="color:var(--mag);font-weight:800">Association Jeunesse Partenaire</i></div>
+  </div>
+  <div class="a ticket" style="left:70px;top:840px;width:654px;height:126px;padding:16px 28px;display:flex;align-items:center;gap:26px">
+    <div style="flex:none"><span class="tag" style="font-size:12px;padding:4px 10px;letter-spacing:3px">FIFEM 2026</span>
+      <div style="font-size:46px;font-weight:900;letter-spacing:-2px;line-height:1;margin-top:6px;white-space:nowrap">20 NOV.</div>
+      <div style="font-size:21px;font-weight:800;white-space:nowrap">2026 · 13h30</div></div>
+    <div style="width:2px;height:100px;background:rgba(58,20,5,.25)"></div>
+    <div style="font-size:16px;font-weight:600;line-height:1.35"><b style="font-size:19px">Parc des Expositions d'Abidjan</b><br>Thème : <i>De l'exploration au lingot — quand le cycle de l'or rencontre le regard féminin</i></div>
+  </div>
+  <div class="a" style="left:0;top:978px;width:794px;height:145px;background:#f2efe9">
+    <div class="a c" style="left:0;top:20px;width:794px;gap:18px">
+      <span class="spons" style="padding:7px 12px;border-radius:10px"><img src="assets/sponsors.png" style="height:30px"></span>
+      <span class="orga" style="border-radius:10px"><img src="assets/orga.png" style="height:70px"></span>
+    </div>
+    <div class="a c" style="left:0;top:108px;width:794px;font-size:14px;font-weight:700;letter-spacing:2px;color:var(--mag)">#FIFEM2026 · #AEGMPE · LIRE DANS LA ROCHE, BÂTIR L'AVENIR</div>
+  </div>
+  <div class="grain"></div>
+</div>
+
+<script>
+const id=(location.hash||'#p1').slice(1);document.getElementById(id).classList.add('on');
+window.ready=document.fonts.ready.then(()=>Promise.all([...document.images].map(i=>i.complete?1:new Promise(r=>{i.onload=r;i.onerror=r}))));
+</script>
+</body>
+</html>
