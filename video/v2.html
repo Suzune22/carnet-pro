@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>AE-GMPE × FIFEM — v2</title>
+<style>
+@font-face{font-family:IT;src:url(assets/fonts/intertight-normal.woff2) format("woff2");font-weight:100 900;font-style:normal}
+@font-face{font-family:IT;src:url(assets/fonts/intertight-italic.woff2) format("woff2");font-weight:100 900;font-style:italic}
+:root{--mag:#E5197E;--mag2:#FF4FA3;--pur:#8B5CF6;--pur2:#B794F6;--lav:#E9DDFB;--ink:#1d1830;--crim:#C1214B;--org:#F07A22}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:1080px;overflow:hidden;background:#fff;font-family:IT,sans-serif;color:var(--ink)}
+#stage{position:relative;width:1920px;height:1080px;overflow:hidden;background:#f3f0f5}
+.scene{position:absolute;inset:0;overflow:hidden;display:none}
+.a{position:absolute;left:0;top:0}
+.c{display:flex;align-items:center;justify-content:center;text-align:center}
+.cam{position:absolute;inset:0;perspective:1600px;perspective-origin:50% 40%}
+.w{position:absolute;transform-style:preserve-3d}
+.obj{position:absolute;transform-style:preserve-3d}
+.shadow{position:absolute;border-radius:40px;background:rgba(60,20,90,.35);filter:blur(28px)}
+.notif{width:560px;height:132px;border-radius:30px;background:linear-gradient(135deg,rgba(255,236,246,.96),rgba(250,205,230,.92));box-shadow:inset 0 2px 0 rgba(255,255,255,.9),0 8px 30px rgba(140,40,120,.25);display:flex;align-items:center;padding:0 26px;gap:20px}
+.notif .av{width:78px;height:78px;border-radius:20px;background:#fff;display:flex;align-items:center;justify-content:center;flex:none;box-shadow:0 3px 10px rgba(0,0,0,.12)}
+.notif .av img{max-width:64px;max-height:64px}
+.notif b{display:block;font-size:27px;font-weight:800;color:#3b1530;line-height:1.1}
+.notif span{display:block;font-size:23px;font-weight:500;color:#7b4e6c;margin-top:4px;line-height:1.15}
+.notif i{position:absolute;right:26px;top:18px;font-style:normal;font-size:18px;color:#a9809a;font-weight:600}
+.big{font-weight:900;letter-spacing:-.04em;line-height:.9}
+.ch{display:inline-block}
+#grain,#fx{position:absolute;left:0;top:0;pointer-events:none}
+#flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+.halftone{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(120,40,140,.35) 1.4px,transparent 1.6px);background-size:9px 9px;
+  -webkit-mask-image:radial-gradient(ellipse at center,transparent 45%,#000 100%);opacity:.5}
+.btn3d{border-radius:70px;background:linear-gradient(180deg,#f7d6f2 0%,#e4a6e8 55%,#c98ae0 100%);box-shadow:inset 0 6px 0 rgba(255,255,255,.75),inset 0 -14px 24px rgba(120,40,160,.35),0 26px 0 #a865c9,0 50px 70px rgba(80,20,110,.45)}
+.chip{display:inline-block;padding:10px 26px;border-radius:999px;background:#2f8fb8;color:#fff;font-weight:700;font-size:22px;margin:0 6px}
+.side div{font-size:21px;font-weight:600;color:#3c3550;margin:0 0 26px;display:flex;align-items:center;gap:14px}
+.side div:before{content:"";width:16px;height:16px;border:2.5px solid #3c3550;border-radius:4px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs id="filters"></defs>
+  <defs>
+    <linearGradient id="gCur" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#C4A6FF"/><stop offset=".55" stop-color="#8B5CF6"/><stop offset="1" stop-color="#5B2BC9"/></linearGradient>
+    <linearGradient id="gGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE9A3"/><stop offset=".45" stop-color="#F3B53B"/><stop offset="1" stop-color="#B9741A"/></linearGradient>
+    <radialGradient id="gSph" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#FFE0EF"/><stop offset=".5" stop-color="#FF7DB8"/><stop offset="1" stop-color="#C2186B"/></radialGradient>
+    <linearGradient id="gHat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF9BC4"/><stop offset="1" stop-color="#D21F6E"/></linearGradient>
+  </defs>
+</svg>
+<div id="stage">
+
+<!-- ================= S1 : desk / phone / notifications ================= -->
+<div id="s1" class="scene" style="background:#d9c6f5">
+  <div class="cam" id="cam1">
+    <div class="w" id="w1" style="left:-440px;top:-560px;width:2800px;height:2200px">
+      <div class="a" style="width:2800px;height:2200px;background:
+         linear-gradient(115deg,transparent 0 30%,rgba(255,255,255,.35) 30% 38%,transparent 38% 44%,rgba(255,255,255,.28) 44% 50%,transparent 50%),
+         radial-gradient(ellipse at 45% 45%,#efe4ff 0%,#d6c0f6 45%,#b996ec 100%)"></div>
+      <div class="a" style="width:2800px;height:2200px;background-image:linear-gradient(rgba(140,90,200,.12) 2px,transparent 2px),linear-gradient(90deg,rgba(140,90,200,.12) 2px,transparent 2px);background-size:220px 220px"></div>
+      <!-- paper sheet -->
+      <div class="obj" id="o_paper" style="left:1560px;top:820px;width:560px;height:720px">
+        <div class="a" style="width:560px;height:720px;background:#fbf8f3;border-radius:8px;box-shadow:0 30px 60px rgba(70,30,110,.35);padding:60px 50px">
+          <div style="height:10px;width:70%;background:#d9d0e4;border-radius:5px;margin-bottom:26px"></div>
+          <div style="height:10px;width:85%;background:#e6dfee;border-radius:5px;margin-bottom:26px"></div>
+          <div style="height:10px;width:60%;background:#e6dfee;border-radius:5px;margin-bottom:60px"></div>
+          <svg width="460" height="380" viewBox="0 0 460 380"><path d="M20 300 L120 160 L190 240 L280 90 L360 200 L440 120" fill="none" stroke="#c9b8dd" stroke-width="6"/><path d="M20 340 H440" stroke="#c9b8dd" stroke-width="4"/><circle cx="280" cy="90" r="14" fill="#E5197E"/></svg>
+        </div>
+      </div>
+      <!-- phone -->
+      <div class="obj" id="o_phone" style="left:1150px;top:700px;width:340px;height:690px">
+        <div class="shadow" id="sh_phone" style="left:30px;top:40px;width:300px;height:640px"></div>
+        <div class="a" id="phoneBody" style="width:340px;height:690px;border-radius:56px;background:linear-gradient(135deg,#ff7b8a,#c41f45 60%,#7d0f2b);box-shadow:inset 0 0 0 6px rgba(255,255,255,.25)">
+          <div class="a" style="left:14px;top:14px;width:312px;height:662px;border-radius:44px;overflow:hidden;background:linear-gradient(170deg,#ff9a6b 0%,#e8336a 45%,#7a1240 100%)">
+            <div class="a" style="left:106px;top:16px;width:100px;height:30px;border-radius:15px;background:#120610"></div>
+            <div class="a c" style="top:90px;width:312px;font-size:22px;font-weight:600;color:#ffe3ec">vendredi 20 novembre</div>
+            <div class="a c" style="top:118px;width:312px;font-size:104px;font-weight:800;color:#fff;letter-spacing:-3px">13:30</div>
+            <img class="a" src="assets/fifem_t.png" style="left:56px;top:300px;width:200px;filter:brightness(0) invert(1);opacity:.85">
+            <div class="a" style="left:22px;top:470px;width:268px;height:76px;border-radius:20px;background:rgba(255,255,255,.35)"></div>
+            <div class="a" style="left:22px;top:556px;width:268px;height:76px;border-radius:20px;background:rgba(255,255,255,.25)"></div>
+          </div>
+        </div>
+      </div>
+      <!-- props -->
+      <div class="obj" id="o_cur1" style="left:1500px;top:1420px;width:200px;height:200px"><svg width="200" height="200" viewBox="0 0 100 100"><path d="M12 8 L88 46 L52 56 L40 92 Z" fill="url(#gCur)" stroke="#E7DAFF" stroke-width="2" stroke-linejoin="round"/></svg></div>
+      <div class="obj" id="o_cur2" style="left:620px;top:1260px;width:150px;height:150px"><svg width="150" height="150" viewBox="0 0 100 100"><path d="M12 8 L88 46 L52 56 L40 92 Z" fill="url(#gCur)" stroke="#E7DAFF" stroke-width="2" stroke-linejoin="round"/></svg></div>
+      <div class="obj" id="o_sph1" style="left:900px;top:840px;width:150px;height:150px"><svg width="150" height="150"><circle cx="75" cy="75" r="72" fill="url(#gSph)"/></svg></div>
+      <div class="obj" id="o_sph2" style="left:1900px;top:1560px;width:90px;height:90px"><svg width="90" height="90"><circle cx="45" cy="45" r="43" fill="url(#gSph)"/></svg></div>
+      <div class="obj" id="o_gold1" style="left:960px;top:1500px;width:180px;height:150px"><svg width="180" height="150" viewBox="0 0 180 150"><path d="M20 90 L50 30 L110 14 L165 60 L150 120 L80 138 Z" fill="url(#gGold)"/><path d="M50 30 L90 70 L110 14 M90 70 L150 120 M90 70 L80 138 M90 70 L20 90" stroke="rgba(255,255,255,.45)" stroke-width="3" fill="none"/></svg></div>
+      <div class="obj" id="o_gold2" style="left:1720px;top:640px;width:110px;height:95px"><svg width="110" height="95" viewBox="0 0 180 150"><path d="M20 90 L50 30 L110 14 L165 60 L150 120 L80 138 Z" fill="url(#gGold)"/></svg></div>
+      <div class="obj" id="o_hat" style="left:700px;top:620px;width:260px;height:190px"><svg width="260" height="190" viewBox="0 0 260 190"><path d="M40 140 Q40 30 130 26 Q220 30 220 140 Z" fill="url(#gHat)"/><rect x="10" y="134" width="240" height="30" rx="15" fill="#c2185b"/><rect x="118" y="20" width="24" height="120" rx="10" fill="rgba(255,255,255,.35)"/></svg></div>
+      <!-- notifications -->
+      <div class="obj" id="n1" style="left:1440px;top:760px"><div class="notif"><div class="av"><img src="assets/fifem_t.png"></div><div><b>FIFEM 2026</b><span>Nouveau partenaire jeunesse !</span></div><i>maintenant</i></div></div>
+      <div class="obj" id="n2" style="left:620px;top:960px"><div class="notif"><div class="av"><img src="assets/aegmpe_t.png"></div><div><b>AE-GMPE · UTT-Loko</b><span>a rejoint le FIFEM 2026</span></div><i>1 min</i></div></div>
+      <div class="obj" id="n3" style="left:1480px;top:1180px"><div class="notif"><div class="av" style="background:linear-gradient(135deg,#C1214B,#F07A22);color:#fff;font-weight:900;font-size:30px;flex-direction:column;line-height:.9">20<small style="font-size:14px">NOV</small></div><div><b>20 nov. 2026 · 13h30</b><span>Parc des Expositions d'Abidjan</span></div><i>2 min</i></div></div>
+      <div class="obj" id="n4" style="left:560px;top:1180px"><div class="notif" style="width:520px"><div class="av" style="background:#2b1a3d;color:#ffcf6a;font-weight:900;font-size:22px">SX</div><div><b>En marge du SIREXE</b><span>Abidjan · 2026</span></div><i>3 min</i></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= S2 : 3D button + cursor click ================= -->
+<div id="s2" class="scene" style="background:linear-gradient(170deg,#f5e9ff 0%,#e3cdf7 50%,#c9a2ea 100%)">
+  <div class="cam">
+    <div class="w" id="w2" style="left:0;top:0;width:1920px;height:1080px">
+      <!-- laptop hint -->
+      <div class="a" id="s2kb" style="left:-100px;top:640px;width:2200px;height:600px;border-radius:40px;background:linear-gradient(180deg,#d9c3ef,#b892dc);filter:blur(10px);
+           background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.25) 0 90px,transparent 90px 104px),repeating-linear-gradient(0deg,rgba(90,40,130,.18) 0 84px,transparent 84px 100px)"></div>
+      <div class="a" id="s2screen" style="left:200px;top:-240px;width:1500px;height:560px;border-radius:26px;background:linear-gradient(135deg,#fff1e6,#ffd2e6);filter:blur(14px);opacity:.85"></div>
+      <div class="a c btn3d" id="btn" style="left:410px;top:330px;width:1100px;height:300px;font-size:150px;font-weight:900;letter-spacing:-5px;color:#9b3fb5">
+        <span id="btnTxt" style="background:linear-gradient(180deg,#b04fcc,#7c2aa3);-webkit-background-clip:text;color:transparent">Partenariat</span>
+      </div>
+      <div class="a" id="ripple" style="left:0;top:0;width:200px;height:200px;border-radius:50%;border:8px solid #fff"></div>
+      <div class="a" id="cursorBig" style="width:320px;height:320px"><svg width="320" height="320" viewBox="0 0 100 100" style="filter:drop-shadow(0 30px 30px rgba(70,20,120,.45))"><path d="M12 8 L88 46 L52 56 L40 92 Z" fill="url(#gCur)" stroke="#EFE6FF" stroke-width="2.5" stroke-linejoin="round"/></svg></div>
+      <div class="a" id="s2mug" style="left:1640px;top:560px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#f3dfe6 50%,#d7a9bb);filter:blur(6px)"></div>
+    </div>
+  </div>
+  <!-- live burst -->
+  <div class="a" id="live" style="width:1920px;height:1080px">
+    <div class="a" style="inset:0;width:1920px;height:1080px;background:radial-gradient(circle at 50% 50%,#fff 0%,#fff 35%,#f6dcf3 70%,#d9a8ef 100%)"></div>
+    <img class="a" id="liveLogo" src="assets/aegmpe_t.png" style="left:760px;top:250px;width:400px">
+    <div class="a" id="liveSmall" style="left:120px;top:850px;font-size:30px;font-weight:600;color:#fff;text-shadow:0 2px 12px rgba(120,40,140,.6)">ENFIN, C'EST</div>
+    <div class="a" id="liveBig" style="left:116px;top:884px;font-size:96px;font-weight:900;letter-spacing:-3px;color:#fff;text-shadow:0 4px 30px rgba(170,40,140,.6)">OFFICIEL !!!</div>
+  </div>
+</div>
+
+<!-- ================= S3 : kinetic words ================= -->
+<div id="s3" class="scene" style="background:#f1eeea">
+  <div class="a c" id="k1" style="width:1920px;height:1080px;font-size:52px;font-weight:800;gap:28px"><span style="width:26px;height:26px;background:var(--mag);display:inline-block"></span>Une</div>
+  <div class="a c big" id="k2" style="width:1920px;height:1080px;font-size:560px;color:var(--mag);white-space:nowrap">NOUVELLE</div>
+  <div class="a c" id="k3" style="width:1920px;height:1080px;font-size:64px;font-weight:800;color:var(--mag);font-style:italic">alliance<span id="k3dot" style="color:var(--org)">.</span></div>
+  <div class="a" id="k4" style="width:1920px;height:1080px">
+    <img class="a" id="k4f" src="assets/fifem_t.png" style="left:250px;top:330px;width:600px">
+    <div class="a c big" id="k4x" style="left:860px;top:390px;width:200px;height:300px;font-size:260px;color:var(--mag)">×</div>
+    <img class="a" id="k4a" src="assets/aegmpe_t.png" style="left:1110px;top:220px;height:640px">
+  </div>
+</div>
+
+<!-- ================= S4 : sky ================= -->
+<div id="s4" class="scene" style="background:linear-gradient(180deg,#7fc6e8 0%,#a9dcf2 50%,#dff3fb 100%)">
+  <canvas id="sky" class="a" width="1920" height="1080"></canvas>
+  <div class="a c big" id="skyWord" style="width:1920px;top:330px;height:340px;font-size:300px;color:#fff;letter-spacing:-.05em;text-shadow:0 10px 60px rgba(40,120,170,.25)">PARTENAIRE</div>
+  <img class="a" id="skyLogo" src="assets/aegmpe_t.png" style="left:770px;top:150px;width:380px;filter:drop-shadow(0 40px 40px rgba(20,60,110,.35))">
+  <div class="a" id="skyW1" style="left:640px;top:700px;font-size:56px;font-weight:800;color:var(--mag)">jeunesse</div>
+  <div class="a" id="skyW2" style="left:1040px;top:700px;font-size:56px;font-weight:800;color:var(--pur)">engagée</div>
+  <div class="a" id="sun" style="left:-260px;top:-300px;width:900px;height:900px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.95) 0%,rgba(255,255,255,.5) 20%,rgba(255,255,255,0) 60%)"></div>
+  <div class="a" id="panel" style="left:0;top:1080px;width:1920px;height:430px;background:#faf8f5;padding:60px 110px">
+    <div class="a" style="left:110px;top:70px;font-size:62px;font-weight:800;line-height:1.05;letter-spacing:-1.5px">Association<br>Jeunesse Partenaire</div>
+    <div class="a" style="left:110px;top:240px;display:flex;gap:18px">
+      <div style="width:200px;height:120px;border-radius:16px;background:linear-gradient(135deg,#1B2F7A,#3a58c4);display:flex;align-items:center;justify-content:center"><img src="assets/aegmpe_t.png" style="height:104px"></div>
+      <div style="width:200px;height:120px;border-radius:16px;background:linear-gradient(135deg,#f7d48b,#e39b2a)"></div>
+      <div style="width:200px;height:120px;border-radius:16px;background:linear-gradient(135deg,#ffd0e6,#e5197e)"></div>
+    </div>
+    <div class="a" style="left:1180px;top:60px;width:640px">
+      <div style="width:150px;height:14px;background:#f1d9a9;border-radius:4px;margin-bottom:26px"></div>
+      <div id="bullets" style="font-size:30px;font-weight:600;line-height:1.75;color:#2a2440">
+        <div>• AE-GMPE · UTT-Loko</div><div>• Géologie, Mines &amp; Pétrole</div><div>• Étudiants &amp; jeunes talents</div><div>• « Lire dans la roche, bâtir l'avenir »</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= S5 : ring + event ================= -->
+<div id="s5" class="scene" style="background:#fff">
+  <div class="a c big" id="ringWord" style="width:1920px;height:1080px;font-size:250px;white-space:nowrap"><span style="color:#f7c1db">FIFEM&nbsp;</span><span style="color:var(--mag)">2026</span></div>
+  <div class="cam"><div class="w" style="left:0;top:0;width:1920px;height:1080px">
+    <div class="a" id="ticket" style="left:610px;top:290px;width:700px;height:500px;border-radius:34px;background:linear-gradient(135deg,#ffe7a6,#f3b53b 55%,#d88a1d);box-shadow:inset 0 4px 0 rgba(255,255,255,.7),0 50px 80px rgba(120,60,10,.35);padding:50px 56px;color:#3a1405">
+      <div style="display:inline-block;background:var(--crim);color:#fff;font-size:24px;font-weight:800;letter-spacing:4px;padding:8px 20px;border-radius:10px">FIFEM 2026</div>
+      <div style="font-size:112px;font-weight:900;letter-spacing:-4px;margin-top:26px;line-height:1">20 NOV.</div>
+      <div style="font-size:60px;font-weight:800;letter-spacing:-1px;margin-top:6px">2026 · 13h30</div>
+      <div style="font-size:30px;font-weight:700;margin-top:30px">Parc des Expositions d'Abidjan</div>
+      <div class="a" id="tshine" style="top:-20%;width:160px;height:140%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.8),transparent);transform:skewX(-20deg)"></div>
+    </div>
+  </div></div>
+  <canvas id="ring" class="a" width="1920" height="1080"></canvas>
+  <!-- UI page -->
+  <div class="a" id="ui" style="width:1920px;height:1080px;background:#f2efe9">
+    <div class="a side" id="side" style="left:60px;top:80px">
+      <div>Programme</div><div>Panels</div><div>Networking</div><div>Partenaires</div><div>Infos pratiques</div>
+    </div>
+    <div class="a" style="left:330px;top:0;width:2px;height:1080px;background:#ddd6cc"></div>
+    <div class="a c" id="uiTitle" style="left:330px;top:250px;width:1590px;font-size:66px;font-weight:800;letter-spacing:-1.5px">De l'exploration au lingot.</div>
+    <div class="a c" id="uiSub" style="left:330px;top:340px;width:1590px;font-size:34px;font-weight:500;color:#6b6280">Quand le cycle de l'or rencontre le regard féminin</div>
+    <div class="a" id="uiThumbs" style="left:595px;top:450px;width:1060px;height:230px;display:flex;gap:20px">
+      <div class="th" style="flex:1;border-radius:18px;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(0,0,0,.08)"><img src="assets/fifem_t.png" style="width:85%"></div>
+      <div class="th" style="flex:1;border-radius:18px;background:linear-gradient(135deg,#1B2F7A,#3a58c4);display:flex;align-items:center;justify-content:center"><img src="assets/aegmpe_t.png" style="height:88%"></div>
+      <div class="th" style="flex:1;border-radius:18px;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(0,0,0,.08)"><img src="assets/sponsors.png" style="width:92%"></div>
+      <div class="th" style="flex:1;border-radius:18px;overflow:hidden"><img src="assets/orga.png" style="height:100%;margin-left:-40px"></div>
+    </div>
+    <div class="a c" id="uiChips" style="left:330px;top:740px;width:1590px">
+      <span class="chip">Mines</span><span class="chip">Géologie</span><span class="chip">Leadership</span><span class="chip">Jeunesse</span><span class="chip" style="background:var(--mag)">SIREXE 2026</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= S6 : kinetic 2 ================= -->
+<div id="s6" class="scene" style="background:#f1eeea">
+  <div class="a c" id="m1" style="width:1920px;height:1080px;font-size:52px;font-weight:800;gap:28px"><span style="width:26px;height:26px;background:var(--mag);display:inline-block"></span>Lire dans la</div>
+  <div class="a c big" id="m2" style="width:1920px;height:1080px;font-size:640px;color:var(--mag);white-space:nowrap">ROCHE</div>
+  <div class="a c" id="m3" style="width:1920px;height:1080px;font-size:64px;font-weight:800;color:var(--mag);font-style:italic">bâtir l'avenir<span style="color:var(--org)">.</span></div>
+  <div class="a c big" id="m4" style="width:1920px;height:1080px;font-size:150px;color:var(--ink)">ensemble.</div>
+</div>
+
+<!-- ================= S7 : end ================= -->
+<div id="s7" class="scene" style="background:#e6e5e4">
+  <svg class="a" id="scrib" width="1920" height="1080" viewBox="0 0 1920 1080">
+    <path id="scribP" d="M760 560 C 800 430, 900 420, 880 520 C 860 620, 790 650, 820 560 C 850 470, 960 470, 990 560 C 1010 620, 1030 470, 1080 470 C 1120 470, 1100 620, 1150 600 C 1190 585, 1170 470, 1210 480" fill="none" stroke="#E5197E" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <div class="a" id="lock" style="width:1920px;height:1080px">
+    <img class="a" id="lf" src="assets/fifem_t.png" style="left:419px;top:340px;width:480px">
+    <div class="a c big" id="lx" style="left:914px;top:380px;width:140px;height:220px;font-size:180px;color:var(--mag)">×</div>
+    <img class="a" id="la" src="assets/aegmpe_t.png" style="left:1069px;top:225px;height:470px">
+  </div>
+  <div class="a" id="footer" style="left:0;top:820px;width:1920px;height:260px;background:#dcdbd9">
+    <div class="a c" style="top:40px;width:1920px;font-size:30px;font-weight:700;letter-spacing:6px;color:#3c3550">20.11.2026 · 13H30 · PARC DES EXPOSITIONS D'ABIDJAN</div>
+    <div class="a c" style="top:100px;width:1920px;gap:30px">
+      <div style="background:#fff;border-radius:14px;padding:10px 18px"><img src="assets/sponsors.png" style="height:44px;display:block"></div>
+      <div style="border-radius:14px;overflow:hidden;height:64px"><img src="assets/orga.png" style="height:64px;display:block"></div>
+    </div>
+    <div class="a c" style="top:200px;width:1920px;font-size:24px;font-weight:700;color:var(--mag);letter-spacing:2px">#FIFEM2026 · #AEGMPE</div>
+  </div>
+</div>
+
+<canvas id="fx" width="1920" height="1080"></canvas>
+<div class="halftone" id="ht"></div>
+<canvas id="grain" width="960" height="540" style="width:1920px;height:1080px;opacity:.07;mix-blend-mode:multiply"></canvas>
+<div id="flash"></div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const p=(t,a,b)=>clamp((t-a)/(b-a));
+const eOut=x=>1-Math.pow(1-x,3), eOut5=x=>1-Math.pow(1-x,5), eIn=x=>x*x*x;
+const eIO=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const eExpIO=x=>x===0?0:x===1?1:x<.5?Math.pow(2,20*x-10)/2:(2-Math.pow(2,-20*x+10))/2;
+const eBack=x=>{const c1=1.9,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+const eElastic=x=>x===0?0:x===1?1:Math.pow(2,-10*x)*Math.sin((x*10-.75)*(2*Math.PI)/3)+1;
+const lerp=(a,b,x)=>a+(b-a)*x;
+// motion blur filters (directional)
+const fdefs=$('filters'); const FILT={};
+function mb(el,bx,by=0){
+  el=typeof el==='string'?$(el):el; const id=el.id;
+  if(bx<.3&&by<.3){el.dataset.mb='';return '';}
+  if(!FILT[id]){fdefs.insertAdjacentHTML('beforeend',`<filter id="mb_${id}" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="0 0"/></filter>`);FILT[id]=fdefs.lastElementChild.firstElementChild;}
+  FILT[id].setAttribute('stdDeviation',`${bx} ${by}`);
+  return `url(#mb_${id})`;
+}
+function set(el,o={}){
+  el=typeof el==='string'?$(el):el;
+  const {x=0,y=0,z=0,s=1,sx,sy,r=0,rx=0,ry=0,op=1,blur=0,mbx=0,mby=0}=o;
+  el.style.transform=`translate3d(${x}px,${y}px,${z}px) rotateX(${rx}deg) rotateY(${ry}deg) rotate(${r}deg) scale(${sx??s},${sy??s})`;
+  el.style.opacity=op;
+  let f=[]; const m=mb(el,mbx,mby); if(m)f.push(m); if(blur>.05)f.push(`blur(${blur}px)`);
+  el.style.filter=f.length?f.join(' '):'';
+}
+const scenes=[['s1',0,3.05],['s2',3.0,5.65],['s3',5.6,8.45],['s4',8.4,11.65],['s5',11.6,14.65],['s6',14.6,16.85],['s7',16.8,20.1]];
+
+// deterministic random
+let seed=11;const rnd=()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646};
+// grain tiles
+const gctx=$('grain').getContext('2d'); const tiles=[...Array(6)].map(()=>{const im=gctx.createImageData(960,540);for(let i=0;i<im.data.length;i+=4){const v=rnd()*255;im.data[i]=im.data[i+1]=im.data[i+2]=v;im.data[i+3]=255;}return im;});
+// clouds
+const clouds=[...Array(26)].map(()=>({x:rnd()*2400-240,y:520+rnd()*560,r:120+rnd()*220,v:20+rnd()*40,a:.55+rnd()*.4}));
+const sky=$('sky').getContext('2d');
+function drawSky(t){
+  sky.clearRect(0,0,1920,1080);
+  for(const c of clouds){const x=c.x-(t-8.4)*c.v*3;const g=sky.createRadialGradient(x,c.y,0,x,c.y,c.r);
+    g.addColorStop(0,`rgba(255,255,255,${c.a})`);g.addColorStop(.6,`rgba(255,255,255,${c.a*.6})`);g.addColorStop(1,'rgba(255,255,255,0)');sky.fillStyle=g;sky.beginPath();sky.arc(x,c.y,c.r,0,6.283);sky.fill();}
+}
+// fx: speed lines & radial burst
+const fx=$('fx').getContext('2d');
+const streaks=[...Array(46)].map(()=>({y:rnd()*1080,l:300+rnd()*900,w:4+rnd()*16,o:rnd(),sp:.6+rnd()*.8}));
+const rays=[...Array(70)].map(()=>({a:rnd()*6.283,l:.3+rnd()*.7,w:3+rnd()*10,o:rnd()}));
+function speedLines(k,dir=1,col='255,255,255'){ // k 0..1 progress
+  if(k<=0||k>=1)return; const a=Math.sin(k*Math.PI);
+  for(const s of streaks){const x=dir>0?lerp(-1400,2600,(k*s.sp+s.o)%1):lerp(2600,-1400,(k*s.sp+s.o)%1);
+    const g=fx.createLinearGradient(x,0,x+s.l*dir,0);g.addColorStop(0,`rgba(${col},0)`);g.addColorStop(1,`rgba(${col},${.9*a})`);
+    fx.fillStyle=g;fx.fillRect(Math.min(x,x+s.l*dir),s.y,s.l,s.w);}
+}
+function burst(k,cx=960,cy=540,col='255,255,255'){
+  if(k<=0||k>=1)return; const a=Math.sin(k*Math.PI);
+  for(const r of rays){const d0=lerp(80,900,eOut(k))*r.l, d1=d0+lerp(400,120,k)*r.l;
+    fx.strokeStyle=`rgba(${col},${a*.9})`;fx.lineWidth=r.w*(1-k*.6);fx.beginPath();
+    fx.moveTo(cx+Math.cos(r.a)*d0,cy+Math.sin(r.a)*d0);fx.lineTo(cx+Math.cos(r.a)*d1,cy+Math.sin(r.a)*d1);fx.stroke();}
+}
+const ring=$('ring').getContext('2d');
+function drawRing(k){ // expanding magenta ring with halftone edge
+  ring.clearRect(0,0,1920,1080); if(k<=0||k>=1)return;
+  const R=lerp(40,1300,eOut5(k)), w=lerp(40,190,Math.sin(k*Math.PI));
+  ring.lineWidth=w;ring.strokeStyle='#E5197E';ring.beginPath();ring.arc(960,540,R,0,6.283);ring.stroke();
+  ring.fillStyle='#E5197E';
+  for(let a=0;a<6.283;a+=.035){for(let j=1;j<5;j++){const rr=R+w/2+j*12;const sz=Math.max(0,5-j*1.2)*(1-k*.3);
+    ring.beginPath();ring.arc(960+Math.cos(a+j*.02)*rr,540+Math.sin(a+j*.02)*rr,sz,0,6.283);ring.fill();}}
+}
+
+const T=20;
+window.render=function(t){
+  for(const [id,a,b] of scenes) $(id).style.display=(t>=a&&t<b)?'block':'none';
+  fx.clearRect(0,0,1920,1080);
+  gctx.putImageData(tiles[Math.floor(t*12)%6],0,0);
+  let flash=0;
+
+  // ---------- S1
+  if(t<3.05){
+    const k=p(t,0,3.0);
+    const zoom=lerp(.78,1.08,eIO(k))+eIn(p(t,2.5,3.0))*1.6;
+    set('w1',{rx:lerp(48,38,eIO(k)),r:lerp(-26,-14,eIO(k)),s:zoom,y:lerp(60,-20,k),x:lerp(-40,20,k)});
+    const bob=(ph,amp=14)=>Math.sin(t*2.2+ph)*amp;
+    const ph=p(t,.05,.6);
+    set('o_phone',{z:lerp(0,90,eBack(ph))+bob(0),s:lerp(.6,1,eBack(ph)),op:clamp(ph*3),r:-6});
+    set('o_paper',{z:20+bob(1,6),r:14});
+    set('o_cur1',{z:180+bob(2,30),r:-20+Math.sin(t*1.7)*8});
+    set('o_cur2',{z:240+bob(3,30),r:40,blur:5});
+    set('o_sph1',{z:220+bob(4,30),blur:3});
+    set('o_sph2',{z:140+bob(5,20)});
+    set('o_gold1',{z:120+bob(6,25),r:t*12});
+    set('o_gold2',{z:260+bob(7,25),r:-t*20,blur:4});
+    set('o_hat',{z:160+bob(8,25),r:-18});
+    [['n1',.55],['n2',.8],['n3',1.05],['n4',1.3]].forEach(([id,st],i)=>{
+      const q=p(t,st,st+.45), fly=eIn(p(t,2.2+i*.08,2.9));
+      set(id,{z:lerp(60,260+i*30,eBack(q))+bob(i,18)+fly*900,s:lerp(.3,1,eBack(q)),op:q>0?clamp(q*4):0,r:(i%2?6:-8)+Math.sin(t+i)*2,blur:fly*10});
+    });
+    burst(p(t,2.55,3.05),960,540);
+    flash=Math.max(flash,eIn(p(t,2.75,3.0)));
+  }
+  // ---------- S2
+  if(t>=3.0&&t<5.65){
+    const k=p(t,3.0,4.7);
+    set('w2',{rx:lerp(30,16,eOut(k)),r:lerp(-12,-6,eOut(k)),s:lerp(1.45,1.0,eOut5(p(t,3.0,3.6)))+.04*k,y:lerp(-80,0,eOut(p(t,3.0,3.6))),mbx:lerp(30,0,eOut(p(t,3.0,3.35)))});
+    const press=p(t,4.25,4.35), rel=p(t,4.35,4.6);
+    const dn=press*(1-eOut(rel));
+    set('btn',{y:dn*22,s:1-dn*.04,z:40});
+    $('btn').style.boxShadow=`inset 0 6px 0 rgba(255,255,255,.75),inset 0 -14px 24px rgba(120,40,160,.35),0 ${26-dn*20}px 0 #a865c9,0 ${50-dn*30}px 70px rgba(80,20,110,.45)`;
+    const cm=p(t,3.35,4.25);
+    const cx=lerp(1700,980,eOut5(cm)), cy=lerp(900,400,eOut5(cm));
+    set('cursorBig',{x:cx+dn*8,y:cy+dn*22,z:160,r:lerp(30,0,eOut(cm))+dn*6,s:1-dn*.1,op:cm>0?1:0,mbx:lerp(0,18,Math.sin(cm*Math.PI))});
+    const rp=p(t,4.3,4.9);set('ripple',{x:cx-40,y:cy-60,s:lerp(.2,4,eOut(rp)),op:(1-rp)*(rp>0?1:0)});
+    set('s2kb',{x:Math.sin(t)*10});set('s2mug',{y:Math.sin(t*1.5)*12});
+    // live burst
+    const lv=p(t,4.6,4.7);
+    $('live').style.display=t>=4.6?'block':'none';
+    if(t>=4.6){
+      const lk=p(t,4.6,5.65);
+      set('liveLogo',{s:lerp(.4,1.05,eOut5(lk)),r:lerp(-25,4,eOut(lk)),y:lerp(120,0,eOut5(lk))});
+      set('liveSmall',{x:lerp(-300,0,eOut5(p(t,4.75,5.05))),op:p(t,4.75,4.8)});
+      set('liveBig',{x:lerp(-700,0,eOut5(p(t,4.82,5.15))),op:p(t,4.82,4.86),mbx:lerp(40,0,eOut(p(t,4.82,5.1)))});
+      speedLines(p(t,4.6,5.3),1);
+      burst(p(t,4.6,5.2),960,500,'229,25,126');
+      if(t>5.35) speedLines(p(t,5.35,5.7),-1,'229,25,126');
+    }
+    if(t>=4.55&&t<4.8) flash=Math.max(flash,1-p(t,4.55,4.8));
+  }
+  // ---------- S3 kinetic
+  if(t>=5.6&&t<8.45){
+    const vis=(id,a,b)=>{$(id).style.display=(t>=a&&t<b)?'flex':'none';return t>=a&&t<b};
+    if(vis('k1',5.6,6.2)){const q=p(t,5.6,5.8);set('k1',{x:lerp(-120,0,eOut5(q)),op:q*3,mbx:lerp(30,0,q)});}
+    if(vis('k2',6.2,7.0)){const q=p(t,6.2,7.0);const xx=lerp(1500,-1500,q*q*.35+q*.65);set('k2',{x:xx,mbx:lerp(60,14,eOut(p(t,6.2,6.5))),blur:2});}
+    $('k4').style.display=(t>=7.55)?'block':'none';
+    if(vis('k3',7.0,7.6)){const q=p(t,7.0,7.25);set('k3',{s:lerp(1.6,1,eOut5(q)),op:clamp(q*3)});set('k3dot',{s:eElastic(p(t,7.15,7.6))});}
+    if(t>=7.55){
+      const a=p(t,7.55,7.95),b=p(t,7.65,8.05),c=p(t,7.8,8.2);
+      set('k4f',{x:lerp(-700,0,eOut5(a)),mbx:lerp(40,0,eOut(a))});
+      set('k4a',{x:lerp(800,0,eOut5(b)),mbx:lerp(40,0,eOut(b))});
+      set('k4x',{s:eElastic(c),r:lerp(-180,0,eOut(c))});
+      speedLines(p(t,8.15,8.5),1);
+    }
+    flash=Math.max(flash,1-p(t,5.6,5.75));
+  }
+  // ---------- S4 sky
+  if(t>=8.4&&t<11.65){
+    drawSky(t);
+    const q=p(t,8.4,9.0);
+    set('skyWord',{s:lerp(1.35,1,eOut5(q))+.03*p(t,9,11.6),op:clamp(q*2),y:0,blur:lerp(14,0,eOut(q))});
+    const l=p(t,8.5,9.3);
+    set('skyLogo',{y:lerp(-700,0,eOut5(l))+Math.sin(t*2)*14,r:Math.sin(t*1.6)*4+lerp(-30,0,eOut(l)),s:1-.3*eOut5(p(t,10.3,10.8))});
+    set('skyW1',{x:lerp(-80,0,eOut5(p(t,9.3,9.6))),op:p(t,9.3,9.4)});
+    set('skyW2',{x:lerp(80,0,eOut5(p(t,9.45,9.75))),op:p(t,9.45,9.55)});
+    set('sun',{s:1+Math.sin(t*1.3)*.06,op:.9});
+    const pn=p(t,10.3,10.8);
+    set('panel',{y:lerp(0,-430,eOut5(pn))});
+    const up=eOut5(pn);
+    ['skyWord','skyW1','skyW2'].forEach(id=>{$(id).style.marginTop=(-up*170)+'px'});
+    $('skyLogo').style.marginTop=(-up*150)+'px';
+    $('bullets').querySelectorAll('div').forEach((d,i)=>{const b=p(t,10.6+i*.12,10.9+i*.12);set(d,{x:lerp(40,0,eOut(b)),op:b});});
+    flash=Math.max(flash,1-p(t,8.4,8.6));
+    speedLines(p(t,11.3,11.7),-1);
+  }
+  // ---------- S5 ring / ticket / UI
+  if(t>=11.6&&t<14.65){
+    const rk=p(t,11.6,12.4); drawRing(rk);
+    const wq=p(t,11.7,13.2);
+    set('ringWord',{x:lerp(900,-900,wq),mbx:6});
+    const tk=p(t,11.75,12.35);
+    set('ticket',{ry:lerp(-90,0,eOut5(tk))+Math.sin(t*2)*6,rx:Math.sin(t*1.5)*5,s:lerp(.5,1,eBack(tk)),z:40});
+    $('tshine').style.left=lerp(-300,900,eIO(p(t,12.5,13.1)))+'px';
+    const u=p(t,13.05,13.35);
+    $('ui').style.display=t>=13.05?'block':'none';
+    if(t>=13.05){
+      $('ui').style.clipPath=`circle(${lerp(0,1200,eOut5(u))}px at 960px 540px)`;
+      set('uiTitle',{y:lerp(30,0,eOut(p(t,13.2,13.5))),op:p(t,13.2,13.4)});
+      set('uiSub',{op:p(t,13.35,13.6)});
+      $('uiThumbs').querySelectorAll('.th').forEach((d,i)=>{const b=p(t,13.4+i*.08,13.75+i*.08);set(d,{y:lerp(80,0,eBack(b)),op:clamp(b*3)});});
+      $('uiChips').querySelectorAll('.chip').forEach((d,i)=>{const b=p(t,13.7+i*.06,14.0+i*.06);set(d,{s:eBack(b),op:clamp(b*3)});});
+      set('side',{x:lerp(-260,0,eOut5(p(t,13.15,13.5)))});
+    }
+    speedLines(p(t,14.35,14.7),1,'229,25,126');
+  }
+  // ---------- S6 kinetic 2
+  if(t>=14.6&&t<16.85){
+    const vis=(id,a,b)=>{$(id).style.display=(t>=a&&t<b)?'flex':'none';return t>=a&&t<b};
+    if(vis('m1',14.6,15.15)){const q=p(t,14.6,14.8);set('m1',{x:lerp(-120,0,eOut5(q)),op:q*3,mbx:lerp(30,0,q)});}
+    if(vis('m2',15.15,15.85)){const q=p(t,15.15,15.85);set('m2',{x:lerp(-1700,1700,q*.7+q*q*.3),mbx:lerp(60,14,eOut(p(t,15.15,15.4))),blur:2});}
+    if(vis('m3',15.85,16.35)){const q=p(t,15.85,16.05);set('m3',{s:lerp(1.6,1,eOut5(q)),op:clamp(q*3)});}
+    if(vis('m4',16.35,16.85)){const q=p(t,16.35,16.55);set('m4',{sy:lerp(0,1,eOut5(q)),sx:1,op:1});burst(p(t,16.35,16.85),960,540,'229,25,126');}
+    flash=Math.max(flash,1-p(t,14.6,14.75));
+  }
+  // ---------- S7 end
+  if(t>=16.8){
+    const d=p(t,16.85,17.6), path=$('scribP'), L=path.getTotalLength();
+    path.style.strokeDasharray=L; path.style.strokeDashoffset=L*(1-eIO(d));
+    const out=p(t,17.55,17.85);
+    set('scrib',{s:lerp(1,.3,eIn(out)),op:1-out});
+    const lf=p(t,17.6,18.1),la=p(t,17.7,18.2),lx=p(t,17.85,18.4);
+    set('lf',{x:lerp(140,0,eOut5(lf)),s:lerp(.6,1,eOut5(lf)),op:lf});
+    set('la',{x:lerp(-140,0,eOut5(la)),s:lerp(.6,1,eOut5(la)),op:la});
+    set('lx',{s:eElastic(lx),op:lx>0?1:0});
+    const fo=p(t,18.1,18.6);set('footer',{y:lerp(260,0,eOut5(fo))});
+    set('lock',{y:-lerp(0,40,eOut5(fo))});
+    burst(p(t,17.6,18.2),960,500,'229,25,126');
+  }
+  $('flash').style.opacity=clamp(flash)*.9;
+  $('ht').style.opacity=(t>=16.8||(t>=5.6&&t<8.45)||(t>=14.6&&t<16.85))?.15:.45;
+};
+window.ready=document.fonts.ready.then(()=>Promise.all([...document.images].map(i=>i.complete?1:new Promise(r=>{i.onload=r;i.onerror=r}))));
+render(0);
+</script>
+</body>
+</html>
