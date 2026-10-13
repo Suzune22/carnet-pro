@@ -62,7 +62,7 @@ canvas{position:absolute;left:0;top:0}
     <!-- texts block B (16–20 s) -->
     <div id="blockB" class="a" style="width:1920px;height:1080px">
       <div class="a c osw" id="b1" style="top:640px;width:1920px;font-size:40px;font-weight:700;letter-spacing:18px;color:#ffc861;text-shadow:0 2px 12px rgba(0,0,0,.6)">FIFEM 2026</div>
-      <div class="a c anton" id="b2" style="top:695px;width:1920px;font-size:96px;color:#fff;letter-spacing:3px;text-shadow:0 6px 30px rgba(0,0,0,.6)">VENDREDI 20 NOVEMBRE 2026 · 13H30</div>
+      <div class="a c anton" id="b2" style="top:695px;width:1920px;font-size:96px;color:#fff;letter-spacing:3px;text-shadow:0 6px 30px rgba(0,0,0,.6)">VENDREDI 20 NOVEMBRE 2026</div>
       <div class="a c osw" id="b3" style="top:822px;width:1920px;font-size:44px;font-weight:400;letter-spacing:10px;color:#f8ead2">PARC DES EXPOSITIONS D'ABIDJAN</div>
       <div class="a c osw" id="b4" style="top:888px;width:1920px;font-size:34px;font-weight:300;font-style:italic;text-transform:none;letter-spacing:2px;color:#ffd99a">« Lire dans la roche, bâtir l'avenir »</div>
       <div class="a c" id="b5" style="top:955px;width:1920px;gap:24px">
@@ -186,30 +186,30 @@ window.render=function(t){
   if(t>=10.95){
     const k=p(t,11,11.4);
     flash=Math.max(flash,t<11.5?1-p(t,11,11.5):0);
-    drawRays(t,eOut(p(t,11,12))*(1-p(t,19.0,19.8)));
+    drawRays(t,eOut(p(t,11,12))*(1-p(t,17.0,17.8)));
     set('rbg',{s:1.05+.05*Math.sin(t*.5),op:eOut(p(t,11,11.3))});
     set('smoke',{x:Math.sin(t*.4)*80-(t-11)*8,y:-(t-11)*6,op:.5});
     // logos converge
-    const c=eOut5(p(t,11.05,12.2));
-    const down=eIO(p(t,15.8,16.5));
+    const c=eOut5(p(t,11.05,11.9));
+    const down=eIO(p(t,13.8,14.4));
     set('lf',{x:lerp(-700,0,c),op:clamp(c*2),s:lerp(1,.82,down)});
     set('la',{x:lerp(700,0,c),op:clamp(c*2),s:lerp(1,.82,down)});
-    set('lx',{s:eBack(p(t,12.0,12.5))*lerp(1,.82,down),op:p(t,12,12.1)});
+    set('lx',{s:eBack(p(t,11.6,12.0))*lerp(1,.82,down),op:p(t,11.6,11.7)});
     set('logos',{y:lerp(0,-40,down)});
-    $('shine').style.left=lerp(-300,2100,eIO(p(t,13.2,14.4)))+'px';
+    $('shine').style.left=lerp(-300,2100,eIO(p(t,12.3,13.2)))+'px';
     // block A
-    const a1=p(t,11.9,12.5);set('tTitle',{y:lerp(40,0,eOut5(a1)),op:a1*(1-p(t,15.7,16.0)),blur:lerp(10,0,eOut(a1))});
-    const a2=p(t,13.0,13.35);set('tOff',{s:lerp(1.8,1,eOut5(a2)),op:a2*(1-p(t,15.7,16.0))});
-    if(t>=13&&t<13.3)shake=Math.max(shake,10*(1-p(t,13,13.3)));
-    const a3=p(t,13.5,14.0);set('tAss',{op:a3*(1-p(t,15.7,16.0))});$('tAss').style.letterSpacing=lerp(30,14,eOut(a3))+'px';
+    const a1=p(t,11.5,12.0);set('tTitle',{y:lerp(40,0,eOut5(a1)),op:a1*(1-p(t,13.7,14.0)),blur:lerp(10,0,eOut(a1))});
+    const a2=p(t,12.2,12.5);set('tOff',{s:lerp(1.8,1,eOut5(a2)),op:a2*(1-p(t,13.7,14.0))});
+    if(t>=12.2&&t<12.5)shake=Math.max(shake,10*(1-p(t,12.2,12.5)));
+    const a3=p(t,12.5,12.9);set('tAss',{op:a3*(1-p(t,13.7,14.0))});$('tAss').style.letterSpacing=lerp(30,14,eOut(a3))+'px';
     // block B
-    [['b1',16.0],['b2',16.2],['b3',16.5],['b4',16.8],['b5',17.1]].forEach(([id,st])=>{const q=p(t,st,st+.45);set(id,{y:lerp(30,0,eOut5(q)),op:q,blur:lerp(8,0,eOut(q))});});
+    [['b1',14.0],['b2',14.15],['b3',14.4],['b4',14.6],['b5',14.8]].forEach(([id,st])=>{const q=p(t,st,st+.45);set(id,{y:lerp(30,0,eOut5(q)),op:q,blur:lerp(8,0,eOut(q))});});
     drawDust(t,.9);
-    zoom=1+.035*p(t,11,19);
-    for(const b of [12,13,14,15,16,17,18]) if(t>=b) zoom+= .012*Math.exp(-(t-b)*8);
+    zoom=1+.035*p(t,11,17);
+    for(const b of [11.5,12,12.5,13,13.5,14,15,16]) if(t>=b) zoom+= .012*Math.exp(-(t-b)*8);
     // fade to black + end tag
-    black=Math.max(black,eIO(p(t,18.9,19.5)));
-    $('endtag').style.opacity=p(t,19.0,19.3)*(1-p(t,19.7,20));
+    black=Math.max(black,eIO(p(t,16.9,17.5)));
+    $('endtag').style.opacity=p(t,17.0,17.3)*(1-p(t,17.7,18));
   }
   const rs=R(Math.floor(t*30)*7+3);
   $('world').style.transform=`translate(${(rs()-.5)*shake}px,${(rs()-.5)*shake}px) scale(${zoom})`;
