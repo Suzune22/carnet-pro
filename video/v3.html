@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>AE-GMPE × FIFEM — trailer</title>
+<style>
+@font-face{font-family:Anton;src:url(assets/fonts/Anton.woff2) format("woff2")}
+@font-face{font-family:Oswald;src:url(assets/fonts/Oswald.woff2) format("woff2");font-weight:200 700}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:#030305}
+#world{position:absolute;inset:0;transform-origin:50% 50%}
+.a{position:absolute;left:0;top:0}
+.c{display:flex;align-items:center;justify-content:center;text-align:center}
+.anton{font-family:Anton,Impact,sans-serif;text-transform:uppercase}
+.osw{font-family:Oswald,sans-serif;text-transform:uppercase}
+.chrome{font-family:Anton;font-style:italic;background:linear-gradient(180deg,#ffffff 0%,#e8ecef 30%,#8f989f 48%,#4a5258 52%,#c9d0d5 72%,#ffffff 100%);-webkit-background-clip:text;color:transparent;filter:drop-shadow(0 6px 12px rgba(0,0,0,.8))}
+canvas{position:absolute;left:0;top:0}
+#flash{position:absolute;inset:0;pointer-events:none;opacity:0}
+#vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 50%,rgba(0,0,0,.75) 100%)}
+#grain{opacity:.06;mix-blend-mode:screen;width:1080px;height:1920px}
+.smoke{position:absolute;width:1300px;height:1200px;mix-blend-mode:screen}
+</style>
+</head>
+<body>
+<div id="stage">
+ <div id="world">
+  <!-- intro text -->
+  <div id="intro" class="a c anton" style="width:1080px;height:1920px;flex-direction:column;color:#fff;line-height:.92">
+    <div id="i1" style="font-size:190px;letter-spacing:2px">ÊTES-VOUS</div>
+    <div id="i2" style="font-size:228px;letter-spacing:2px">PRÊTS ?</div>
+  </div>
+  <!-- countdown -->
+  <div id="count" class="a" style="width:1080px;height:1920px">
+    <div class="a c chrome cd" id="d1" style="left:-200px;top:660px;width:400px;height:600px;font-size:440px">1</div>
+    <div class="a c chrome cd" id="d2" style="left:-200px;top:660px;width:400px;height:600px;font-size:440px">2</div>
+    <div class="a c chrome cd" id="d3" style="left:-200px;top:660px;width:400px;height:600px;font-size:440px">3</div>
+  </div>
+  <!-- poster -->
+  <div id="poster" class="a" style="width:1080px;height:1920px">
+    <div class="a" id="halo" style="left:-160px;top:180px;width:1400px;height:1100px;background:radial-gradient(ellipse at 50% 50%,rgba(255,236,200,.95) 0%,rgba(255,180,110,.55) 25%,rgba(200,40,60,.18) 50%,rgba(0,0,0,0) 70%)"></div>
+    <canvas id="beams" width="1080" height="1920"></canvas>
+    <img class="a" id="pf" src="assets/fifem_t.png" style="left:345px;top:70px;width:390px;filter:brightness(0) invert(1) drop-shadow(0 0 18px rgba(255,255,255,.35))">
+    <div class="a c osw" id="pres" style="top:370px;width:1080px;font-size:34px;font-weight:500;letter-spacing:14px;color:#f3e3cf">présente son partenaire</div>
+    <img class="a" id="pa" src="assets/aegmpe_t.png" style="left:250px;top:430px;width:580px;filter:drop-shadow(0 0 26px rgba(255,236,210,.55)) drop-shadow(0 30px 50px rgba(0,0,0,.6))">
+    <img class="smoke" id="sm0" src="assets/smoke0.png" style="left:-110px;top:900px">
+    <img class="smoke" id="sm1" src="assets/smoke1.png" style="left:-110px;top:1000px;opacity:.8">
+    <div class="a" style="left:0;top:1600px;width:1080px;height:320px;background:linear-gradient(180deg,transparent,rgba(60,0,10,.55))"></div>
+    <div class="a c anton" id="t1" style="top:1120px;width:1080px;font-size:150px;color:#f4ece0;letter-spacing:1px;text-shadow:0 6px 30px rgba(0,0,0,.7)">AE-GMPE <span style="color:#ff3d6e;margin:0 22px">×</span> FIFEM</div>
+    <div class="a c anton" id="t2" style="top:1300px;width:1080px;font-size:68px;color:#f4ece0;letter-spacing:3px;text-shadow:0 4px 20px rgba(0,0,0,.7)">ASSOCIATION JEUNESSE PARTENAIRE</div>
+    <div class="a c osw" id="t3" style="top:1400px;width:1080px;font-size:54px;font-weight:400;color:#fff;letter-spacing:3px;text-shadow:0 3px 16px rgba(0,0,0,.8)">VENDREDI 20 NOVEMBRE 2026 · 13H30</div>
+    <div class="a c osw" id="t4" style="top:1475px;width:1080px;font-size:42px;font-weight:300;color:#fff;letter-spacing:4px;text-shadow:0 3px 16px rgba(0,0,0,.8)">PARC DES EXPOSITIONS D'ABIDJAN</div>
+    <div class="a c" id="t5" style="top:1580px;width:1080px;gap:22px">
+      <div style="background:#fff;border-radius:14px;padding:8px 14px;display:flex"><img src="assets/sponsors.png" style="height:44px"></div>
+      <div style="border-radius:14px;overflow:hidden;display:flex"><img src="assets/orga.png" style="height:96px"></div>
+    </div>
+    <div class="a c osw" id="t6" style="top:1790px;width:1080px;font-size:40px;font-weight:400;color:#f4ece0;letter-spacing:6px">#FIFEM2026 · #AEGMPE</div>
+  </div>
+ </div>
+ <canvas id="fx" width="1080" height="1920"></canvas>
+ <div id="vig"></div>
+ <canvas id="grain" width="540" height="960"></canvas>
+ <div id="flash"></div>
+ <canvas id="tv" width="1080" height="1920"></canvas>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const p=(t,a,b)=>clamp((t-a)/(b-a));
+const eOut=x=>1-Math.pow(1-x,3), eOut5=x=>1-Math.pow(1-x,5), eIn=x=>x*x*x;
+const eIO=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const lerp=(a,b,x)=>a+(b-a)*x;
+function set(el,{x=0,y=0,s=1,r=0,op=1,blur=0,sx,sy}={}){el=typeof el==='string'?$(el):el;
+  el.style.transform=`translate(${x}px,${y}px) rotate(${r}deg) scale(${sx??s},${sy??s})`;el.style.opacity=op;
+  if(el.dataset.base===undefined)el.dataset.base=el.style.filter||'';
+  el.style.filter=(el.dataset.base+(blur>.1?` blur(${blur}px)`:'')).trim();}
+// seeded rng
+function R(seed){let s=seed%2147483647||1;return()=>{s=(s*16807)%2147483647;return (s-1)/2147483646}}
+// grain
+const gctx=$('grain').getContext('2d');const rg=R(5);
+const tiles=[...Array(6)].map(()=>{const im=gctx.createImageData(540,960);for(let i=0;i<im.data.length;i+=4){const v=rg()*255;im.data[i]=im.data[i+1]=im.data[i+2]=v;im.data[i+3]=255}return im});
+const fx=$('fx').getContext('2d'), tv=$('tv').getContext('2d'), beams=$('beams').getContext('2d');
+
+// lightning bolt
+function bolt(r,x1,y1,x2,y2,disp,depth){
+  if(depth===0){fx.lineTo(x2,y2);return}
+  const mx=(x1+x2)/2+(r()-.5)*disp, my=(y1+y2)/2+(r()-.5)*disp;
+  bolt(r,x1,y1,mx,my,disp/2,depth-1);bolt(r,mx,my,x2,y2,disp/2,depth-1);
+  if(depth>3&&r()<.25){fx.moveTo(mx,my);const a=r()*6.28;fx.lineTo(mx+Math.cos(a)*disp*.7,my+Math.sin(a)*disp*.7);fx.moveTo(mx,my)}
+}
+function sparks(t,amt){
+  if(amt<=0)return;const r=R(Math.floor(t*30)*97+13);
+  fx.save();fx.globalCompositeOperation='lighter';
+  for(let k=0;k<5;k++){
+    const side=Math.floor(r()*4);let x1,y1,x2,y2;
+    const L=170,Rr=910,T=760,B=1160;
+    if(side===0){x1=L+r()*740;y1=T-20;x2=x1+(r()-.5)*300;y2=T+r()*120}
+    else if(side===1){x1=L+r()*740;y1=B+20;x2=x1+(r()-.5)*300;y2=B-r()*120}
+    else if(side===2){x1=L-30;y1=T+r()*400;x2=L+r()*160;y2=y1+(r()-.5)*240}
+    else {x1=Rr+30;y1=T+r()*400;x2=Rr-r()*160;y2=y1+(r()-.5)*240}
+    for(const [w,c,b] of [[10,'rgba(90,140,255,.35)',30],[3.5,'rgba(190,215,255,.9)',14],[1.4,'#fff',0]]){
+      const rr=R(Math.floor(t*30)*31+k*7);fx.strokeStyle=c;fx.lineWidth=w*amt;fx.shadowColor='#7aa8ff';fx.shadowBlur=b;
+      fx.beginPath();fx.moveTo(x1,y1);bolt(rr,x1,y1,x2,y2,120,6);fx.stroke();}
+  }
+  fx.restore();
+}
+// light leak / fire swirl
+function leak(k,t,strength=1){
+  if(k<=0||k>=1)return;
+  fx.save();fx.globalCompositeOperation='lighter';
+  const a=Math.sin(k*Math.PI)*strength;
+  const g=fx.createRadialGradient(lerp(-100,1200,k),lerp(1500,500,k),0,lerp(-100,1200,k),lerp(1500,500,k),900);
+  g.addColorStop(0,`rgba(255,170,80,${.7*a})`);g.addColorStop(.5,`rgba(220,60,30,${.35*a})`);g.addColorStop(1,'rgba(0,0,0,0)');
+  fx.fillStyle=g;fx.fillRect(0,0,1080,1920);
+  fx.filter='blur(14px)';
+  for(let i=0;i<4;i++){
+    const ph=i*1.7+t*3, cx=540+Math.sin(ph)*300, cy=lerp(1900,0,k)+i*160-240;
+    fx.strokeStyle=i%2?`rgba(255,230,190,${.9*a})`:`rgba(255,140,50,${.8*a})`;fx.lineWidth=lerp(40,110,Math.sin(k*Math.PI))*(i%2?.5:1);fx.lineCap='round';
+    fx.beginPath();fx.moveTo(cx-500,cy+300);
+    fx.bezierCurveTo(cx-200+Math.sin(ph*1.3)*300,cy-400,cx+200+Math.cos(ph)*300,cy+500,cx+520,cy-280);fx.stroke();
+  }
+  fx.restore();
+}
+function embers(t,amt){
+  if(amt<=0)return;const r=R(77);
+  fx.save();fx.globalCompositeOperation='lighter';
+  for(let i=0;i<60;i++){const x0=r()*1080,sp=60+r()*160,ph=r()*10,sz=1.5+r()*3.5;
+    const y=1920-((t*sp+ph*200)%2100), x=x0+Math.sin(t*1.5+ph)*40;
+    const g=fx.createRadialGradient(x,y,0,x,y,sz*5);g.addColorStop(0,`rgba(255,190,120,${.8*amt})`);g.addColorStop(1,'rgba(255,60,30,0)');
+    fx.fillStyle=g;fx.beginPath();fx.arc(x,y,sz*5,0,6.283);fx.fill();}
+  fx.restore();
+}
+function drawBeams(t){
+  beams.clearRect(0,0,1080,1920);beams.save();beams.translate(540,720);beams.globalCompositeOperation='lighter';
+  for(let i=0;i<12;i++){const a=i/12*6.283+t*.08;beams.rotate(6.283/12);
+    const g=beams.createLinearGradient(0,0,0,-900);g.addColorStop(0,'rgba(255,210,160,.22)');g.addColorStop(1,'rgba(255,120,80,0)');
+    beams.fillStyle=g;beams.beginPath();beams.moveTo(0,0);beams.lineTo(-40-20*Math.sin(t+i),-900);beams.lineTo(40+20*Math.sin(t+i),-900);beams.fill();}
+  beams.restore();
+}
+
+const T=18;
+window.render=function(t){
+  fx.clearRect(0,0,1080,1920);tv.clearRect(0,0,1080,1920);
+  gctx.putImageData(tiles[Math.floor(t*24)%6],0,0);
+  let flash=0, flashCol='255,255,255', black=0, shake=0, zoom=1;
+
+  // ---- INTRO 0–3.1
+  const showIntro=t<3.15; $('intro').style.display=showIntro?'flex':'none';
+  if(showIntro){
+    const k=p(t,0,.7);
+    const s=lerp(5.5,1,eOut5(k))+.04*p(t,.7,3.1);
+    let op=1;
+    if(t>1.35&&t<1.62) op=[.25,1,.35,.15,1,.4][Math.floor((t-1.35)*22)%6];
+    if(t>2.62&&t<2.9) op=[.5,.15,1,.3][Math.floor((t-2.62)*22)%4];
+    op*=1-p(t,2.9,3.12);
+    set('intro',{s,op,blur:lerp(8,0,eOut(k))});
+    if(t>1.75&&t<2.5) sparks(t,Math.sin(p(t,1.75,2.5)*Math.PI)*1.2);
+    if(t>1.75&&t<2.5&&Math.floor(t*30)%4===0) {flash=.25;flashCol='160,190,255';}
+    shake=t<.75?(1-k)*14:0;
+  }
+  // ---- COUNTDOWN 3.2–6.25
+  const showC=t>=3.15&&t<6.3; $('count').style.display=showC?'block':'none';
+  if(showC){
+    // focus: 3 → 2 → 1
+    const f=3-eIO(p(t,4.15,4.45))-eIO(p(t,5.15,5.45));
+    [1,2,3].forEach(n=>{
+      const d=n-f, ad=Math.abs(d);
+      const x=540+d*300, s=lerp(1,.38,clamp(ad)), op=(ad<1.6?lerp(1,.55,clamp(ad)):lerp(.55,0,clamp(ad-1.6)))*(t<3.35?p(t,3.15,3.35):1)*(1-p(t,6.05,6.28));
+      const appear=n===3?1:p(t,3.2+(3-n)*.25,3.5+(3-n)*.25);
+      set('d'+n,{x,y:0,s:s*(1+.06*Math.exp(-Math.pow((t-[0,5.2,4.2,3.2][n])*6,2))),op:op*appear});
+    });
+    [3.2,4.2,5.2].forEach(h=>{flash=Math.max(flash,.18*(1-p(t,h,h+.15))*(t>=h?1:0));});
+  }
+  // ---- LEAK 6.1–7.8
+  if(t>6.05&&t<7.9){ leak(p(t,6.05,7.9),t,1.3); embers(t,Math.sin(p(t,6.05,7.9)*Math.PI)); }
+  // ---- POSTER 7.5–18
+  const showP=t>=7.5; $('poster').style.display=showP?'block':'none';
+  if(showP){
+    const k=p(t,7.5,9.2);
+    let op=eOut(k);
+    if(t>8.0&&t<8.6) op*= [1,.3,.8,.1,.9,.5][Math.floor((t-8.0)*18)%6];
+    $('poster').style.opacity=op;
+    drawBeams(t);
+    set('halo',{s:1+.04*Math.sin(t*2),op:.62+.1*Math.sin(t*3.1)});
+    set('pf',{y:lerp(-40,0,eOut5(p(t,8.2,8.9))),op:p(t,8.2,8.6)});
+    set('pres',{op:p(t,8.6,9.1)});
+    set('pa',{s:lerp(1.25,1,eOut5(p(t,7.5,8.6)))+.015*Math.sin(t*1.6),blur:lerp(16,0,eOut(p(t,7.5,8.6)))});
+    set('sm0',{x:Math.sin(t*.35)*70-t*6,y:-t*6+Math.sin(t*.5)*20,s:1.05+.05*Math.sin(t*.4)});
+    set('sm1',{x:-Math.sin(t*.3)*90+t*5,y:-t*4,s:1.1+.06*Math.cos(t*.5),op:.75});
+    [['t1',8.9],['t2',9.2],['t3',9.45],['t4',9.65],['t5',9.9],['t6',10.1]].forEach(([id,st])=>{
+      const q=p(t,st,st+.45);set(id,{y:lerp(40,0,eOut5(q)),op:q,blur:lerp(10,0,eOut(q))});});
+    embers(t,.7);
+    // beat pulses (zoom punch)
+    const beats=[9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0];
+    for(const b of beats){ if(t>=b) zoom=Math.max(zoom,1+.025*Math.exp(-(t-b)*7)); }
+    zoom*=1+.03*p(t,7.5,17);
+    // blackout flickers
+    if(t>11.45&&t<11.6) black=.92; if(t>12.45&&t<12.52) black=.85;
+    if(t>14.0&&t<14.25) black=[.9,.2,.95,.4][Math.floor((t-14)*16)%4];
+    // light leaks
+    if(t>13.1&&t<13.9) leak(p(t,13.1,13.9),t,.45);
+    if(t>15.2&&t<15.9){leak(p(t,15.2,15.9),t+3,.55);flash=Math.max(flash,.28*Math.sin(p(t,15.2,15.9)*Math.PI));flashCol='255,150,70';}
+    // glitch 16.7–17.2
+    if(t>16.7&&t<17.25){const r=R(Math.floor(t*30)*13);shake=18;
+      const w=$('world');w.style.filter=`drop-shadow(${(r()-.5)*30}px 0 0 rgba(255,0,60,.7)) drop-shadow(${(r()-.5)*30}px 0 0 rgba(0,200,255,.6))`;
+    } else $('world').style.filter='';
+  }
+  // shake + zoom
+  const rs=R(Math.floor(t*30)*7+3);
+  $('world').style.transform=`translate(${(rs()-.5)*shake}px,${(rs()-.5)*shake}px) scale(${zoom})`;
+  $('flash').style.background=`rgb(${flashCol})`;$('flash').style.opacity=clamp(flash);
+  $('stage').style.background='#030305';
+  // black overlay via flash layer when black>0
+  if(black>0){$('flash').style.background='#000';$('flash').style.opacity=black;}
+  // TV off 17.3–18
+  if(t>=17.3){
+    const k1=p(t,17.3,17.6), k2=p(t,17.6,17.85), k3=p(t,17.85,18);
+    const h=lerp(1920,6,eIn(k1)), w=lerp(1080,8,eIn(k2));
+    tv.fillStyle='#000';tv.fillRect(0,0,1080,1920);
+    if(k3<1){tv.fillStyle=`rgba(235,245,255,${1-k3})`;tv.shadowColor='#bcd';tv.shadowBlur=30;
+      tv.fillRect(540-w/2,960-h/2,w,h);tv.shadowBlur=0;}
+    if(k1<1){tv.clearRect(540-w/2,960-h/2,w,h);tv.fillStyle=`rgba(255,255,255,${eIn(k1)*.8})`;tv.fillRect(540-w/2,960-h/2,w,h);}
+  }
+};
+window.ready=document.fonts.ready.then(()=>Promise.all([...document.images].map(i=>i.complete?1:new Promise(r=>{i.onload=r;i.onerror=r}))));
+render(0);
+</script>
+</body>
+</html>
