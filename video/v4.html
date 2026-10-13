@@ -206,7 +206,7 @@ window.render=function(t){
     [['b1',14.0],['b2',14.15],['b3',14.4],['b4',14.6],['b5',14.8]].forEach(([id,st])=>{const q=p(t,st,st+.45);set(id,{y:lerp(30,0,eOut5(q)),op:q,blur:lerp(8,0,eOut(q))});});
     drawDust(t,.9);
     zoom=1+.035*p(t,11,17);
-    for(const b of [11.5,12,12.5,13,13.5,14,15,16]) if(t>=b) zoom+= .012*Math.exp(-(t-b)*8);
+    for(const b of [14,14.5,15,15.5,16,16.5]) if(t>=b) zoom+= .012*Math.exp(-(t-b)*8);
     // fade to black + end tag
     black=Math.max(black,eIO(p(t,16.9,17.5)));
     $('endtag').style.opacity=p(t,17.0,17.3)*(1-p(t,17.7,18));
