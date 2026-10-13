@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>AE-GMPE × FIFEM — annonce claire</title>
+<style>
+@font-face{font-family:Anton;src:url(assets/fonts/Anton.woff2) format("woff2")}
+@font-face{font-family:Oswald;src:url(assets/fonts/Oswald.woff2) format("woff2");font-weight:200 700}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:1080px;overflow:hidden;background:#000}
+#stage{position:relative;width:1920px;height:1080px;overflow:hidden;background:#000}
+#world{position:absolute;inset:0;transform-origin:50% 45%}
+.a{position:absolute;left:0;top:0}
+.c{display:flex;align-items:center;justify-content:center;text-align:center}
+.anton{font-family:Anton,Impact,sans-serif;text-transform:uppercase}
+.osw{font-family:Oswald,sans-serif}
+.gold{background:linear-gradient(180deg,#fff7df 0%,#ffd27a 30%,#b8761c 49%,#5e3508 52%,#e5a843 72%,#fff3cf 100%);-webkit-background-clip:text;color:transparent}
+.sh{text-shadow:0 4px 0 rgba(0,0,0,.35),0 8px 40px rgba(0,0,0,.75)}
+canvas{position:absolute;left:0;top:0}
+#flash{position:absolute;inset:0;pointer-events:none;opacity:0;background:#fff4dc}
+#black{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none}
+#vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 50%,rgba(0,0,0,.75) 100%)}
+#grain{opacity:.06;mix-blend-mode:screen;width:1920px;height:1080px}
+.ico{display:inline-block;vertical-align:middle;margin-right:34px}
+</style>
+</head>
+<body>
+<div id="stage">
+ <div id="world">
+  <!-- ===== Intro (0–5 s) ===== -->
+  <div id="intro" class="a" style="width:1920px;height:1080px">
+    <img class="a" id="rock" src="assets/rock.jpg" style="width:1920px;height:1080px">
+    <canvas id="glow" width="1920" height="1080"></canvas>
+    <div id="i1" class="a c anton sh" style="width:1920px;height:1080px;font-size:130px;color:#fff;letter-spacing:3px">ÉTUDIANTS DE L'AE-GMPE…</div>
+    <div id="i2" class="a c anton gold" style="width:1920px;height:1080px;font-size:170px;letter-spacing:4px;filter:drop-shadow(0 6px 30px rgba(0,0,0,.8))">UNE GRANDE NOUVELLE !</div>
+    <div id="count" class="a c anton gold" style="width:1920px;height:1080px;font-size:560px;font-style:italic;filter:drop-shadow(0 10px 40px rgba(255,160,40,.6))"></div>
+  </div>
+
+  <!-- ===== Reveal (5–18 s) ===== -->
+  <div id="reveal" class="a" style="width:1920px;height:1080px">
+    <div class="a" style="width:1920px;height:1080px;background:radial-gradient(ellipse 62% 70% at 50% 34%,#fff3dc 0%,#f6d9a8 22%,#b9672a 46%,#3a1208 70%,#060203 100%)"></div>
+    <canvas id="rays" width="1920" height="1080"></canvas>
+    <img class="a" id="smoke" src="assets/smoke0.png" style="left:300px;top:560px;width:1300px;height:700px;mix-blend-mode:screen;opacity:.45">
+    <div class="a" style="left:0;top:520px;width:1920px;height:560px;background:linear-gradient(180deg,rgba(20,6,2,0),rgba(20,6,2,.62) 40%,rgba(10,3,1,.8))"></div>
+    <div class="a" id="logos" style="width:1920px;height:1080px">
+      <img class="a" id="lf" src="assets/fifem_t.png" style="left:420px;top:150px;width:480px">
+      <div class="a c anton" id="lx" style="left:900px;top:200px;width:120px;height:220px;font-size:170px;color:#c1214b;text-shadow:0 0 30px rgba(255,255,255,.9)">×</div>
+      <img class="a" id="la" src="assets/aegmpe_t.png" style="left:1060px;top:70px;height:440px">
+    </div>
+    <!-- 5–9 s -->
+    <div id="h1" class="a c anton sh" style="top:560px;width:1920px;height:300px;flex-direction:column;color:#fff;line-height:1.05">
+      <div style="font-size:104px;letter-spacing:2px">L'AE-GMPE DEVIENT PARTENAIRE</div>
+      <div style="font-size:130px;letter-spacing:3px"><span style="color:#ffc861">DU FIFEM 2026</span></div>
+    </div>
+    <!-- 9–12 s -->
+    <div id="h2" class="a c anton sh" style="top:590px;width:1920px;font-size:86px;color:#ffd890;letter-spacing:2px">LE FORUM INTERNATIONAL DES FEMMES MINIÈRES</div>
+    <div id="h3" class="a c osw sh" style="top:730px;width:1920px;font-size:62px;font-weight:600;color:#fff;letter-spacing:3px">L'AE-GMPE, Association Jeunesse Partenaire</div>
+    <!-- 12–16 s -->
+    <div id="d1" class="a c anton sh" style="top:575px;width:1920px;font-size:110px;color:#fff;letter-spacing:3px">
+      <svg class="ico" width="96" height="96" viewBox="0 0 24 24" fill="none" stroke="#ffc861" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/></svg>VENDREDI 20 NOVEMBRE 2026</div>
+    <div id="d2" class="a c anton sh" style="top:735px;width:1920px;font-size:88px;color:#fff;letter-spacing:3px">
+      <svg class="ico" width="84" height="84" viewBox="0 0 24 24" fill="none" stroke="#ffc861" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/></svg>PARC DES EXPOSITIONS D'ABIDJAN</div>
+    <div id="d3" class="a c" style="top:900px;width:1920px;gap:26px">
+      <div style="background:#fff;border-radius:14px;padding:8px 16px;display:flex"><img src="assets/sponsors.png" style="height:52px"></div>
+      <div style="border-radius:14px;overflow:hidden;display:flex"><img src="assets/orga.png" style="height:96px"></div>
+    </div>
+    <!-- 16–18 s -->
+    <div id="end" class="a c anton sh" style="top:620px;width:1920px;height:240px;font-size:150px;letter-spacing:5px;white-space:nowrap;color:#ffc861">ON VOUS ATTEND NOMBREUX !</div>
+  </div>
+ </div>
+ <canvas id="fx" width="1920" height="1080"></canvas>
+ <div id="vig"></div>
+ <canvas id="grain" width="960" height="540"></canvas>
+ <div id="flash"></div>
+ <div id="black"></div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const p=(t,a,b)=>clamp((t-a)/(b-a));
+const eOut=x=>1-Math.pow(1-x,3), eOut5=x=>1-Math.pow(1-x,5), eIn=x=>x*x*x;
+const eIO=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const eBack=x=>{const c1=1.7,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+const lerp=(a,b,x)=>a+(b-a)*x;
+function set(el,{x=0,y=0,s=1,op=1,blur=0}={}){el=typeof el==='string'?$(el):el;
+  el.style.transform=`translate(${x}px,${y}px) scale(${s})`;el.style.opacity=op;
+  if(el.dataset.base===undefined)el.dataset.base=el.style.filter||'';
+  el.style.filter=(el.dataset.base+(blur>.1?` blur(${blur}px)`:'')).trim();}
+// fade in [a,a+d], hold, fade out [b-d2,b]
+const vis=(t,a,b,d=.35,d2=.3)=>Math.min(p(t,a,a+d),1-p(t,b-d2,b));
+function R(seed){let s=Math.abs(Math.floor(seed))%2147483647||1;return()=>{s=(s*16807)%2147483647;return (s-1)/2147483646}}
+const gctx=$('grain').getContext('2d');const rg=R(5);
+const tiles=[...Array(6)].map(()=>{const im=gctx.createImageData(960,540);for(let i=0;i<im.data.length;i+=4){const v=rg()*255;im.data[i]=im.data[i+1]=im.data[i+2]=v;im.data[i+3]=255}return im});
+const fx=$('fx').getContext('2d'), glow=$('glow').getContext('2d'), rays=$('rays').getContext('2d');
+const rd=R(42);const dust=[...Array(120)].map(()=>({x:rd()*1920,y:rd()*1080,vx:(rd()-.5)*14,vy:-4-rd()*14,r:.8+rd()*2.4,ph:rd()*6.3}));
+function drawDust(t,amt){fx.save();fx.globalCompositeOperation='lighter';
+  for(const d of dust){const x=((d.x+d.vx*t)%1920+1920)%1920,y=((d.y+d.vy*t)%1080+1080)%1080;
+    fx.fillStyle=`rgba(255,215,150,${amt*(.3+.6*Math.abs(Math.sin(t*1.7+d.ph)))})`;fx.beginPath();fx.arc(x,y,d.r,0,6.283);fx.fill();}
+  fx.restore();}
+function light(x,y,r,i){
+  const m=`radial-gradient(circle ${r}px at ${x}px ${y}px, rgba(0,0,0,${i}) 0%, rgba(0,0,0,${i*.5}) 50%, rgba(0,0,0,0) 100%)`;
+  $('rock').style.webkitMaskImage=m;$('rock').style.maskImage=m;
+  glow.clearRect(0,0,1920,1080);if(i<=0)return;glow.save();glow.globalCompositeOperation='lighter';
+  const g=glow.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,`rgba(255,190,110,${.22*i})`);g.addColorStop(1,'rgba(0,0,0,0)');
+  glow.fillStyle=g;glow.fillRect(0,0,1920,1080);glow.restore();}
+function drawRays(t,a){rays.clearRect(0,0,1920,1080);if(a<=0)return;rays.save();rays.translate(960,300);rays.globalCompositeOperation='lighter';
+  for(let i=0;i<16;i++){rays.rotate(6.283/16);const g=rays.createLinearGradient(0,0,0,-1300);
+    g.addColorStop(0,`rgba(255,225,170,${.26*a})`);g.addColorStop(1,'rgba(255,140,60,0)');rays.fillStyle=g;
+    const w=50+30*Math.sin(t*1.1+i*1.7);rays.beginPath();rays.moveTo(0,0);rays.lineTo(-w,-1300);rays.lineTo(w,-1300);rays.fill();}
+  rays.restore();}
+
+window.render=function(t){
+  fx.clearRect(0,0,1920,1080);gctx.putImageData(tiles[Math.floor(t*24)%6],0,0);
+  let flash=0,black=0,zoom=1,shake=0;
+  const intro=t<5.05; $('intro').style.display=intro?'block':'none'; $('reveal').style.display=t>=5?'block':'none';
+  if(intro){
+    // la lumière revient peu à peu
+    const k=p(t,.1,4.8); light(960,520,lerp(60,1300,eIO(k)),lerp(0,.75,eOut(p(t,.1,2.2))));
+    drawDust(t,lerp(.2,.8,k));
+    set('i1',{op:vis(t,.35,1.7,.4,.25),s:1+.03*p(t,.35,1.7),blur:lerp(8,0,eOut(p(t,.35,.75)))});
+    set('i2',{op:vis(t,1.75,2.95,.2,.25),s:lerp(1.25,1,eOut5(p(t,1.75,2.05)))+.02*p(t,2,2.95)});
+    if(t>=1.75&&t<2) shake=10*(1-p(t,1.75,2));
+    // compte à rebours 3–5 s
+    if(t>=3&&t<5){const step=.667;const i=Math.min(2,Math.floor((t-3)/step));const k2=(t-3)-i*step;
+      $('count').style.display='flex';$('count').textContent=3-i;
+      set('count',{s:lerp(1.45,1,eOut5(p(k2,0,.16)))-.05*k2,op:(k2<.03?p(k2,0,.03):1)*(1-p(k2,.52,.64)),blur:lerp(12,0,eOut(p(k2,0,.14)))});
+      flash=.28*(1-p(k2,0,.16));shake=12*(1-p(k2,0,.22));
+    } else $('count').style.display='none';
+    zoom=1+.03*p(t,0,5);
+  }
+  if(t>=5){
+    flash=Math.max(flash,1-p(t,5,5.6));
+    drawRays(t,eOut(p(t,5,6))*(1-p(t,17.3,18)));
+    set('smoke',{x:Math.sin(t*.4)*80-(t-5)*6,y:-(t-5)*4,op:.45});
+    const c=eOut5(p(t,5.05,5.9));
+    set('lf',{x:lerp(-700,0,c),op:clamp(c*2)});
+    set('la',{x:lerp(700,0,c),op:clamp(c*2)});
+    set('lx',{s:eBack(p(t,5.6,6.0)),op:p(t,5.6,5.7)});
+    // textes : une idée par écran, tenue assez longtemps
+    set('h1',{op:vis(t,5.7,9.0,.45,.3),y:lerp(40,0,eOut5(p(t,5.7,6.2))),blur:lerp(10,0,eOut(p(t,5.7,6.1)))});
+    set('h2',{op:vis(t,9.05,12.0,.4,.3),y:lerp(30,0,eOut5(p(t,9.05,9.5)))});
+    set('h3',{op:vis(t,9.9,12.0,.4,.3),y:lerp(30,0,eOut5(p(t,9.9,10.3)))});
+    set('d1',{op:vis(t,12.05,15.9,.4,.3),x:lerp(-80,0,eOut5(p(t,12.05,12.5)))});
+    set('d2',{op:vis(t,12.7,15.9,.4,.3),x:lerp(80,0,eOut5(p(t,12.7,13.1)))});
+    set('d3',{op:vis(t,13.4,15.9,.4,.3),y:lerp(40,0,eOut5(p(t,13.4,13.8)))});
+    set('end',{op:vis(t,16.0,18.2,.3,.3),s:lerp(1.35,1,eOut5(p(t,16.0,16.4)))+.02*p(t,16.4,18)});
+    if(t>=16&&t<16.3) shake=8*(1-p(t,16,16.3));
+    drawDust(t,.8);
+    zoom=1+.03*p(t,5,18);
+    black=eIO(p(t,17.5,18));
+  }
+  const rs=R(Math.floor(t*30)*7+3);
+  $('world').style.transform=`translate(${(rs()-.5)*shake}px,${(rs()-.5)*shake}px) scale(${zoom})`;
+  $('flash').style.opacity=clamp(flash);$('black').style.opacity=clamp(black);
+};
+window.ready=document.fonts.ready.then(()=>Promise.all([...document.images].map(i=>i.complete?1:new Promise(r=>{i.onload=r;i.onerror=r}))));
+render(0);
+</script>
+</body>
+</html>
